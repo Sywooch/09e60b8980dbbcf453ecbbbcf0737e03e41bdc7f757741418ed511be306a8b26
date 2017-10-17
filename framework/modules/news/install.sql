@@ -1,0 +1,1 @@
+ALTER TABLE `sw_news` ADD COLUMN `forum_url`  text NULL AFTER `pic_loc`;

@@ -1,0 +1,1741 @@
+<!doctype html>
+<!--[if IE 6 ]>
+<html lang="en-us" class="ie6"> <![endif]-->
+<!--[if IE 7 ]>
+<html lang="en-us" class="ie7"> <![endif]-->
+<!--[if IE 8 ]>
+<html lang="en-us" class="ie8"> <![endif]-->
+<!--[if (gt IE 7)|!(IE)]><!-->
+<html lang="en-us"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>API DOC</title>
+    <meta name="description" content="">
+    <meta name="author" content="MyOrange">
+    <meta name="copyright" content="MyOrange">
+    <meta name="generator" content="Documenter v2.0 http://rxa.li/documenter">
+    <meta name="date" content="2016-10-04T00:00:00+02:00">
+
+    <link rel="stylesheet" href="assets/css/documenter_style.css" media="all">
+    <link rel="stylesheet" href="assets/js/google-code-prettify/prettify.css" media="screen">
+    <script src="assets/js/google-code-prettify/prettify.js"></script>
+
+
+    <script src="assets/js/jquery.js"></script>
+
+    <script src="assets/js/jquery.scrollTo.js"></script>
+    <script src="assets/js/jquery.easing.js"></script>
+
+    <script>
+        document.createElement('section');
+         var duration = '500', easing = 'swing';
+    </script>
+    <script src="assets/js/script.js"></script>
+
+    <style>
+        html {
+            background-color: #FFFFFF;
+            color: #383838;
+        }
+
+        ::-moz-selection {
+            background: #444444;
+            color: #DDDDDD;
+        }
+
+        ::selection {
+            background: #444444;
+            color: #DDDDDD;
+        }
+
+        #documenter_sidebar #documenter_logo {
+            background-image: url(assets/images/image_1.png);
+        }
+
+        a {
+            color: #0000FF;
+        }
+
+        .btn {
+            border-radius: 3px;
+        }
+
+        .btn-primary {
+            background-image: -moz-linear-gradient(top, #0088CC, #0044CC);
+            background-image: -ms-linear-gradient(top, #0088CC, #0044CC);
+            background-image: -webkit-gradient(linear, 0 0, 0 0088 CC%, from(#DDDDDD), to(#0044CC));
+            background-image: -webkit-linear-gradient(top, #0088CC, #0044CC);
+            background-image: -o-linear-gradient(top, #0088CC, #0044CC);
+            background-image: linear-gradient(top, #0088CC, #0044CC);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0088CC', endColorstr='#0044CC', GradientType=0);
+            border-color: #0044CC #0044CC #bfbfbf;
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:active,
+        .btn-primary.active,
+        .btn-primary.disabled,
+        .btn-primary[disabled] {
+            border-color: #0088CC #0088CC #bfbfbf;
+            background-color: #0044CC;
+        }
+
+        hr {
+            border-top: 1px solid #EBEBEB;
+            border-bottom: 1px solid #FFFFFF;
+        }
+
+        #documenter_sidebar, #documenter_sidebar ul a {
+            background-color: #DDDDDD;
+            color: #222222;
+        }
+
+        #documenter_sidebar ul a {
+            -webkit-text-shadow: 1px 1px 0px #EEEEEE;
+            -moz-text-shadow: 1px 1px 0px #EEEEEE;
+            text-shadow: 1px 1px 0px #EEEEEE;
+        }
+
+        #documenter_sidebar ul {
+            border-top: 1px solid #AAAAAA;
+        }
+
+        #documenter_sidebar ul a {
+            border-top: 1px solid #EEEEEE;
+            border-bottom: 1px solid #AAAAAA;
+            color: #444444;
+        }
+
+        #documenter_sidebar ul a:hover {
+            background: #444444;
+            color: #DDDDDD;
+            border-top: 1px solid #444444;
+        }
+
+        #documenter_sidebar ul a.current {
+            background: #444444;
+            color: #DDDDDD;
+            border-top: 1px solid #444444;
+        }
+
+        #documenter_copyright {
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        /*pre{    white-space: initial;}*/
+    </style>
+
+</head>
+<body class="documenter-project-smartadmin-v18x">
+<div id="documenter_sidebar">
+    <ul id="documenter_nav">
+        <li><a class="current" href="#documenter_cover">Главная </a></li>
+        <li><a href="#users" title="users">Пользователи</a></li>
+        <li><a href="#organizations" title="chats">Организации</a></li>
+        <li><a href="#news" title="chats">Новости</a></li>
+        <li><a href="#communication" title="chats">Общение</a></li>
+        <li><a href="#advertising" title="chats">Реклама</a></li>
+        <li><a href="#advertising_banner" title="chats">Баннерная реклама</a></li>
+        <li><a href="#poster" title="chats">Афиша</a></li>
+        <li><a href="#shares" title="chats">Акции</a></li>
+        <li><a href="#buttons" title="chats">Кнопки</a></li>
+        <li><a href="#filters" title="chats">Фильтры</a></li>
+        <li><a href="#ads" title="chats">Объявления</a></li>
+        <li><a href="#help" title="chats">Помощь</a></li>
+    </ul>
+    <div id="documenter_copyright">Copyright GoldenEye 2017<br>
+    </div>
+</div>
+<div id="documenter_content">
+    <section id="documenter_cover">
+        <h1>Goroda REST API v1.0</h1>
+        <h2>Request and response documentation</h2>
+        <hr>
+        <ul>
+            <li>by: GoldenEye</li>
+            <li><a href=""></a></li>
+            <li>email: <a> slims@ukr.net </a></li>
+        </ul>
+        <pre style="background: #f3f3f3; padding: 10px;">
+STATUS: 200 - SUCCESS | JSON или STRING
+
+STATUS: 555 - ERROR | JSON или STRING</pre>
+    </section>
+    <section id="users">
+        <div class="page-header"><h1>Пользователи</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="login post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/user/login
+                                    </a>
+                                </span>
+                            </h3>
+
+                        </div>
+                        <div class="content">
+                            <form accept-charset="UTF-8" action="#" class="sandbox" method="post">
+                                <div style="margin:0;padding:0;display:inline"></div>
+                                <h4>Параметры</h4>
+                                    <table class="fullwidth">
+                                        <thead>
+                                            <tr>
+                                                <th>Параметр</th>
+                                                <th>Тип данных</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                        <tr>
+                                            <td class="code required">email</td>
+                                            <td width="500"><strong>string</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="code required">password</td>
+                                            <td width="500"><strong>string</strong></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                            </form>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">dr4r2YpM5taxFV5JM9MXbxhUk6aiix6w</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="register post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/user/register
+                                    </a>
+                                </span>
+                            </h3>
+
+                        </div>
+                        <div class="content">
+                            <form accept-charset="UTF-8" action="#" class="sandbox" method="post">
+                                <div style="margin:0;padding:0;display:inline"></div>
+                                <h4>Параметры</h4>
+                                    <table class="fullwidth">
+                                        <thead>
+                                            <tr>
+                                                <th>Параметр</th>
+                                                <th>Тип данных</th>
+                                            </tr>
+                                        </thead>
+                                            <tbody >
+                                            <tr>
+                                                <td class="code required">first_name</td>
+                                                <td width="500"><strong>string</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="code required">last_name</td>
+                                                <td width="500"><strong>string</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="code required">email</td>
+                                                <td width="500"><strong>string</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="code required">password</td>
+                                                <td width="500"><strong>string</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="code required">re_password</td>
+                                                <td width="500"><strong>string</strong></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                            </form>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">dr4r2YpM5taxFV5JM9MXbxhUk6aiix6w33</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="index get operation" >
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/user
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            - Пока выдаю всюинформацию, потом нужно будет ограничить!
+
+                            <h4>Параметры - Headers</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">access_token</td>
+                                    <td width="500"><strong>auth_key | string </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>{
+    "id": 9,
+    "first_name": "Дима",
+    "last_name": "Новиков",
+    "email": "admin@goroda.mobi",
+    "phone": "",
+    "password_hash": "$2y$13$3oCqJI1gOKyPi4rIqj4tPeh5zApdFh2b3Powbpp1C1ImJi7D4oFqS",
+    "salt": "",
+    "created_at": "2017-07-01 17:47:03",
+    "updated_at": "2017-07-14 14:07:36",
+    "activate": 0,
+    "status": 1,
+    "auth_key": "dr4r2YpM5taxFV5JM9MXbxhUk6aiix6w33",
+    "profile": null,
+    "password_reset_token": "e0ZbQilu9YRgFGCGAstq2irKHIRQXVG0_1500030456",
+    "auth_id": "",
+    "auth_service": "default",
+    "auth_url": "",
+    "block_publication": 0
+} </pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="avatar post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/user/avatar
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Headers</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип данных</th>
+                                    </tr>
+                                </thead>
+                                    <tbody >
+                                    <tr>
+                                        <td class="code required">access_token</td>
+                                        <td width="500"><strong>auth_key | string </strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            <h4>Параметры - Body</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип данных</th>
+                                    </tr>
+                                </thead>
+                                    <tbody >
+                                    <tr>
+                                        <td class="code required">image</td>
+                                        <td width="500"><strong>file</strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">Аватар успешно загружен.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="change_password post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/user/change_password
+                                    </a>
+                                </span>
+                            </h3>
+
+                        </div>
+                        <div class="content">
+                            <form accept-charset="UTF-8" action="#" class="sandbox" method="post">
+                                <h4>Параметры - Headers</h4>
+                                <table class="fullwidth">
+                                    <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип данных</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody >
+                                    <tr>
+                                        <td class="code required">access_token</td>
+                                        <td width="500"><strong>auth_key | string </strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <h4>Параметры - Body</h4>
+                                <table class="fullwidth">
+                                    <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип данных</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody >
+                                    <tr>
+                                        <td class="code required">password</td>
+                                        <td width="500"><strong>string</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="code required">re_password</td>
+                                        <td width="500"><strong>string</strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">Новый пароль успешно установлен</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="reset_password_request post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/user/reset_password_request
+                                    </a>
+                                </span>
+                            </h3>
+
+                        </div>
+                        <div class="content">
+                            <form accept-charset="UTF-8" action="#" class="sandbox" method="post">
+                                <h4>Параметры</h4>
+                                <table class="fullwidth">
+                                    <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип данных</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody >
+                                    <tr>
+                                        <td class="code required">email</td>
+                                        <td width="500"><strong>string</strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">Проверьте свою электронную почту для получения дальнейших инструкций.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="reset_password post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/user/reset_password/{token}
+                                    </a>
+                                </span>
+                            </h3>
+
+                        </div>
+                        <div class="content">
+                            <form accept-charset="UTF-8" action="#" class="sandbox" method="post">
+                                <h4>Параметры - Body</h4>
+                                <table class="fullwidth">
+                                    <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип данных</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody >
+                                    <tr>
+                                        <td class="code required">password</td>
+                                        <td width="500"><strong>string</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="code required">re_password</td>
+                                        <td width="500"><strong>string</strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">Новый пароль успешно установлен</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="organizations">
+        <div class="page-header"><h1>Организации</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="index get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/organizations
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Body - JSON</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">category_id</td>
+                                    <td width="500"><strong> int </strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">page</td>
+                                    <td width="500"><strong> int </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>{
+    "id": "6",
+    "name": "Организация",
+    "description": "Описание",
+    "category_id": "3",
+    "image": "",
+    "published": "1",
+    "order": "0",
+    "url": "",
+    "url_facebook": "",
+    "url_vk": "",
+    "url_ok": "",
+    "url_instagram": "",
+    "url_twitter": "",
+    "created_at": null,
+    "updated_at": "2017-06-28 19:13:22",
+    "user_name": null,
+    "user_email": null,
+    "user_telephone": null,
+    "addresses": [],
+    "telephones": [
+        {
+            "organization_id": "6",
+            "number": ""
+        }
+    ]
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="view get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/organizations/view/{id}
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>    {
+        "id": "6",
+        "name": "Организация",
+        "description": "Описание",
+        "category_id": "3",
+        "image": "",
+        "published": "1",
+        "order": "0",
+        "url": "",
+        "url_facebook": "",
+        "url_vk": "",
+        "url_ok": "",
+        "url_instagram": "",
+        "url_twitter": "",
+        "created_at": null,
+        "updated_at": "2017-06-28 19:13:22",
+        "user_name": null,
+        "user_email": null,
+        "user_telephone": null,
+        "addresses": [],
+        "telephones": [
+            {
+                "organization_id": "6",
+                "number": ""
+            }
+        ]
+    },</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="category get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/organizations/category
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>{
+    "id": "2",
+    "root": "1",
+    "lft": "2",
+    "rgt": "13",
+    "lvl": "1",
+    "name": "Прова",
+    "icon": "",
+    "icon_type": "1",
+    "active": "1",
+    "selected": "0",
+    "disabled": "0",
+    "readonly": "0",
+    "visible": "1",
+    "collapsed": "0",
+    "movable_u": "1",
+    "movable_d": "1",
+    "movable_l": "1",
+    "movable_r": "1",
+    "removable": "1",
+    "removable_all": "0"
+},
+{
+    "id": "13",
+    "root": "12",
+    "lft": "2",
+    "rgt": "3",
+    "lvl": "1",
+    "name": "sdasdsad",
+    "icon": "",
+    "icon_type": "1",
+    "active": "1",
+    "selected": "0",
+    "disabled": "0",
+    "readonly": "0",
+    "visible": "1",
+    "collapsed": "0",
+    "movable_u": "1",
+    "movable_d": "1",
+    "movable_l": "1",
+    "movable_r": "1",
+    "removable": "1",
+    "removable_all": "0"
+},
+{
+    "id": "14",
+    "root": "11",
+    "lft": "2",
+    "rgt": "3",
+    "lvl": "1",
+    "name": "ASDADasds",
+    "icon": "",
+    "icon_type": "1",
+    "active": "1",
+    "selected": "0",
+    "disabled": "0",
+    "readonly": "0",
+    "visible": "1",
+    "collapsed": "0",
+    "movable_u": "1",
+    "movable_d": "1",
+    "movable_l": "1",
+    "movable_r": "1",
+    "removable": "1",
+    "removable_all": "0"
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="new post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/organizations/new
+                                    </a>
+                                </span>
+                            </h3>
+
+                        </div>
+                        <div class="content">
+                                <h4>Параметры - Headers</h4>
+                                <table class="fullwidth">
+                                    <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип данных</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody >
+                                    <tr>
+                                        <td class="code required">access_token</td>
+                                        <td width="500"><strong>auth_key | string </strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <h4>Параметры - Body</h4>
+                                <table class="fullwidth">
+                                    <thead>
+                                    <tr>
+                                        <th>Параметр</th>
+                                        <th>Тип данных</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody >
+                                    <tr>
+                                        <td class="code required">name</td>
+                                        <td width="500"><strong>string</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="code required">user_telephone</td>
+                                        <td width="500"><strong>string</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="code required">user_name</td>
+                                        <td width="500"><strong>string</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="code required">user_email</td>
+                                        <td width="500"><strong>string</strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">Ваша заявка принята.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="news">
+        <div class="page-header"><h1>Новости</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="index get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/news
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Body - JSON</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">page</td>
+                                    <td width="500"><strong> int </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>[
+    {
+        "id": "30",
+        "project": "NONE",
+        "server": "NONE",
+        "type": "2",
+        "category_id": "0",
+        "published": "1",
+        "seo_title": null,
+        "seo_keywords": null,
+        "seo_description": null,
+        "created_at": "2017-05-01 09:43:07",
+        "created_author": "1",
+        "updated_at": "2017-05-17 14:34:16",
+        "published_date": null,
+        "updated_author": null,
+        "comments": null,
+        "pic_url": null,
+        "pic_loc": null,
+        "video_url": "",
+        "source_url": "",
+        "data": {
+            "ru": {
+                "nid": "30",
+                "language": "ru",
+                "title": "fdvfdvfvfdvfv",
+                "text": "fvdfvdfvdfvdvfv",
+                "description": null,
+                "seo_title": null,
+                "seo_keywords": null,
+                "seo_description": null
+            }
+        }
+    },
+    {
+        "id": "31",
+        "project": "NONE",
+        "server": "NONE",
+        "type": "1",
+        "category_id": "0",
+        "published": "1",
+        "seo_title": null,
+        "seo_keywords": null,
+        "seo_description": null,
+        "created_at": "2017-07-02 22:25:15",
+        "created_author": "1",
+        "updated_at": "2017-07-02 22:25:15",
+        "published_date": null,
+        "updated_author": null,
+        "comments": null,
+        "pic_url": null,
+        "pic_loc": null,
+        "video_url": "",
+        "source_url": "",
+        "data": {
+            "ru": {
+                "nid": "31",
+                "language": "ru",
+                "title": "Тестовая новость для апи",
+                "text": "Тестовая новость для апи",
+                "description": null,
+                "seo_title": null,
+                "seo_keywords": null,
+                "seo_description": null
+            }
+        }
+    }
+]</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="view get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/news/view/{id}
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>[
+    {
+        "id": "30",
+        "project": "NONE",
+        "server": "NONE",
+        "type": "2",
+        "category_id": "0",
+        "published": "1",
+        "seo_title": null,
+        "seo_keywords": null,
+        "seo_description": null,
+        "created_at": "2017-05-01 09:43:07",
+        "created_author": "1",
+        "updated_at": "2017-05-17 14:34:16",
+        "published_date": null,
+        "updated_author": null,
+        "comments": [
+            {
+                "id": "2",
+                "news_id": "30",
+                "author": "Коля",
+                "comment": "вфывплкопоелроетлтетрлоер",
+                "created_at": "2017-04-10 12:50:31"
+            }
+        ],
+        "pic_url": null,
+        "pic_loc": null,
+        "video_url": "",
+        "source_url": "",
+        "data": {
+            "ru": {
+                "nid": "30",
+                "language": "ru",
+                "title": "fdvfdvfvfdvfv",
+                "text": "fvdfvdfvdfvdvfv",
+                "description": null,
+                "seo_title": null,
+                "seo_keywords": null,
+                "seo_description": null
+            }
+        }
+    }
+]</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="comment post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/news/comment
+                                    </a>
+                                </span>
+                            </h3>
+
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Headers</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">access_token</td>
+                                    <td width="500"><strong>auth_key | string </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <h4>Параметры - Body</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">news_id</td>
+                                    <td width="500"><strong>int</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">comment</td>
+                                    <td width="500"><strong>string</strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">Ваш комментарий отправлен на модерацию</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="comment post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/news/new
+                                    </a>
+                                </span>
+                            </h3>
+
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Headers</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">access_token</td>
+                                    <td width="500"><strong>auth_key | string </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <h4>Параметры - Body</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">title</td>
+                                    <td width="500"><strong>string</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">text</td>
+                                    <td width="500"><strong>string</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">image[]</td>
+                                    <td width="500"><strong>files</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">video_url</td>
+                                    <td width="500"><strong>string</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">source_url</td>
+                                    <td width="500"><strong>string</strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">Ваша новость отправлена на модерацию.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="communication">
+        <div class="page-header"><h1>Общение</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="index get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/communication
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Body - JSON</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">page</td>
+                                    <td width="500"><strong> int </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>    {
+        "id": "4",
+        "text": "        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n",
+        "user_id": "9",
+        "pin": "1",
+        "status": "1",
+        "created_at": "2017-06-19 15:21:03",
+        "updated_at": null,
+        "user": {
+            "first_name": "Дима",
+            "last_name": "Новиков",
+            "id": "9"
+        },
+        "commentsCount": {
+            "count": "2",
+            "comm_id": "4"
+        }
+    },
+    {
+        "id": "6",
+        "text": "        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n",
+        "user_id": "2",
+        "pin": "1",
+        "status": "1",
+        "created_at": "2017-06-19 15:21:03",
+        "updated_at": null,
+        "user": {
+            "first_name": "",
+            "last_name": "",
+            "id": "2"
+        },
+        "commentsCount": null
+    }</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="view get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/news/communication/{id}
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>    {
+        "id": "4",
+        "text": "        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n",
+        "user_id": "9",
+        "pin": "1",
+        "status": "1",
+        "created_at": "2017-06-19 15:21:03",
+        "updated_at": null,
+        "comments": [
+            {
+                "id": "1",
+                "comm_id": "4",
+                "user_id": "7",
+                "text": "        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n",
+                "status": "1",
+                "created_at": "2017-06-19 15:14:00",
+                "updated_at": null
+            },
+            {
+                "id": "2",
+                "comm_id": "4",
+                "user_id": "1",
+                "text": "        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n",
+                "status": "1",
+                "created_at": "2017-06-19 15:21:03",
+                "updated_at": null
+            }
+        ]
+    }</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="update post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/news/update
+                                    </a>
+                                </span>
+                            </h3>
+
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Headers</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">access_token</td>
+                                    <td width="500"><strong>auth_key | string </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <h4>Параметры - Body</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">text</td>
+                                    <td width="500"><strong>string</strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">Отправлено на модерацию.</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="comment post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/news/comment
+                                    </a>
+                                </span>
+                            </h3>
+
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Headers</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">access_token</td>
+                                    <td width="500"><strong>auth_key | string </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <h4>Параметры - Body</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">comm_id</td>
+                                    <td width="500"><strong>int</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">text</td>
+                                    <td width="500"><strong>string</strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">Ваш комментарий отправлен на модерацию</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="new post operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">POST</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/news/new
+                                    </a>
+                                </span>
+                            </h3>
+
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Headers</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">access_token</td>
+                                    <td width="500"><strong>auth_key | string </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <h4>Параметры - Body</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">title</td>
+                                    <td width="500"><strong>string</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">text</td>
+                                    <td width="500"><strong>string</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">image[]</td>
+                                    <td width="500"><strong>files</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">video_url</td>
+                                    <td width="500"><strong>string</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">source_url</td>
+                                    <td width="500"><strong>string</strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers">Ваша новость отправлена на модерацию.</div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="advertising">
+        <div class="page-header"><h1>Реклама</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="index get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/advertising
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>    {
+    "id": 1,
+    "title": "Тестовая реклама",
+    "text": "Текст тестовой рекламы",
+    "url": "url_to_video",
+    "created_at": "2017-06-30 18:43:45",
+    "updated_at": "2017-06-30 18:43:45"
+    }</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="advertising_banner">
+        <div class="page-header"><h1>Баннерная реклама</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="index get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/advertising-banner
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>{
+    "id": 1,
+    "url": "some_url",
+    "telephone": "+1231-231-2312",
+    "organization_id": 1,
+    "category_id": 1,
+    "image": "/uploads/images/123.png",
+    "created_at": "2017-06-30 18:48:23",
+    "updated_at": "2017-06-30 18:48:23"
+    }</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="poster">
+        <div class="page-header"><h1>Афиша</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="index get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/poster
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Body - JSON</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">category_id</td>
+                                    <td width="500"><strong> int </strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">page</td>
+                                    <td width="500"><strong> int </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>    {
+        "id": 1,
+        "name": "asdadasd",
+        "description": "",
+        "address": "",
+        "image": "",
+        "category_id": 2,
+        "price": null,
+        "telephone": "",
+        "published": 1,
+        "url": "",
+        "url_video": "",
+        "url_descrition": null,
+        "pin_main": 0,
+        "pin_poster": 0,
+        "pin_filter": 0,
+        "start_at": "2017-06-16 21:00:00",
+        "end_at": "2017-07-01 01:00:00",
+        "created_at": null,
+        "updated_at": null
+    }</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="shares">
+        <div class="page-header"><h1>Акции</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="index get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/shares
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Body - JSON</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">category_id</td>
+                                    <td width="500"><strong> int </strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">page</td>
+                                    <td width="500"><strong> int </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>{
+    "id": 4,
+    "name": "ыфвфвфв2",
+    "description": "",
+    "address": "",
+    "image": "",
+    "category_id": 3,
+    "price": null,
+    "telephone": "",
+    "published": 1,
+    "url": "",
+    "url_video": "",
+    "url_descrition": "",
+    "pin_main": 0,
+    "pin_poster": 0,
+    "pin_filter": 0,
+    "start_at": null,
+    "end_at": "2017-07-02",
+    "created_at": null,
+    "updated_at": null
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="buttons">
+        <div class="page-header"><h1>Кнопки</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="index get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/buttons
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>{
+    "id": 1,
+    "title": "sadasdasd",
+    "url": "sadasdasd",
+    "telephone": "",
+    "image": "",
+    "section": null,
+    "section_id": null
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="filters">
+        <div class="page-header"><h1>Фильтры</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="index get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/filters
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Body - JSON</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">category_id</td>
+                                    <td width="500"><strong> int </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>{
+    "id": 1,
+    "parent_id": null,
+    "title": "фывфыв",
+    "published": 1,
+    "image": "",
+    "category_id": 0
+},
+{
+    "id": 2,
+    "parent_id": null,
+    "title": "Афиша фильтр",
+    "published": 1,
+    "image": "",
+    "category_id": 1
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="ads">
+        <div class="page-header"><h1>Объявления</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="index get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/ads
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <h4>Параметры - Body - JSON</h4>
+                            <table class="fullwidth">
+                                <thead>
+                                <tr>
+                                    <th>Параметр</th>
+                                    <th>Тип данных</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                <tr>
+                                    <td class="code required">category_id</td>
+                                    <td width="500"><strong> int </strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="code required">page</td>
+                                    <td width="500"><strong> int </strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>{
+    "id": 3,
+    "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n",
+    "user_id": 2,
+    "pin_main": 1,
+    "pin_filter": 1,
+    "status": 1,
+    "created_at": "2017-06-19 15:21:03",
+    "updated_at": null
+},
+{
+    "id": 4,
+    "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae hic nam obcaecati perspiciatis quisquam sed tempore, temporibus? Aperiam commodi hic id, inventore ipsum, molestias mollitia nobis perspiciatis possimus voluptas voluptate.\n",
+    "user_id": 1,
+    "pin_main": 1,
+    "pin_filter": 1,
+    "status": 1,
+    "created_at": "2017-06-19 15:21:03",
+    "updated_at": null
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section id="help">
+        <div class="page-header"><h1>Помощь</h1>
+            <hr class="notop">
+        </div>
+        <ul class="endpoints">
+            <li class="endpoint">
+                <ul class="operations">
+                    <li class="index get operation">
+                        <div class="heading">
+                            <h3>
+                                <span class="http_method"><a href="#">GET</a> </span>
+                                <span class="path">
+                                    <a href="#">http://api.ooogoroda.mobi/api/v1/help
+                                    </a>
+                                </span>
+                            </h3>
+                        </div>
+                        <div class="content">
+                            <div class="response">
+                                <h4>Ответ - Body</h4>
+                                <div class="block response_headers"><pre>    {
+        "id": 1,
+        "name": "asdadadadasdasd",
+        "text": "asdasdasdasdasdasdasdasd<br />\r\nasd<br />\r\nas<br />\r\nda<br />\r\nsd<br />\r\nas<br />\r\nd<br />\r\nas<br />\r\ndasd",
+        "link": "http://aeszxa.axshare.com/#g=1&p=помощь"
+    }</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+</div>
+</body>
+</html>

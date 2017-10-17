@@ -1,0 +1,142 @@
+/*
+ * It is advised not to edit the ScriptsWeb_production.css
+ * as this will override any changes you make in the 
+ * later versions of this theme. 
+ * 
+ * We advise that you use use this CSS to override 
+ * ScriptsWeb styles.
+ * 
+ * Rename the stylesheet to whatever your liking so it will stay
+ * unique to you with each update of ScriptsWeb.
+ */
+
+/*
+ * INDEX
+ * 
+ * - HTML
+ * - BODY
+ * - CUSTOM STYLES
+ */
+
+
+/* Upload images btns */
+#images .btn { padding: 6px 12px !important;margin: 5px !important; }
+#images .btn:not(:first-child) { margin-left: 0 !important; }
+
+/*Ajax pice preloader*/
+.pace-preloader{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    /* background: antiquewhite; */
+    background-color: #f3f3f3;
+    background-image: -moz-linear-gradient(top, #f3f3f3, #e2e2e2);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f3f3f3), to(#e2e2e2));
+    background-image: -webkit-linear-gradient(top, #f3f3f3, #e2e2e2);
+    background-image: -o-linear-gradient(top, #f3f3f3, #e2e2e2);
+    background-image: linear-gradient(to bottom, #f3f3f3, #e2e2e2);
+}
+
+
+div#preloader { position: fixed; left: 0; top: 0; z-index: 999; width: 100%; height: 100%; overflow: visible; background: #fff url('../img/ajax-loader.gif') no-repeat center center; }
+
+
+.state-error .select2-container-multi .select2-choices{background: #fff0f0;border-color: #A90329;}
+.select2-hidden-accessible{display: none}
+.heading{}
+
+.smart-form fieldset header {margin: 0 0 25px 0;}
+.smart-form .checkbox.percent-check input+i:after, .smart-form .checkbox.percent-check input:checked:hover+i:after{content: '%';}
+
+
+
+/*Used in news module*/
+#dZUpload, #UploadsList {display: none}
+#UploadsList .custom-scroll {    height:400px; overflow-y: scroll;}
+#tabs img.flag {margin-top: -7px}
+.glyphicon-remove{color: #ff0000}
+.glyphicon-eye-close{color: #808080}
+.glyphicon-eye-open  {color: #008000}
+td .list-inline {  margin: 0;}
+
+
+
+/*Users*/
+.admin-users-list img {width: 25px;border-radius: 0;}
+.admin-users-list .fa {font-size: 15px;}
+.tabs .nav-tabs>li>a .menu-active {
+    width: 100%;
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    text-align: center;
+    visibility: hidden;
+    font-size: 16px;
+}
+.tabs .nav-tabs>li.active>a .menu-active, .tabs .nav-tabs>li.active>a:hover .menu-active, .tabs .nav-tabs>li.active>a:focus .menu-active {
+    visibility: visible;
+}
+
+/* Projects */
+
+.projects .form-control[disabled],
+.projects .form-control[readonly],
+.projects fieldset[disabled] .form-control {
+    background: none;
+    border: none;
+    cursor: default;
+}
+
+.createProject header#additional {cursor: pointer}
+
+
+
+#carservice b.badge{top: 0;     right: -8px;   padding: 3px 7px;}
+
+
+.vcenter tr > th, .vcenter tr > td{
+    vertical-align:middle!important;
+    /*text-align: center;*/
+
+}
+
+
+#logo{width: 30px;}
+#extr-page #header #logo img {width: 30px;}
+
+
+header #logo-group a{
+    font-size: 20px;
+    color: #6b7b95;
+}
+
+@media (max-width: 880px) and (min-width: 768px){
+    #logo img {
+        width: 30px;
+    }
+
+}
+
+@media (max-width: 767px){
+    #logo img {
+        width: 30px;
+    }
+}
+
+
+
+.kv-detail-container {
+    overflow: auto;
+    min-height: 150px;
+    padding: 0!important;
+    border-radius: 0!important;
+    border: 0!important;
+}
+
+
+.kv-header-container .row {
+    margin: 0;
+}

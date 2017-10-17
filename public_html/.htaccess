@@ -1,0 +1,28 @@
+AddDefaultCharset UTF-8
+AddCharset utf-8 .js
+
+#php_value memory_limit 30M
+php_value post_max_size 100M
+php_value upload_max_filesize 30M
+
+IndexIgnore */*
+RewriteEngine on
+
+#RewriteCond %{HTTP_HOST} ^example.com
+#RewriteRule (.*) http://www.example.com/$1 [R=301,L]
+
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*city\.getList.*\ HTTP/ [NC]
+RewriteRule ^City\.getList /city_getList.php [NC,L]
+
+# remove trailing slash
+RewriteRule ^/ru/index.php$ /ru [L,R=301]
+RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php
+
+
