@@ -1,3 +1,6 @@
 /logs/
 /private/
 /document_errors/
+/nbproject/private/
+/cgi-bin/
+/public_html/uploads/
