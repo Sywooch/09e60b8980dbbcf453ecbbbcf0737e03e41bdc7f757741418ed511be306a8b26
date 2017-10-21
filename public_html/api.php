@@ -74,3 +74,27 @@ inchpes najev veradarcnum a <br>
     <li>name=(anun)</li> 
     <li>f_name=(azganun)</li>
 </ul>
+
+<h2>HOME</h2>
+<code>Home</code><br>
+<h3>---.get </h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Home.get</orinak><br>
+
+<h2>News</h2>
+<code>News</code><br>
+<h3>---.getCat <help></help></h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/News.getCat</orinak>(stanum a burgeri meji catigorianeri hamar)<br>
+
+<h3>---.getList </h3>
+<help>GET cat_id (stanum a es depqum burgeri mej avelacvac categoriaji 'id' -in)</help>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/News.getList</orinak> (iskakan News -y)<br>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/News.getList?cat_id=2</orinak> (stanum a burgeri meji 2 ID unecoxi hamar)<br>
+
+<h3>---.get<help></help> (stanuma konkret news i item -y)</h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/News.get</orinak><br>
+<ul>
+    <span>vorpes paramets karox e poxancvel GET ev POST</span>
+    <li>GET id <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/News.get?id=4</orinak>(stanum a 4 hamari Id -ov news i item)</li> 
+<li>GET id ev POST 'comment' <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/News.get?id=4</orinak>(comment a anum news -i tak ev stanum a 4 hamari Id -ov news)</li>
+<li>GET id , GET 'comment_id' ev POST 'comment' <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/News.get?id=4&comment_id=14</orinak>(UPDATE a anum comment 14 -y ev stanum a 4 hamari Id -ov news)</li>
+</ul>
