@@ -194,7 +194,7 @@ class User {
                 $in_id = implode(',', $users_id);
                 $query = "SELECT id , name , f_name , photo_250 FROM `user` WHERE id IN ( $in_id )";
                 $db = $user->db;
-                return $db::q_array($query);
+                return $db::q_array_id($query);
             }
         }
     }

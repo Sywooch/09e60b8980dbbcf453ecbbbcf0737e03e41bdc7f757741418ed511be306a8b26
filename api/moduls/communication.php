@@ -17,7 +17,25 @@ class Communication {
                 }
             }
         }
-        $data = $c;
+        $data['list'] = $c;
+        $user_ids = array_unique(self::getUsersId($c));
+        $data['users'] = User::get($user_ids);
+        return $data;
+    }
+
+    private static function getUsersId($array) {
+        $data = [];
+        if (!empty($array)) {
+            foreach ($array as $key => $vol) {
+                if (is_array($vol)) {
+                    $data = array_merge($data, self::getUsersId($vol));
+                } else {
+                    if ($key == 'user_id') {
+                        $data[] = (int) $vol;
+                    }
+                }
+            }
+        }
         return $data;
     }
 
