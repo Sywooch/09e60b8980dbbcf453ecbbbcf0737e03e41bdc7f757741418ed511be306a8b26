@@ -98,3 +98,15 @@ inchpes najev veradarcnum a <br>
 <li>GET id ev POST 'comment' <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/News.get?id=4</orinak>(comment a anum news -i tak ev stanum a 4 hamari Id -ov news)</li>
 <li>GET id , GET 'comment_id' ev POST 'comment' <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/News.get?id=4&comment_id=14</orinak>(UPDATE a anum comment 14 -y ev stanum a 4 hamari Id -ov news)</li>
 </ul>
+
+<h2>Communication</h2>
+<code>Communication</code><br>
+<h3>---.getList </h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Communication.getList</orinak><br>
+<h3>---.comment<help></help> </h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Communication.comment</orinak><br>
+<ul>
+    <span>anpajman pajmannery poxancvox $_POST ov 'comment'</span>
+    <li>GET id <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Communication.comment?id=4</orinak>(comment es anum konkret item in)</li> 
+<li>aranc GET parametri commenty kavelacvi main um vorpes glxavor commentneric meky</li>
+</ul>

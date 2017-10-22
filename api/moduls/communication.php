@@ -39,4 +39,26 @@ class Communication {
         return $data;
     }
 
+    public function comment() {
+        $user = User::get();
+        if ($user && !empty($_POST['comment'])) {
+            $user_id = (int) $user['id'];
+            $comm = trim($_POST['comment']);
+            if ($user_id > 0 && !empty($comm)) {
+                if (!empty($_GET['id'])) {
+                    $query = " INSERT INTO communication_comments "
+                            . " SET c_id = " . (int) $_GET['id'] . ", "
+                            . " text = '" . DB::res($comm) . "', user_id =  $user_id, created_at = NOW() ";
+                } else {
+                    $query = " INSERT INTO communication "
+                            . " SET  text = '" . DB::res($comm) . "', user_id =  $user_id, created_at = NOW() ";
+                }
+                $error = DB::q_($query);
+                if (!$error) {
+                    return 'OK';
+                }
+            }
+        }
+    }
+
 }
