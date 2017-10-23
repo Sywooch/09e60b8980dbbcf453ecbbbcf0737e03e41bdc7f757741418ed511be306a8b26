@@ -52,14 +52,24 @@ class Organizations {
     }
 
     public function get() {
-        
+        $data = [];
+        $id = null;
+        if (!empty($_GET['id'])) {
+            if ((int) $_GET['id'] > 0) {
+                $id = (int) $_GET['id'];
+            }
+        }
+        $data['item'] = self::getItem($id);
+        return $data;
     }
 
-    private static function getInfo($id) {
-        
+    private static function getItem($id) {
+        if($id){
+            
+        }
     }
 
-    private static function comment($id) {
+    private static function _comments($id) {
         
     }
 
