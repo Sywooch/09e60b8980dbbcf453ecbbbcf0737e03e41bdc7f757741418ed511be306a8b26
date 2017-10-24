@@ -12,6 +12,7 @@ class User {
     public function reg() {
         $data = null;
         if (!empty($_POST['method'])) {
+            $db = $this->db;
             switch ($_POST['method']) {
                 case 'email':
                     $data = self::regEmail();
@@ -27,9 +28,9 @@ class User {
         return $data;
     }
 
-    private static function regEmail() {
+    private static function regEmail($db) {
         $data = null;
-        $db = $this->db;
+
         if (!empty($_POST['name']) && !empty($_POST['f_name']) && !empty($_POST['email']) && !empty($_POST['pass'])) {
             if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                 if (strlen($_POST["pass"]) > 6) {
@@ -104,9 +105,10 @@ class User {
     public function login() {
         $data = null;
         if (!empty($_POST['method'])) {
+            $db = $this->db;
             switch ($_POST['method']) {
                 case 'email':
-                    $data = self::loginEmail();
+                    $data = self::loginEmail($db);
                     break;
                 case 1:
                     echo "i равно 1";
@@ -119,9 +121,8 @@ class User {
         return $data;
     }
 
-    private static function loginEmail() {
+    private static function loginEmail($db) {
         $data = NULL;
-        $db = $this->db;
         if (!empty($_POST['email']) && !empty($_POST['pass'])) {
             if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                 $query = "SELECT * FROM user where email = '" . DB::res($_POST['email']) . "' "
@@ -130,7 +131,8 @@ class User {
                         . " AND email_confirm = 1";
                 $user = $db::q_line($query);
                 if ($user) {
-                    $data = self::updateToken($user);
+                    
+                    $data = self::updateToken($user,$db);
                     $data['name'] = $user['name'];
                     $data['f_name'] = $user['f_name'];
                     $data['photo_250'] = $user['photo_250'];
@@ -149,10 +151,10 @@ class User {
         return $data;
     }
 
-    private static function updateToken($user) {
+    private static function updateToken($user,$db) {
         $data = null;
         $query = "UPDATE `user` SET `token` = md5(RAND()+RAND()) , token_update_date = NOW() WHERE id = " . $user['id'];
-        $db = $this->db;
+        
         if (!$db::q_($query)) {
             return $db::q_line("SELECT token FROM `user` WHERE id = " . $user['id']);
         }
