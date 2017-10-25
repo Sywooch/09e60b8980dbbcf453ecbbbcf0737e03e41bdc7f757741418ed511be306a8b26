@@ -110,3 +110,21 @@ inchpes najev veradarcnum a <br>
     <li>GET id <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Communication.comment?id=4</orinak>(comment es anum konkret item in)</li> 
 <li>aranc GET parametri commenty kavelacvi main um vorpes glxavor commentneric meky</li>
 </ul>
+
+<h2>Organizations</h2>
+<code>Organizations</code><br>
+<h3>---.getList <help></help></h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Organizations.getList</orinak>(stanum a 3 tesaki respoinse :kara stana category_list KAM (OR) item_list: u reklam , ete et ejum linelu a uremn liqy ete che datark. hima drac a vor misht cuc ta)<br>
+
+<h3>---.getList </h3>
+<help>GET cat_id (stanum a categorai meji parnakutjuny , nujn a inch vor hasarak depqum)</help>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Organizations.getList?cat_id=2</orinak> (stanum a 2 ID unecoxi categoriaji meji parnakutjuny)<br>
+
+<h3>---.get<help></help> (stanuma konkret item -y)</h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Organizations.get</orinak>(aranc id i chi ashxatum)<br>
+<ul>
+    <span>vorpes paramets karox e poxancvel GET ev POST</span>
+    <li>GET id <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Organizations.get?id=4</orinak>(stanum a 4 hamari Id -ov  item)</li> 
+<li>GET id ev POST 'comment' <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Organizations.get?id=4</orinak>(comment a anum item -i tak ev stanum a 4 hamari Id -ov item)</li>
+<li>GET id , GET 'comment_id' ev POST 'comment' <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Organizations.get?id=4&comment_id=14</orinak>(UPDATE a anum comment 14 -y ev stanum a 4 hamari Id -ov itemy)</li>
+</ul>

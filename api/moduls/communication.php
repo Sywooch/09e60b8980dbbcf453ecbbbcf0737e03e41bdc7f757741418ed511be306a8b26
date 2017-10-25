@@ -23,6 +23,30 @@ class Communication {
         return $data;
     }
 
+    public function get() {
+        $data = null;
+        if (!empty($_GET['id'])) {
+            $id = (int) $_GET['id'];
+            if ($id > 0) {
+                $query = "SELECT * FROM communication WHERE id =" . $id;
+                $c = DB::q_line($query);
+                if ($c) {
+                    $query = "SELECT * FROM communication_comments WHERE c_id = $id ORDER BY id DESC ";
+                    $cc = DB::q_array($query);
+                    if ($cc) {
+                        foreach ($cc as $vol) {
+                            $c['comments'][] = $vol;
+                        }
+                    }
+                }
+                $data['item'] = $c;
+                $user_ids = array_unique(self::getUsersId($c));
+                $data['users'] = User::get($user_ids);
+            }
+        }
+        return $data;
+    }
+
     public static function getUsersId($array = []) {
         $data = [];
         if (!empty($array)) {

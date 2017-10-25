@@ -92,7 +92,7 @@ class News {
         return $data;
     }
 
-    private static function comment($news_id) {
+    public static function comment($news_id = null, $organizations_id = null) {
         if (!empty($_POST['comment'])) {
             if (!empty($_GET['comment_id'])) {
                 $comment_id = (int) $_GET['comment_id'];
@@ -100,12 +100,12 @@ class News {
                     self::commmentUpdate($comment_id);
                 }
             } else {
-                self::commmentInsert($news_id);
+                self::commmentInsert($news_id = null, $organizations_id = null);
             }
         }
     }
 
-    private static function commmentUpdate($id) {
+    public static function commmentUpdate($id) {
         $user = User::get();
         if ($user && $id) {
             $comm = trim($_POST['comment']);
@@ -119,13 +119,14 @@ class News {
         }
     }
 
-    private static function commmentInsert($news_id) {
+    public static function commmentInsert($news_id = null, $organizations_id = null) {
         $user = User::get();
         if ($user) {
             $comm = trim($_POST['comment']);
             if (!empty($comm)) {
                 $query = "INSERT INTO `comments` SET "
-                        . " news_id = $news_id , "
+                        . " news_id = '$news_id' , "
+                        . " organizations_id = '$organizations_id' ,"
                         . " user_id = " . $user['id'] . ", "
                         . " comment = '" . DB::res($comm) . "' , status = 1, "
                         . " created_at = NOW() ";
