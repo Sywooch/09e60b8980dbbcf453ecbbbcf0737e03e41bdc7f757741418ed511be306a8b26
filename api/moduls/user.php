@@ -2,17 +2,51 @@
 
 class User {
 
-    protected $db = null;
+    private static $connection = null;
     protected $session_user = null;
 
     public function __construct() {
-        $this->db = new DB('user');
+        if (!self::$connection) {
+            self::$connection = new mysqli('localhost', 'db_users', 'db_users', 'db_users');
+        }
+    }
+
+    public static function cnn() {
+        if (self::$connection === NULL) {
+            new self;
+        }
+        return self::$connection;
+    }
+
+    public static function q_array($query) {
+        if ($result = self::cnn()->query($query)) {
+            $data = array();
+            while ($obj = $result->fetch_array(MYSQLI_ASSOC)) {
+                $data[] = $obj;
+            }
+            return $data;
+        } else {
+            return NULL;
+        }
+    }
+
+    public static function q_line($query) {
+        if ($result = self::cnn()->query($query . ' LIMIT 1')) {
+            return $result->fetch_array(MYSQLI_ASSOC);
+        } else {
+            return NULL;
+        }
+    }
+
+    public static function q_($query) {
+        $error = NULL;
+        self::cnn()->query($query) OR $error = self::cnn()->error;
+        return $error;
     }
 
     public function reg() {
         $data = null;
         if (!empty($_POST['method'])) {
-            $db = $this->db;
             switch ($_POST['method']) {
                 case 'email':
                     $data = self::regEmail();
@@ -28,7 +62,7 @@ class User {
         return $data;
     }
 
-    private static function regEmail($db) {
+    private static function regEmail() {
         $data = null;
 
         if (!empty($_POST['name']) && !empty($_POST['f_name']) && !empty($_POST['email']) && !empty($_POST['pass'])) {
@@ -39,9 +73,9 @@ class User {
                             . " email = '" . DB::res($_POST['email']) . "', "
                             . " pass = '" . DB::res($_POST['pass']) . "' ";
 //          var_dump($query);die;
-                    $error = $db::q_($query);
+                    $error = self::q_($query);
                     if (!$error) {
-                        $user = DB::q_line("SELECT * FROM `user` ORDER BY id DESC");
+                        $user = self::q_line("SELECT * FROM `user` ORDER BY id DESC");
                         IMAGE::ProfileImgSave($user);
                         if (!MAILER::sendConfirmEmail($user)) {
                             $data = 'OK';
@@ -72,12 +106,11 @@ class User {
         $this->accessToken();
         if ($this->session_user) {
             if (!empty($_POST['name']) && !empty($_POST['f_name'])) {
-                $db = $this->db;
                 $query = "UPDATE `user` SET "
                         . " name = '" . DB::res($_POST['name']) . "', "
                         . " f_name = '" . DB::res($_POST['f_name']) . "' "
                         . " WHERE id  = " . $this->session_user['id'];
-                $error = $db::q_($query);
+                $error = self::q_($query);
                 if (!$error) {
                     self::accessToken();
                     $photo = IMAGE::ProfileImgSave($this->session_user);
@@ -105,10 +138,9 @@ class User {
     public function login() {
         $data = null;
         if (!empty($_POST['method'])) {
-            $db = $this->db;
             switch ($_POST['method']) {
                 case 'email':
-                    $data = self::loginEmail($db);
+                    $data = self::loginEmail();
                     break;
                 case 1:
                     echo "i равно 1";
@@ -121,7 +153,7 @@ class User {
         return $data;
     }
 
-    private static function loginEmail($db) {
+    private static function loginEmail() {
         $data = NULL;
         if (!empty($_POST['email']) && !empty($_POST['pass'])) {
             if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
@@ -129,10 +161,10 @@ class User {
                         . " AND binary pass = '" . DB::res($_POST['pass']) . "' "
                         . " AND active = 1 "
                         . " AND email_confirm = 1";
-                $user = $db::q_line($query);
+                $user = self::q_line($query);
                 if ($user) {
-                    
-                    $data = self::updateToken($user,$db);
+
+                    $data = self::updateToken($user);
                     $data['name'] = $user['name'];
                     $data['f_name'] = $user['f_name'];
                     $data['photo_250'] = $user['photo_250'];
@@ -151,22 +183,19 @@ class User {
         return $data;
     }
 
-    private static function updateToken($user,$db) {
-        $data = null;
+    private static function updateToken($user) {
         $query = "UPDATE `user` SET `token` = md5(RAND()+RAND()) , token_update_date = NOW() WHERE id = " . $user['id'];
-        
-        if (!$db::q_($query)) {
-            return $db::q_line("SELECT token FROM `user` WHERE id = " . $user['id']);
+        if (!self::q_($query)) {
+            return self::q_line("SELECT token FROM `user` WHERE id = " . $user['id']);
         }
     }
 
     public function accessToken() {
         $data = null;
-        $db = $this->db;
         $header = getallheaders();
         if (!empty($header['X-Access-Token'])) {
             $query = "SELECT * FROM `user` WHERE token = '" . DB::res($header['X-Access-Token']) . "'";
-            $req = $db::q_line($query);
+            $req = self::q_line($query);
             if ($req) {
                 $this->session_user = $req;
                 $data = 'OK';
@@ -189,14 +218,13 @@ class User {
     public static function get($users_id = []) {
         $user = new self;
         if (empty($users_id)) {
-            $user->accessToken();
-            return $user::$session_user;
+            $re = $user->accessToken();
+            return $user->session_user;
         } else {
             if (is_array($users_id)) {
                 $in_id = implode(',', $users_id);
                 $query = "SELECT id , name , f_name , photo_250 FROM `user` WHERE id IN ( $in_id )";
-                $db = $user->db;
-                return $db::q_array($query);
+                return self::q_array($query);
             }
         }
     }

@@ -5,7 +5,7 @@ class Communication {
     public function getList() {
         $data = null;
         $query = "SELECT * FROM communication ORDER BY id DESC";
-        $c = DB::q_array_id($query);
+        $c = DB::q_array($query);
         if ($c) {
             $id = array_keys($c);
             $in_id = implode(',', $id);

@@ -68,11 +68,11 @@ class News {
                     $query = "SELECT image FROM news_image WHERE news_id = " . $item['id'];
                     $data['item']['image'] = DB::q_array($query);
                     $query = "SELECT id, "
-                            . " comment, "
+                            . " `comment`, "
                             . " user_id, "
                             . " created_at, "
                             . " updated_at "
-                            . " FROM comments "
+                            . " FROM `comments` "
                             . " WHERE news_id = " . $item['id'] . " "
                             . " ORDER BY id DESC";
                     $comments = DB::q_array($query);
@@ -110,7 +110,7 @@ class News {
         if ($user && $id) {
             $comm = trim($_POST['comment']);
             if (!empty($comm)) {
-                $query = "UPDATE comments SET "
+                $query = "UPDATE `comments` SET "
                         . " comment = '" . DB::res($comm) . "' , "
                         . " status = 2 WHERE id = " . $id . " "
                         . " AND user_id = " . $user['id'];
@@ -124,12 +124,12 @@ class News {
         if ($user) {
             $comm = trim($_POST['comment']);
             if (!empty($comm)) {
-                $query = "INSERT INTO comments SET "
+                $query = "INSERT INTO `comments` SET "
                         . " news_id = $news_id , "
                         . " user_id = " . $user['id'] . ", "
                         . " comment = '" . DB::res($comm) . "' , status = 1, "
                         . " created_at = NOW() ";
-                DB::q_($query);
+                $error = DB::q_($query);
             }
         }
     }
