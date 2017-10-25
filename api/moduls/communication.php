@@ -5,7 +5,7 @@ class Communication {
     public function getList() {
         $data = null;
         $query = "SELECT * FROM communication ORDER BY id DESC";
-        $c = DB::q_array($query);
+        $c = DB::q_array_id($query);
         if ($c) {
             $id = array_keys($c);
             $in_id = implode(',', $id);
@@ -17,13 +17,13 @@ class Communication {
                 }
             }
         }
-        $data['list'] = $c;
+        $data['list'] = array_values($c);
         $user_ids = array_unique(self::getUsersId($c));
         $data['users'] = User::get($user_ids);
         return $data;
     }
 
-    private static function getUsersId($array) {
+    public static function getUsersId($array = []) {
         $data = [];
         if (!empty($array)) {
             foreach ($array as $key => $vol) {

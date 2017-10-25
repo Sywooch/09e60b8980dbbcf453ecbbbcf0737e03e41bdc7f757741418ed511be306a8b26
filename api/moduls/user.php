@@ -219,7 +219,9 @@ class User {
         $user = new self;
         if (empty($users_id)) {
             $re = $user->accessToken();
-            return $user->session_user;
+            $data = $user->session_user;
+            unset($data['token'], $data['pass'], $data['hash'], $data['token_update_date'], $data['active'],$data['email_confirm_hash']);
+            return $data;
         } else {
             if (is_array($users_id)) {
                 $in_id = implode(',', $users_id);
