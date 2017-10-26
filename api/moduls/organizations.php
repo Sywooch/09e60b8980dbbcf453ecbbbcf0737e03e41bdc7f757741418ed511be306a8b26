@@ -73,9 +73,10 @@ class Organizations {
         if ($id) {
             $info = self::item_info($id);
             if ($info) {
-                News::comment(null, $id);
+//                News::comment(null, $id);
+                $comments = COMMENTS::execute('organizations_id', $id);
                 $contacts = self::item_contacts($id);
-                $comments = self::item_comments($id);
+//                $comments = self::item_comments($id);
                 ######
                 $data['info'] = $info;
                 $data['contacts'] = $contacts;

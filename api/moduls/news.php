@@ -59,7 +59,8 @@ class News {
                         . " WHERE id = " . (int) $_GET['id'];
                 $item = DB::q_line($query);
                 if ($item) {
-                    self::comment($item['id']);
+//                    self::comment($item['id']);
+                    $comments = COMMENTS::execute('news_id',$item['id']);
                     $data['item'] = $item;
                     $query = "SELECT `title`, `text` FROM news_data WHERE nid = " . $item['id'];
                     $n_d = DB::q_array($query);
@@ -67,15 +68,7 @@ class News {
 
                     $query = "SELECT image FROM news_image WHERE news_id = " . $item['id'];
                     $data['item']['image'] = DB::q_array($query);
-                    $query = "SELECT id, "
-                            . " `comment`, "
-                            . " user_id, "
-                            . " created_at, "
-                            . " updated_at "
-                            . " FROM `comments` "
-                            . " WHERE news_id = " . $item['id'] . " "
-                            . " ORDER BY id DESC";
-                    $comments = DB::q_array($query);
+                    
                     if ($comments) {
                         foreach ($comments as $vol) {
                             $user_ids[] = $vol['user_id'];

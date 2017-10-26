@@ -31,13 +31,7 @@ class Communication {
                 $query = "SELECT * FROM communication WHERE id =" . $id;
                 $c = DB::q_line($query);
                 if ($c) {
-                    $query = "SELECT * FROM communication_comments WHERE c_id = $id ORDER BY id DESC ";
-                    $cc = DB::q_array($query);
-                    if ($cc) {
-                        foreach ($cc as $vol) {
-                            $c['comments'][] = $vol;
-                        }
-                    }
+                    $c['comments'] = COMMENTS::execute('communication_id', $c['id']);
                 }
                 $data['item'] = $c;
                 $user_ids = array_unique(self::getUsersId($c));
@@ -64,24 +58,40 @@ class Communication {
     }
 
     public function comment() {
+        $query = null;
         $user = User::get();
-        if ($user && !empty($_POST['comment'])) {
+        if ($user) {
             $user_id = (int) $user['id'];
-            $comm = trim($_POST['comment']);
-            if ($user_id > 0 && !empty($comm)) {
-                if (!empty($_GET['id'])) {
-                    $query = " INSERT INTO communication_comments "
-                            . " SET c_id = " . (int) $_GET['id'] . ", "
-                            . " text = '" . DB::res($comm) . "', user_id =  $user_id, created_at = NOW() ";
-                } else {
-                    $query = " INSERT INTO communication "
-                            . " SET  text = '" . DB::res($comm) . "', user_id =  $user_id, created_at = NOW() ";
-                }
-                $error = DB::q_($query);
-                if (!$error) {
-                    return 'OK';
+            @$comm = trim($_POST['comment']);
+            if ($user_id > 0) {
+                if (!empty($comm)) {
+                    if (!empty($_GET['id'])) {
+                        $query = " INSERT INTO communication_comments "
+                                . " SET c_id = " . (int) $_GET['id'] . ", "
+                                . " text = '" . DB::res($comm) . "', user_id =  $user_id, created_at = NOW() ";
+                    } else {
+                        $query = " INSERT INTO communication "
+                                . " SET  text = '" . DB::res($comm) . "', user_id =  $user_id, created_at = NOW() ";
+                    }
+                } elseif (isset($_GET['delete'])) {
+                    if (!empty($_GET['id'])) {
+                        $query = "DELETE FROM communication "
+                                . " WHERE id = " . (int) $_GET['id'] . " "
+                                . " AND user_id = " . $user_id;
+                    } elseif (!empty($_GET['comment_id'])) {
+                        if ((int) $_GET['comment_id'] > 0) {
+                            $query = "DELETE FROM communication_comments"
+                                    . " WHERE id = " . (int) $_GET['comment_id'] . " "
+                                    . " AND user_id = " . $user_id;
+                        }
+                    }
                 }
             }
+        }
+//        var_dump($query);die;
+        $error = DB::q_($query);
+        if (!$error) {
+            return 'OK';
         }
     }
 
