@@ -1,13 +1,15 @@
 <?php
-    use yii\helpers\Html;
-	use yii\web\View;
-	use yii\widgets\ListView;
+
+use yii\helpers\Html;
+use yii\web\View;
+use yii\widgets\ListView;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\modules\ads\models\AdsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $this->title = 'Объявления';
 $this->params['breadcrumbs'][] = $this->title;
-	$js = <<<JS
+$js = <<<JS
     function changeStatus(thi){
     // alert('DO THIS');
     // console.log();
@@ -39,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
         });	
     }
 JS;
-	$this->registerJs($js, View::POS_END)
+$this->registerJs($js, View::POS_END)
 ?>
 <div class="ads-index">
     <div class="row">
@@ -47,7 +49,10 @@ JS;
             <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-bullhorn"></i> <?= Html::encode($this->title) ?></h1>
         </div>
     </div>
-    <?= ListView::widget([
+    <a href="/ads/category/index">Категории</a>
+    <a href="/ads/create">Объявления</a>
+    <?
+    echo ListView::widget([
         'dataProvider' => $dataProvider,
         'itemView' => '_list',
         'layout' => '{summary}
@@ -61,8 +66,9 @@ JS;
             {pager}',
         'summary' => '
              <div class="row">
-                <div class="col-sm-6">'.$this->render('_search', ['model' => $searchModel]).'</div>
+                <div class="col-sm-6">' . $this->render('_search', ['model' => $searchModel]) . '</div>
                 <div class="col-sm-6 text-align-right">Показаны записи {begin}-{end} из {totalCount}</div>
             </div>'
-    ]); ?>
+    ]);
+    ?>
 </div>
