@@ -103,12 +103,25 @@ inchpes najev veradarcnum a <br>
 <code>Communication</code><br>
 <h3>---.getList </h3>
 <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Communication.getList</orinak><br>
-<h3>---.comment<help></help> </h3>
-<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Communication.comment</orinak><br>
+<br>
+<h3>---.get </h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Communication.get?id=3</orinak><br>
+stanum a konkret post yst nran poxancvox id ov <code>$GET[id]</code>
+commentnery ashxatum en nuj devi inch vor news um <br>
+
+<br>
+<<----(poxarinvac mas 29.10.2017)
+<h3>---.post<help></help> </h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Communication.post</orinak><br>
+post es avelacnum uxarkelov miajn <code>$POST[post]</code>
+aranc get parametri avelacnum a Posty
+------>
+<br>
+isk posti popoxutjuny zaprosin avelacvum a post i id in <code>$GET[id]</code> 
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Communication.post?id=2</orinak><br>
+chenq moranum posti parnakutjuny <code>$POST[post]</code> um
 <ul>
-    <span>anpajman pajmannery poxancvox $_POST ov 'comment'</span>
-    <li>GET id <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Communication.comment?id=4</orinak>(comment es anum konkret item in)</li> 
-<li>aranc GET parametri commenty kavelacvi main um vorpes glxavor commentneric meky</li>
+    comenty nujn a vonc vor news um .
 </ul>
 
 <h2>Organizations</h2>
@@ -127,4 +140,35 @@ inchpes najev veradarcnum a <br>
     <li>GET id <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Organizations.get?id=4</orinak>(stanum a 4 hamari Id -ov  item)</li> 
 <li>GET id ev POST 'comment' <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Organizations.get?id=4</orinak>(comment a anum item -i tak ev stanum a 4 hamari Id -ov item)</li>
 <li>GET id , GET 'comment_id' ev POST 'comment' <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Organizations.get?id=4&comment_id=14</orinak>(UPDATE a anum comment 14 -y ev stanum a 4 hamari Id -ov itemy)</li>
+</ul>
+
+
+
+<h2>Объявления</h2>
+<code>ads</code><br>
+<h3>---.getList <help></help></h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/ads.getList</orinak>(stanum a 3 tesaki respoinse :kara stana category_list KAM (OR) item_list: u reklam , ete et ejum linelu a uremn liqy ete che datark. hima drac a vor misht cuc ta)<br>
+
+<h3>---.getList </h3>
+<help>GET cat_id (stanum a categorai meji parnakutjuny , nujn a inch vor hasarak depqum)</help>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/ads.getList?cat_id=2</orinak> (stanum a 2 ID unecoxi categoriaji meji parnakutjuny)<br>
+
+<h3>---.get </h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/ads.get?id=3</orinak><br>
+stanum a konkret post yst nran poxancvox id ov <code>$GET[id]</code>
+commentnery ashxatum en nuj devi inch vor news um <br>
+
+<br>
+
+<h3>---.post<help></help> </h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/ads.post</orinak><br>
+post es avelacnum uxarkelov  <code>$POST[post]</code> ev <code>$POST[cat_id]</code>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/ads.post?cat_id=5 </orinak><br>
+aranc cat_id xndrum em chavelacnel :)
+<br>
+isk posti popoxutjuny zaprosin avelacvum a post i id in <code>$GET[id]</code> 
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/ads.post?id=2</orinak><br>
+u <code>$POST[post]</code> i parnakutjuny
+<ul>
+    comenty nujn a vonc vor news um .
 </ul>

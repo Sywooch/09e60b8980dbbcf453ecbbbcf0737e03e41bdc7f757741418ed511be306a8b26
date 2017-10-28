@@ -9,7 +9,7 @@ class Communication {
         if ($c) {
             $id = array_keys($c);
             $in_id = implode(',', $id);
-            $query = "SELECT * FROM communication_comments WHERE c_id IN ( $in_id ) ORDER BY id DESC ";
+            $query = "SELECT * FROM comments WHERE communication_id IN ( $in_id ) ORDER BY id DESC ";
             $cc = DB::q_array($query);
             if ($cc) {
                 foreach ($cc as $vol) {
@@ -57,33 +57,20 @@ class Communication {
         return $data;
     }
 
-    public function comment() {
+    public function post() {
         $query = null;
         $user = User::get();
         if ($user) {
             $user_id = (int) $user['id'];
-            @$comm = trim($_POST['comment']);
+            @$comm = trim($_POST['post']);
             if ($user_id > 0) {
                 if (!empty($comm)) {
                     if (!empty($_GET['id'])) {
-                        $query = " INSERT INTO communication_comments "
-                                . " SET c_id = " . (int) $_GET['id'] . ", "
-                                . " text = '" . DB::res($comm) . "', user_id =  $user_id, created_at = NOW() ";
+                        $query = " UPDATE communication SET "
+                                . " text = '" . DB::res($comm) . "' WHERE  user_id =  $user_id  AND  id = " . (int) $_GET['id'];
                     } else {
                         $query = " INSERT INTO communication "
                                 . " SET  text = '" . DB::res($comm) . "', user_id =  $user_id, created_at = NOW() ";
-                    }
-                } elseif (isset($_GET['delete'])) {
-                    if (!empty($_GET['id'])) {
-                        $query = "DELETE FROM communication "
-                                . " WHERE id = " . (int) $_GET['id'] . " "
-                                . " AND user_id = " . $user_id;
-                    } elseif (!empty($_GET['comment_id'])) {
-                        if ((int) $_GET['comment_id'] > 0) {
-                            $query = "DELETE FROM communication_comments"
-                                    . " WHERE id = " . (int) $_GET['comment_id'] . " "
-                                    . " AND user_id = " . $user_id;
-                        }
                     }
                 }
             }
