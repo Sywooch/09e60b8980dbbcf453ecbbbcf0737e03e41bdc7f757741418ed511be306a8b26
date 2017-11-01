@@ -2,6 +2,9 @@
 
 class COMMENTS {
 
+    public static $new = 1;
+    public static $update = 2;
+
     public static function execute($fild_name = null, $id = null) {
         if (!empty($_POST['comment'])) {
             if (!empty($_GET['comment_id'])) {
@@ -23,7 +26,7 @@ class COMMENTS {
             if (!empty($comm)) {
                 $query = "UPDATE `comments` SET "
                         . " comment = '" . DB::res($comm) . "' , "
-                        . " status = 2 WHERE id = " . $id . " "
+                        . " status = " . self::$update . " WHERE id = " . $id . " "
                         . " AND user_id = " . $user['id'];
                 DB::q_($query);
             }
@@ -33,12 +36,14 @@ class COMMENTS {
     public static function commmentInsert($fild_name = null, $id = null) {
         $user = User::get();
         if ($user) {
+//            $img = IMAGE::CommentImgSave();
             $comm = trim($_POST['comment']);
             if (!empty($comm)) {
                 $query = "INSERT INTO `comments` SET "
                         . " $fild_name = '$news_id' , "
                         . " user_id = " . $user['id'] . ", "
-                        . " comment = '" . DB::res($comm) . "' , status = 1, "
+//                        . " img = '" . $img . "', "
+                        . " comment = '" . DB::res($comm) . "' , status = " . self::$new . ", "
                         . " created_at = NOW() ";
                 $error = DB::q_($query);
             }
