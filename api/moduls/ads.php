@@ -39,7 +39,7 @@ class Ads {
         if ($cat_id) {
             $query = "SELECT * FROM ads "
                     . " WHERE (category_id  LIKE ('%," . $cat_id . "') OR category_id = '$cat_id') "
-                    . " AND published = 1";
+                    . " AND published = 1 AND ";
         }
 //        var_dump($query);die;
         if ($query) {

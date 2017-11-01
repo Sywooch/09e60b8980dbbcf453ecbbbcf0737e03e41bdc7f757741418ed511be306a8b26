@@ -2,21 +2,25 @@
 
 class Communication {
 
+    public static $new = 0;
+    public static $update = 1;
+    public static $hide = 2;
+
     public function getList() {
         $data = null;
-        $query = "SELECT * FROM communication ORDER BY id DESC";
+        $query = "SELECT * FROM communication WHERE `status` != " . self::$hide . " ORDER BY id DESC";
         $c = DB::q_array_id($query);
-        if ($c) {
-            $id = array_keys($c);
-            $in_id = implode(',', $id);
-            $query = "SELECT * FROM comments WHERE communication_id IN ( $in_id ) ORDER BY id DESC ";
-            $cc = DB::q_array($query);
-            if ($cc) {
-                foreach ($cc as $vol) {
-                    $c[$vol['c_id']]['comments'][] = $vol;
-                }
-            }
-        }
+//        if ($c) {
+//            $id = array_keys($c);
+//            $in_id = implode(',', $id);
+//            $query = "SELECT * FROM comments WHERE communication_id IN ( $in_id ) AND `status` != " . self::$hide . " ORDER BY id DESC ";
+//            $cc = DB::q_array($query);
+//            if ($cc) {
+//                foreach ($cc as $vol) {
+//                    $c[$vol['id']]['comments'][] = $vol;
+//                }
+//            }
+//        }
         $data['list'] = array_values($c);
         $user_ids = array_unique(self::getUsersId($c));
         $data['users'] = User::get($user_ids);
@@ -28,7 +32,7 @@ class Communication {
         if (!empty($_GET['id'])) {
             $id = (int) $_GET['id'];
             if ($id > 0) {
-                $query = "SELECT * FROM communication WHERE id =" . $id;
+                $query = "SELECT * FROM communication WHERE id =" . $id . " AND `status` != " . self::$hide;
                 $c = DB::q_line($query);
                 if ($c) {
                     $c['comments'] = COMMENTS::execute('communication_id', $c['id']);
@@ -36,6 +40,25 @@ class Communication {
                 $data['item'] = $c;
                 $user_ids = array_unique(self::getUsersId($c));
                 $data['users'] = User::get($user_ids);
+            }
+        }
+        return $data;
+    }
+
+    public function hide() {
+        $data = null;
+        $user = User::get();
+        if (!empty($_GET['id'])) {
+            $id = (int) $_GET['id'];
+            if ($id > 0) {
+                $query = "UPDATE communication  SET `status` = " . self::$hide . " WHERE id =" . $id . " AND user_id = " . $user['id'];
+                $c = DB::q_($query);
+//                var_dump($query);die;
+                if ($c) {
+                    $data['error'] = ['code' => 1, 'message' => 'INTERNAL ERROR'];
+                } else {
+                    $data = 'OK';
+                }
             }
         }
         return $data;

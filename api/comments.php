@@ -13,7 +13,7 @@ class COMMENTS {
                     self::commmentUpdate($comment_id);
                 }
             } else {
-                self::commmentInsert($fild_name = null, $id = null);
+                self::commmentInsert($fild_name, $id);
             }
         }
         return self::item_comments($fild_name, $id);
@@ -40,11 +40,12 @@ class COMMENTS {
             $comm = trim($_POST['comment']);
             if (!empty($comm)) {
                 $query = "INSERT INTO `comments` SET "
-                        . " $fild_name = '$news_id' , "
+                        . " $fild_name = '$id' , "
                         . " user_id = " . $user['id'] . ", "
 //                        . " img = '" . $img . "', "
                         . " comment = '" . DB::res($comm) . "' , status = " . self::$new . ", "
                         . " created_at = NOW() ";
+//                var_dump($query);die;
                 $error = DB::q_($query);
             }
         }
