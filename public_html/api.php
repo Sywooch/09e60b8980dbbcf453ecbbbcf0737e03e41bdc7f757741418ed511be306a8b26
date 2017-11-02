@@ -174,7 +174,7 @@ u <code>$POST[post]</code> i parnakutjuny
 </ul>
 
 <br>
-<h2>Объявления</h2>
+<h2>Реклама</h2>
 <code>Advertising</code><br>
 <h3>---.get <help></help></h3>
 <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Advertising.get</orinak>
