@@ -2,6 +2,10 @@
 
 class Ads {
 
+    public static $new = 0;
+    public static $update = 1;
+    public static $hide = 2;
+
     public function getList() {
         $data = null;
         $cat_id = null;
@@ -13,6 +17,13 @@ class Ads {
         $data['reklama'] = self::reklama($cat_id);
         $data['category_list'] = self::categoryList($cat_id);
         $data['item_list'] = self::itemList($cat_id);
+        $user_ids = array_unique(self::getUsersId($data['item_list']));
+        if (!empty($user_ids)) {
+            $data['users'] = User::get($user_ids);
+        } else {
+            $data['users'] = [];
+        }
+
         return $data;
     }
 
@@ -39,11 +50,31 @@ class Ads {
         if ($cat_id) {
             $query = "SELECT * FROM ads "
                     . " WHERE (category_id  LIKE ('%," . $cat_id . "') OR category_id = '$cat_id') "
-                    . " AND published = 1 AND ";
+                    . " AND published = 1 AND `status` != " . self::$hide;
         }
-//        var_dump($query);die;
+        // var_dump($query);die;
         if ($query) {
             $data = DB::q_array($query);
+        }
+
+        return $data;
+    }
+
+    public function hide() {
+        $data = null;
+        $user = User::get();
+        if (!empty($_GET['id'])) {
+            $id = (int) $_GET['id'];
+            if ($id > 0) {
+                $query = "UPDATE ads  SET `status` = " . self::$hide . " WHERE id =" . $id . " AND user_id = " . $user['id'];
+                $c = DB::q_($query);
+//                var_dump($query);die;
+                if ($c) {
+                    $data['error'] = ['code' => 1, 'message' => 'INTERNAL ERROR'];
+                } else {
+                    $data = 'OK';
+                }
+            }
         }
         return $data;
     }
@@ -105,8 +136,10 @@ class Ads {
                     } elseif (!empty($_GET['cat_id'])) {
                         if ((int) $_GET['cat_id'] > 0) {
                             $cat = (int) $_GET['cat_id'];
+                            $img = IMAGE::PostImgSave();
                             $query = " INSERT INTO ads "
-                                    . " SET  text = '" . DB::res($comm)
+                                    . " SET img = '" . $img . "', "
+                                    . " text = '" . DB::res($comm)
                                     . "', user_id =  $user_id, "
                                     . " category_id = $cat, "
                                     . " created_at = NOW() ";

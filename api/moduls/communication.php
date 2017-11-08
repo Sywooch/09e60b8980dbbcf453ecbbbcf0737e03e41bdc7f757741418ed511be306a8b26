@@ -92,8 +92,10 @@ class Communication {
                         $query = " UPDATE communication SET "
                                 . " text = '" . DB::res($comm) . "' WHERE  user_id =  $user_id  AND  id = " . (int) $_GET['id'];
                     } else {
+                        $img = IMAGE::PostImgSave();
+
                         $query = " INSERT INTO communication "
-                                . " SET  text = '" . DB::res($comm) . "', user_id =  $user_id, created_at = NOW() ";
+                                . " SET  img = '" . $img . "', text = '" . DB::res($comm) . "', user_id =  $user_id, created_at = NOW() ";
                     }
                 }
             }

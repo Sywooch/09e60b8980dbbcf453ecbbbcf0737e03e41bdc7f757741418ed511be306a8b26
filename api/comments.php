@@ -6,7 +6,7 @@ class COMMENTS {
     public static $update = 2;
 
     public static function execute($fild_name = null, $id = null) {
-        if (!empty($_POST['comment'])) {
+        if (!empty($_POST['comment']) || isset($_FILES['comment_photo'])) {
             if (!empty($_GET['comment_id'])) {
                 $comment_id = (int) $_GET['comment_id'];
                 if ($comment_id > 0) {
@@ -23,9 +23,19 @@ class COMMENTS {
         $user = User::get();
         if ($user && $id) {
             $comm = trim($_POST['comment']);
-            if (!empty($comm)) {
+            $img = IMAGE::CommentImgSave();
+            if (!empty($comm) || $img) {
+                $s = '';
+                $f = '';
+                if (!empty($comm)) {
+                    $s = " comment = '" . DB::res($comm) . "' , ";
+                }
+                if ($img) {
+                    $f = " img = '" . $img . "', ";
+                }
                 $query = "UPDATE `comments` SET "
-                        . " comment = '" . DB::res($comm) . "' , "
+                        . $s
+                        . $f
                         . " status = " . self::$update . " WHERE id = " . $id . " "
                         . " AND user_id = " . $user['id'];
                 DB::q_($query);
@@ -36,13 +46,13 @@ class COMMENTS {
     public static function commmentInsert($fild_name = null, $id = null) {
         $user = User::get();
         if ($user) {
-//            $img = IMAGE::CommentImgSave();
+            $img = IMAGE::CommentImgSave();
             $comm = trim($_POST['comment']);
             if (!empty($comm)) {
                 $query = "INSERT INTO `comments` SET "
                         . " $fild_name = '$id' , "
                         . " user_id = " . $user['id'] . ", "
-//                        . " img = '" . $img . "', "
+                        . " img = '" . $img . "', "
                         . " comment = '" . DB::res($comm) . "' , status = " . self::$new . ", "
                         . " created_at = NOW() ";
 //                var_dump($query);die;
@@ -55,6 +65,7 @@ class COMMENTS {
         $query = "SELECT id, "
                 . " `comment`, "
                 . " user_id, "
+                . " img, "
                 . " created_at, "
                 . " updated_at "
                 . " FROM `comments` "

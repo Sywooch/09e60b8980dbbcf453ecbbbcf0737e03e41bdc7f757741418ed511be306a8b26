@@ -84,14 +84,21 @@ class IMAGE extends ImageResize {
         return self::ImgSave('comment');
     }
 
+    public static function PostImgSave() {
+        return self::ImgSave('post');
+    }
+
     public static function ImgSave($path = 'def', $resize = 1200) {
         $data = null;
         self::$resize = $resize;
         $file = self::fileCollector();
         if ($file) {
-            $file_name = 'comment_' .
+            $file_name = date("Y-m-d_H_i_s") . '_' .
                     md5($file) . '.' .
                     $file->type;
+            if (!is_dir(__DIR__ . '/../public_html/uploads/images/' . $path . '/')) {
+                mkdir(__DIR__ . '/../public_html/uploads/images/' . $path . '/');
+            }
             $file_path_base = '/uploads/images/' . $path . '/' . $file_name;
             $file_path = __DIR__ . '/../public_html' . $file_path_base;
 

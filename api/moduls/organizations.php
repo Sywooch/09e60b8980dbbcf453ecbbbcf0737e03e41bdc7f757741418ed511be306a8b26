@@ -37,7 +37,7 @@ class Organizations {
         $data = [];
         $query = null;
         if ($cat_id) {
-            $query = "SELECT o.*, oa.* FROM organizations o "
+            $query = "SELECT o.*, oa.*, (SELECT COUNT(id) FROM comments cm WHERE cm.organizations_id = o.id ) as comment_count FROM organizations o "
                     . " LEFT JOIN organizations_address oa ON (oa.organization_id = o.id) "
                     . " WHERE (o.category_id  LIKE ('%," . $cat_id . "') OR o.category_id = '$cat_id') "
                     . " AND o.published = 1";
@@ -45,6 +45,16 @@ class Organizations {
         if ($query) {
             $data = DB::q_array($query);
         }
+        if (!empty($data)) {
+            foreach ($data as $key => $vol) {
+                if (is_numeric($vol['latitude']) && is_numeric($vol['longitude'])) {
+                    $data[$key]['distance'] = Distance::getDistance($vol['latitude'], $vol['longitude']);
+                } else {
+                    $data[$key]['distance'] = null;
+                }
+            }
+        }
+
         return $data;
     }
 
