@@ -81,6 +81,7 @@ class Communication {
     }
 
     public function post() {
+//         var_dump(getallheaders());die;
         $query = null;
         $user = User::get();
         if ($user) {
@@ -90,17 +91,22 @@ class Communication {
                 if (!empty($comm)) {
                     if (!empty($_GET['id'])) {
                         $query = " UPDATE communication SET "
-                                . " text = '" . DB::res($comm) . "' WHERE  user_id =  $user_id  AND  id = " . (int) $_GET['id'];
+                                . " text = '" . DB::res($comm) . "' "
+                                . "WHERE  user_id =  $user_id  AND  id = " . (int) $_GET['id'];
                     } else {
                         $img = IMAGE::PostImgSave();
 
                         $query = " INSERT INTO communication "
-                                . " SET  img = '" . $img . "', text = '" . DB::res($comm) . "', user_id =  $user_id, created_at = NOW() ";
+                                . " SET  img = '" . DB::res($img) . "', "
+                                . " text = '" . DB::res($comm) . "', "
+                                . " user_id =  $user_id, "
+                                . " created_at = NOW() ";
                     }
                 }
             }
         }
-//        var_dump($query);die;
+//        var_dump($query);
+//        die;
         $error = DB::q_($query);
         if (!$error) {
             return 'OK';

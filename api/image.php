@@ -25,7 +25,7 @@ class IMAGE extends ImageResize {
                 $file->save($file_path);
                 if (file_exists($file_path)) {
                     $query = "UPDATE `user` SET photo_250 = '" . $file_path_base . "' WHERE id = " . $user['id'];
-                    $error = $user::q_($query);
+                    $error = USER::q_($query);
                     if ($error) {
                         $data['error']['code'] = 'upis';
                     } else {
