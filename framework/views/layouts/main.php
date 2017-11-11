@@ -141,7 +141,7 @@
                         <li><a href="<?=Url::toRoute('/news/category/index')?>"><i class="fa fa-dedent"></i> Разделы </a></li>
                     </ul>
                 </li>
-                <li>
+<!--                <li>
                     <a href="#" title="Пользователи"><i class="fa fa-lg fa-fw fa-users"></i>
                         <span class="menu-item-parent">Пользователи</span><span class="badge pull-right inbox-badge margin-right-13 bg-color-yellow"></span>
                     </a>
@@ -149,7 +149,7 @@
                         <li><a href="<?=Url::toRoute('/users')?>"><i class="fa fa-list"></i> Все </a></li>
                         <li><a href="<?=Url::toRoute('/users/create')?>"><i class="fa fa-plus"></i> Добавить нового </a></li>
                     </ul>
-                </li>
+                </li>-->
                 <li>
                     <a href="#" title="Организации"><i class="fa fa-lg fa-fw fa-universal-access"></i>
                         <span class="menu-item-parent">Организации</span><span class="badge pull-right inbox-badge margin-right-13 bg-color-yellow"></span>
