@@ -157,6 +157,9 @@ chenq moranum posti parnakutjuny <code>$POST[post]</code> um
 <orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Ads.get?id=3</orinak><br>
 stanum a konkret post yst nran poxancvox id ov <code>$GET[id]</code>
 commentnery ashxatum en nuj devi inch vor news um <br>
+<h3>---.hide </h3>
+<orinak>http://api.ramenskoye.100081.ooogoroda.mobi/Ads.hide?id=3</orinak><br>
+taqcum a konkret der grac id <code>$GET[id]</code>
 
 <br>
 

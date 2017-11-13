@@ -1,5 +1,39 @@
 <?php
 
+function renderText($data, $i = 0, $arr = null) {
+//    var_dump($arr);
+    if (is_array($data)) {
+        foreach ($data as $key => $vol) {
+            if (!is_array($vol)) {
+                if ($key == 'text') {
+//                        die();
+                    // Strip HTML Tags
+                    $clear = strip_tags($vol);
+// Clean up things like &amp;
+                    $clear = html_entity_decode($clear);
+// Strip out any url-encoded stuff
+                        $clear = urldecode($clear);
+//// Replace non-AlNum characters with space
+//                    $clear = preg_replace('/[^A-Za-z0-9]/', ' ', $clear);
+//// Replace Multiple spaces with single space
+//                        $clear = preg_replace('/ +/', ' ', $clear);
+// Trim the string of leading/trailing space
+                    $clear = trim($clear);
+//                        die($clear);
+                    $data[$key] = filter_var($clear, FILTER_SANITIZE_STRING);
+//                        $data[$key] = strip_tags($vol);
+                    return $data;
+//                    var_dump($data, $i++ . "### " . print_r($arr) . " ############\r\n<br>");die;
+                }
+            } else {
+                $data[$key] = renderText($vol, $i, $arr);
+            }
+            $arr[] = $key;
+        }
+    }
+    return $data;
+}
+
 class News {
 
     public function getList() {
@@ -60,7 +94,7 @@ class News {
                 $item = DB::q_line($query);
                 if ($item) {
 //                    self::comment($item['id']);
-                    $comments = COMMENTS::execute('news_id',$item['id']);
+                    $comments = COMMENTS::execute('news_id', $item['id']);
                     $data['item'] = $item;
                     $query = "SELECT `title`, `text` FROM news_data WHERE nid = " . $item['id'];
                     $n_d = DB::q_array($query);
@@ -68,7 +102,7 @@ class News {
 
                     $query = "SELECT image FROM news_image WHERE news_id = " . $item['id'];
                     $data['item']['image'] = DB::q_array($query);
-                    
+
                     if ($comments) {
                         foreach ($comments as $vol) {
                             $user_ids[] = $vol['user_id'];
@@ -82,7 +116,8 @@ class News {
                 }
             }
         }
-        return $data;
+        return renderText($data);
+//        return $data;
     }
 
     public static function comment($news_id = null, $organizations_id = null) {

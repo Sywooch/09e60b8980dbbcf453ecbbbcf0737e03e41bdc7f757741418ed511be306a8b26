@@ -5,6 +5,7 @@ require(__DIR__ . '/mail.php');
 require(__DIR__ . '/image.php');
 require(__DIR__ . '/comments.php');
 require(__DIR__ . '/distance.php');
+require(__DIR__ . '/data.php');
 //var_dump(__DIR__ . '/mail.php');die;
 
 foreach (glob(__DIR__ . "/moduls/*.php") as $filename) {
