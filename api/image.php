@@ -81,11 +81,11 @@ class IMAGE extends ImageResize {
     }
 
     public static function CommentImgSave() {
-        return self::ImgSave('comment');
+        return self::ImgSave('comment',150);
     }
 
     public static function PostImgSave() {
-        return self::ImgSave('post');
+        return self::ImgSave('post',150);
     }
 
     public static function ImgSave($path = 'def', $resize = 1200) {

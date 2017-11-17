@@ -68,7 +68,7 @@ class DB {
         if ($result = self::cnn()->query($query . ' LIMIT 1')) {
             return $result->fetch_array(MYSQLI_ASSOC);
         } else {
-            return NULL;
+            return '';
         }
     }
 

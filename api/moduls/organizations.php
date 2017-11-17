@@ -83,12 +83,17 @@ class Organizations {
         if ($id) {
             $info = self::item_info($id);
             if ($info) {
+//                var_dump($info);die;
+                if (empty($info['image'])) {
+                    $info['image'] = '/uploads/images/def_Organizations.png';
+                }
 //                News::comment(null, $id);
                 $comments = COMMENTS::execute('organizations_id', $id);
                 $contacts = self::item_contacts($id);
 //                $comments = self::item_comments($id);
                 ######
                 $data['info'] = $info;
+                $info['go'] = 17;
                 $data['contacts'] = $contacts;
                 $data['comments'] = $comments;
             }
@@ -96,23 +101,25 @@ class Organizations {
         return $data;
     }
 
-    private static function item_comments($id) {
-        $query = "SELECT id, "
-                . " `comment`, "
-                . " user_id, "
-                . " created_at, "
-                . " updated_at "
-                . " FROM `comments` "
-                . " WHERE organizations_id = " . $id . " "
-                . " ORDER BY id DESC";
-        return DB::q_array($query);
-    }
+//    private static function item_comments($id) {
+//        $query = "SELECT id, "
+//                . " `comment`, "
+//                . " user_id, "
+//                . " created_at, "
+//                . " updated_at "
+//                . " FROM `comments` "
+//                . " WHERE organizations_id = " . $id . " "
+//                . " ORDER BY id DESC";
+//        return DB::q_array($query);
+//    }
 
     private static function item_contacts($id) {
         $data['address'] = DB::q_array("SELECT * FROM organizations_address WHERE organization_id = " . $id);
-        $data['images'] = DB::q_array("SELECT * FROM organizations_images WHERE organization_id = " . $id . " ORDER BY  sort_order DESC");
-        $data['sites'] = DB::q_array("SELECT * FROM organizations_sites WHERE organization_id = " . $id);
-        $data['telephones'] = DB::q_array("SELECT * FROM organizations_telephones WHERE organization_id = " . $id);
+//        $images = DB::q_line("SELECT * FROM organizations_images WHERE organization_id = " . $id . " ORDER BY  sort_order DESC")['image'];
+//        $data['images'] = $images;
+//        $data['sites'] = DB::q_array("SELECT * FROM organizations_sites WHERE organization_id = " . $id);
+        $data['telephones'] = DB::q_array_key("SELECT number FROM organizations_telephones WHERE number !='' AND organization_id = " . $id, 'number');
+
         return $data;
     }
 
