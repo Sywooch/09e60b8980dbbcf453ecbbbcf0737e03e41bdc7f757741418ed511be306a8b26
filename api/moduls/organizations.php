@@ -96,6 +96,8 @@ class Organizations {
                 $info['go'] = 17;
                 $data['contacts'] = $contacts;
                 $data['comments'] = $comments;
+                $user_ids = array_unique(Communication::getUsersId($data['comments']));
+                $data['users'] = User::get($user_ids);
             }
         }
         return $data;
