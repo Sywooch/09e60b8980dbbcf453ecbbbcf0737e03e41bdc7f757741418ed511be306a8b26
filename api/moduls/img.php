@@ -1,7 +1,6 @@
 <?php
 
 class Img {
-
 //  public function get() {
 //
 // $header = getallheaders();
@@ -17,5 +16,19 @@ class Img {
 //    var_dump($_FILES);
 //    $ob = IMAGE::ProfileImgSave($user);
 //  }
-
 }
+
+//require(__DIR__ . '/../../framework/vendor/autoload.php');
+//require(__DIR__ . '/../../framework/vendor/yiisoft/yii2/Yii.php');
+//require(__DIR__ . '/../../framework/modules/ads/models/Category.php');
+//
+//use app\modules\ads\models as str;
+//
+////$category = str\Category::model()->findByPk(1);
+////$descendants = $category->children()->findAll();
+//
+//$category = new str\Category;
+//$category = DB::q_array("SELECT ")
+//
+//var_dump($category);
+//die;

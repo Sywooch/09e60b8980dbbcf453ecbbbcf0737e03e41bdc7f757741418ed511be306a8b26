@@ -6,24 +6,12 @@ function renderText($data, $i = 0, $arr = null) {
         foreach ($data as $key => $vol) {
             if (!is_array($vol)) {
                 if ($key == 'text') {
-//                        die();
-                    // Strip HTML Tags
                     $clear = strip_tags($vol);
-// Clean up things like &amp;
                     $clear = html_entity_decode($clear);
-// Strip out any url-encoded stuff
-                        $clear = urldecode($clear);
-//// Replace non-AlNum characters with space
-//                    $clear = preg_replace('/[^A-Za-z0-9]/', ' ', $clear);
-//// Replace Multiple spaces with single space
-//                        $clear = preg_replace('/ +/', ' ', $clear);
-// Trim the string of leading/trailing space
+                    $clear = urldecode($clear);
                     $clear = trim($clear);
-//                        die($clear);
                     $data[$key] = filter_var($clear, FILTER_SANITIZE_STRING);
-//                        $data[$key] = strip_tags($vol);
                     return $data;
-//                    var_dump($data, $i++ . "### " . print_r($arr) . " ############\r\n<br>");die;
                 }
             } else {
                 $data[$key] = renderText($vol, $i, $arr);
