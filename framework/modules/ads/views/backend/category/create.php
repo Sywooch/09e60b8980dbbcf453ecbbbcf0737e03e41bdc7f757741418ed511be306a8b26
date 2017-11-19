@@ -1,5 +1,7 @@
 <?php
+
 use yii\helpers\Html;
+
 /* @var $this yii\web\View */
 /* @var $model app\modules\organizations\models\Category */
 /* @var string $placeholder */
@@ -16,11 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="jarviswidget">
         <div>
             <div class="widget-body no-padding">
-				<?=
-					$this->render('_form', [
-						'model' => $model,
-						'placeholder' => $placeholder
-					]) ?>
+                <?=
+                $this->render('_form', [
+                    'model' => $model,
+                    'placeholder' => $placeholder
+                ])
+                ?>
             </div>
         </div>
     </div>

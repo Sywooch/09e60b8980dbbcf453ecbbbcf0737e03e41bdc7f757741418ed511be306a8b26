@@ -1,12 +1,12 @@
 <?php
 
 use app\modules\ads\models\Category;
-	use kartik\tree\TreeView;
-	use kartik\tree\TreeViewInput;
-	use leandrogehlen\treegrid\TreeGrid;
-	use slatiusa\treetable\Treetable;
-	use voskobovich\tree\manager\widgets\nestable\Nestable;
-	use yii\web\View;
+use kartik\tree\TreeView;
+use kartik\tree\TreeViewInput;
+use leandrogehlen\treegrid\TreeGrid;
+use slatiusa\treetable\Treetable;
+use voskobovich\tree\manager\widgets\nestable\Nestable;
+use yii\web\View;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\Url;
@@ -56,16 +56,17 @@ $this->registerJs($js, View::POS_END)
     <section id="widget-grid">
         <div class="row">
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <?echo TreeView::widget([
-                    'query'             => Category::find()->addOrderBy('root, lft'),
-                    'headingOptions'    => ['label' => 'Категории'],
-                    'displayValue'      => 1,                           // initial display value
-                    'softDelete'      => false,                        // normally not needed to change
-                    'showInactive'      => true,                        // normally not needed to change
-	                'fontAwesome' => true,
+                <?
+                echo TreeView::widget([
+                    'query' => Category::find()->addOrderBy('root, lft'),
+                    'headingOptions' => ['label' => 'Категории'],
+                    'displayValue' => 1, // initial display value
+                    'softDelete' => false, // normally not needed to change
+                    'showInactive' => true, // normally not needed to change
+                    'fontAwesome' => true,
                     'nodeView' => '@app/modules/ads/views/backend/default/tree'
-
-                ]);?>
+                ]);
+                ?>
             </article>
         </div>
     </section>
