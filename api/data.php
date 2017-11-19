@@ -21,4 +21,36 @@ class DATA {
         return $s . $d;
     }
 
+    public static function comments($data) {
+        $start = $data["created_at"];
+//        var_dump($start);die;
+        $ns = new DateTimeZone(self::$TIME_ZONE);
+        $s = null;
+        if (!empty($start)) {
+            $date = new DateTime($start, $ns);
+            $s = $date->format('d-m-Y H:i');
+        }
+        $data["created_at"] = $s;
+        $data["updated_at"] = '';
+        return $data;
+    }
+
+    public static function news($data) {
+        if (!empty($data)) {
+            $ns = new DateTimeZone(self::$TIME_ZONE);
+            foreach ($data as $key => $vol) {
+                $start = $vol["date"];
+//        var_dump($start);die;
+
+                $s = null;
+                if (!empty($start)) {
+                    $date = new DateTime($start, $ns);
+                    $s = $date->format('d-m-Y H:i');
+                }
+                $data[$key]["date"] = $s;
+            }
+        }
+        return $data;
+    }
+
 }

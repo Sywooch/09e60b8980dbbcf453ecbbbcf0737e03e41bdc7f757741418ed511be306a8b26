@@ -6,6 +6,7 @@ class COMMENTS {
     public static $update = 2;
 
     public static function execute($fild_name = null, $id = null) {
+        $data = [];
         if (!empty($_POST['comment']) || isset($_FILES['comment_photo'])) {
             if (!empty($_GET['comment_id'])) {
                 $comment_id = (int) $_GET['comment_id'];
@@ -16,7 +17,9 @@ class COMMENTS {
                 self::commmentInsert($fild_name, $id);
             }
         }
-        return self::item_comments($fild_name, $id);
+        $data = self::item_comments($fild_name, $id);
+
+        return $data;
     }
 
     public static function commmentUpdate($id) {
@@ -71,7 +74,14 @@ class COMMENTS {
                 . " FROM `comments` "
                 . " WHERE $fild_name = " . $id . " "
                 . " ORDER BY id DESC";
-        return DB::q_array($query);
+        $data = DB::q_array($query);
+        if (!empty($data)) {
+            foreach ($data as $key => $vol) {
+                $data[$key] = DATA::comments($data[$key]);
+            }
+        }
+
+        return $data;
     }
 
 }

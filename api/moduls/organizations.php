@@ -50,7 +50,7 @@ class Organizations {
                 if (is_numeric($vol['latitude']) && is_numeric($vol['longitude'])) {
                     $data[$key]['distance'] = Distance::getDistance($vol['latitude'], $vol['longitude']);
                 } else {
-                    $data[$key]['distance'] = null;
+                    $data[$key]['distance'] = '';
                 }
             }
         }
@@ -115,7 +115,7 @@ class Organizations {
 //        return DB::q_array($query);
 //    }
 
-    private static function item_contacts($id) {
+    public static function item_contacts($id) {
         $data['address'] = DB::q_array("SELECT * FROM organizations_address WHERE organization_id = " . $id);
 //        $images = DB::q_line("SELECT * FROM organizations_images WHERE organization_id = " . $id . " ORDER BY  sort_order DESC")['image'];
 //        $data['images'] = $images;

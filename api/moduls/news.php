@@ -13,6 +13,9 @@ function renderText($data, $i = 0, $arr = null) {
                     $data[$key] = filter_var($clear, FILTER_SANITIZE_STRING);
                     return $data;
                 }
+                if ($key == 'created_at') {
+                    $data[$key] = DATA::news($vol);
+                }
             } else {
                 $data[$key] = renderText($vol, $i, $arr);
             }
@@ -47,7 +50,11 @@ class News {
                 . " LEFT JOIN news_data n_d ON (n_d.nid = n.id) "
                 . " WHERE n_d.title != '' AND  $cat_sel  AND n.type = 2 "
                 . " ORDER BY `date` DESC ";
-        return DB::q_array($query);
+        $data = DB::q_array($query);
+        if (!empty($data)) {
+            $data = DATA::news($data);
+        }
+        return $data;
     }
 
     private static function getList_secondary($cat_sel) {
@@ -61,7 +68,11 @@ class News {
                 . " LEFT JOIN news_data n_d ON (n_d.nid = n.id) "
                 . " WHERE n_d.title != '' AND  $cat_sel  AND n.type = 1 "
                 . " ORDER BY `date` DESC ";
-        return DB::q_array($query);
+        $data = DB::q_array($query);
+        if (!empty($data)) {
+            $data = DATA::news($data);
+        }
+        return $data;
     }
 
     public function getCat() {
@@ -82,7 +93,7 @@ class News {
                 $item = DB::q_line($query);
                 if ($item) {
 //                    self::comment($item['id']);
-                    $comments = COMMENTS::execute('news_id', $item['id']);
+
                     $data['item'] = $item;
                     $query = "SELECT `title`, `text` FROM news_data WHERE nid = " . $item['id'];
                     $n_d = DB::q_array($query);
@@ -90,7 +101,8 @@ class News {
 
                     $query = "SELECT image FROM news_image WHERE news_id = " . $item['id'];
                     $data['item']['image'] = DB::q_array($query);
-
+                    $data = renderText($data);
+                    $comments = COMMENTS::execute('news_id', $item['id']);
                     if ($comments) {
                         foreach ($comments as $vol) {
                             $user_ids[] = $vol['user_id'];
@@ -104,7 +116,7 @@ class News {
                 }
             }
         }
-        return renderText($data);
+        return $data;
 //        return $data;
     }
 
