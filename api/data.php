@@ -3,6 +3,9 @@
 class DATA {
 
     public static $TIME_ZONE = 'Europe/Moscow';
+    public static $FORMAT = 'd-m-Y H:i';
+
+//     public static $POSTER_COMMENTS = 'd-m-Y H:i';
 
     public static function poster($start, $end) {
         $ns = new DateTimeZone(self::$TIME_ZONE);
@@ -10,11 +13,11 @@ class DATA {
         $d = null;
         if (!empty($start)) {
             $date = new DateTime($start, $ns);
-            $s = ' с <b>' . $date->format('H:i d-m-Y') . '</b>';
+            $s = ' с <b>' . $date->format(self::$FORMAT) . '</b>';
         }
         if (!empty($end)) {
             $date = new DateTime($start, $ns);
-            $d = ' до <b>' . $date->format('H:i d-m-Y') . '</b>';
+            $d = ' до <b>' . $date->format(self::$FORMAT) . '</b>';
         }
 
 //        echo $date->format('Y-m-d H:i:sP');
@@ -28,7 +31,7 @@ class DATA {
         $s = null;
         if (!empty($start)) {
             $date = new DateTime($start, $ns);
-            $s = $date->format('d-m-Y H:i');
+            $s = $date->format(self::$FORMAT);
         }
         $data["created_at"] = $s;
         $data["updated_at"] = '';
@@ -45,7 +48,7 @@ class DATA {
                 $s = null;
                 if (!empty($start)) {
                     $date = new DateTime($start, $ns);
-                    $s = $date->format('d-m-Y H:i');
+                    $s = $date->format(self::$FORMAT);
                 }
                 $data[$key]["date"] = $s;
             }

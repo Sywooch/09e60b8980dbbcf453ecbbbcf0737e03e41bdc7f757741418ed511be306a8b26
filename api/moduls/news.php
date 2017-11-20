@@ -14,7 +14,7 @@ function renderText($data, $i = 0, $arr = null) {
                     return $data;
                 }
                 if ($key == 'created_at') {
-                    $data[$key] = DATA::news($vol);
+                    $data['date'] = DATA::comments($data)['created_at'];
                 }
             } else {
                 $data[$key] = renderText($vol, $i, $arr);
@@ -85,7 +85,7 @@ class News {
             if ((int) $_GET['id'] > 0) {
 
                 $query = "SELECT id, "
-                        . " created_at as `date`, "
+                        . " created_at , "
                         . " video_url as video, "
                         . " source_url as url "
                         . " FROM news "
@@ -118,49 +118,6 @@ class News {
         }
         return $data;
 //        return $data;
-    }
-
-    public static function comment($news_id = null, $organizations_id = null) {
-        if (!empty($_POST['comment'])) {
-            if (!empty($_GET['comment_id'])) {
-                $comment_id = (int) $_GET['comment_id'];
-                if ($comment_id > 0) {
-                    self::commmentUpdate($comment_id);
-                }
-            } else {
-                self::commmentInsert($news_id = null, $organizations_id = null);
-            }
-        }
-    }
-
-    public static function commmentUpdate($id) {
-        $user = User::get();
-        if ($user && $id) {
-            $comm = trim($_POST['comment']);
-            if (!empty($comm)) {
-                $query = "UPDATE `comments` SET "
-                        . " comment = '" . DB::res($comm) . "' , "
-                        . " status = 2 WHERE id = " . $id . " "
-                        . " AND user_id = " . $user['id'];
-                DB::q_($query);
-            }
-        }
-    }
-
-    public static function commmentInsert($news_id = null, $organizations_id = null) {
-        $user = User::get();
-        if ($user) {
-            $comm = trim($_POST['comment']);
-            if (!empty($comm)) {
-                $query = "INSERT INTO `comments` SET "
-                        . " news_id = '$news_id' , "
-                        . " organizations_id = '$organizations_id' ,"
-                        . " user_id = " . $user['id'] . ", "
-                        . " comment = '" . DB::res($comm) . "' , status = 1, "
-                        . " created_at = NOW() ";
-                $error = DB::q_($query);
-            }
-        }
     }
 
 }

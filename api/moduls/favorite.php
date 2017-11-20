@@ -6,7 +6,9 @@ class Favorite {
         $user = User::get();
         if (!empty($_POST['id']) && $user) {
             $id = (int) $_POST['id'];
-            $error = DB::q_("INSERT FROM `favorite` SET user_id=$user[id], id = $id ");
+            $query = "INSERT INTO `favorite` SET user_id=$user[id], item_id = $id ";
+//            var_dump($query);die;
+            $error = DB::q_($query);
             if (!$error) {
                 return 'OK';
             } else {
@@ -49,7 +51,7 @@ class Favorite {
                     $data[$key]['distance'] = '';
                     $data[$key]['contacts'] = Organizations::item_contacts($vol['id']);
                     if (is_array($data[$key]['contacts'])) {
-                        foreach ($data[$key]['contacts'] as $vol){
+                        foreach ($data[$key]['contacts'] as $vol) {
                             
                         }
                     }

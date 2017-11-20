@@ -20,13 +20,13 @@ class DB {
 
     public static function q_array($query) {
         if ($result = self::cnn()->query($query)) {
-            $data = array();
+            $data = [];
             while ($obj = $result->fetch_array(MYSQLI_ASSOC)) {
                 $data[] = $obj;
             }
             return $data;
         } else {
-            return NULL;
+            return [];
         }
     }
 

@@ -44,16 +44,27 @@ class Distance {
     }
 
     public static function getDistance($x = 180, $y = 180) {
+        $xx = 99999;
+        $yy = 99999;
         if (!empty($_GET['x']) && !empty($_GET['y'])) {
             $xx = (float) $_GET['x'];
             $yy = (float) $_GET['y'];
-            if (($xx > -90 && $xx < 90) && ($yy > -90 && $yy < 90)) {
-                $dis = self::calculateTheDistance($xx, $yy, $x, $y);
-                if (is_numeric($dis)) {
-                    return round($dis / 1000, 2) . ' km';
-                }
+        } else {
+            $header = getallheaders();
+            if (!empty($header['X']) && !empty($header['Y'])) {
+                $xx = (float) $header['X'];
+                $yy = (float) $header['Y'];
             }
         }
+        if (($xx > -90 && $xx < 90) && ($yy > -90 && $yy < 90)) {
+//            var_dump($xx, $yy, (float)$x, (float)$y);die;
+            $dis = self::calculateTheDistance($xx, $yy, (float) $x, (float) $y);
+            if (is_numeric($dis)) {
+//                return round($dis / 1000, 2) . ' km';
+                return $dis;
+            }
+        }
+        return '';
     }
 
 }

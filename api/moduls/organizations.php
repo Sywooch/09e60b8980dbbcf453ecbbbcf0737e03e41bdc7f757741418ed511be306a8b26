@@ -47,10 +47,19 @@ class Organizations {
         }
         if (!empty($data)) {
             foreach ($data as $key => $vol) {
+                if ($vol['latitude'] == 0 || $vol['longitude'] == 0) {
+                    $vol['latitude'] = '';
+                    $vol['longitude'] = '';
+                    $data[$key]['latitude'] = '';
+                    $data[$key]['longitude'] = '';
+                }
                 if (is_numeric($vol['latitude']) && is_numeric($vol['longitude'])) {
-                    $data[$key]['distance'] = Distance::getDistance($vol['latitude'], $vol['longitude']);
+                    $dist = Distance::getDistance($vol['latitude'], $vol['longitude']);
+                    $data[$key]['distance'] = round($dist / 1000, 2) . ' km';
+                    $data[$key]['distance_integer'] = (int) $dist;
                 } else {
                     $data[$key]['distance'] = '';
+                    $data[$key]['distance_integer'] = '';
                 }
             }
         }
