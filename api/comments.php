@@ -4,6 +4,7 @@ class COMMENTS {
 
     public static $new = 1;
     public static $update = 2;
+    public static $hide = 3;
 
     public static function execute($fild_name = null, $id = null) {
         $data = [];
@@ -17,9 +18,27 @@ class COMMENTS {
                 self::commmentInsert($fild_name, $id);
             }
         }
+        if (!empty($_POST['hide_comment'])) {
+            if (!empty($_GET['comment_id'])) {
+                $comment_id = (int) $_GET['comment_id'];
+                if ($comment_id > 0) {
+                    self::commmentHide($comment_id);
+                }
+            }
+        }
         $data = self::item_comments($fild_name, $id);
 
         return $data;
+    }
+
+    public static function commmentHide($id) {
+        $user = User::get();
+        if ($user && $id) {
+            $query = "UPDATE `comments` SET "
+                    . " status = " . self::$hide . " WHERE id = " . $id . " "
+                    . " AND user_id = " . $user['id'];
+            DB::q_($query);
+        }
     }
 
     public static function commmentUpdate($id) {
@@ -73,6 +92,7 @@ class COMMENTS {
                 . " updated_at "
                 . " FROM `comments` "
                 . " WHERE $fild_name = " . $id . " "
+                . " AND status != " . self::$hide
                 . " ORDER BY id DESC";
         $data = DB::q_array($query);
         if (!empty($data)) {
