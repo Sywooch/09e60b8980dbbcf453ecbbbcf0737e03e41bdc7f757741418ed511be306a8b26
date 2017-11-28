@@ -18,7 +18,7 @@ use yii\db\Expression;
  * @property int $order
  * @property int $section_id
  * @property int $published
- * @property int $platform
+ * @property int $platform  
  * @property string $created_at
  * @property string $updated_at
  */
@@ -56,9 +56,9 @@ class Buttons extends ActiveRecord {
   public function rules() {
     return [
         [['title'], 'required'],
-        [['section', 'section_id', 'published', 'order', 'platform'], 'integer'],
+        [['section', 'section_id', 'published', 'order','cat_id'], 'integer'],
         [['created_at', 'updated_at'], 'safe'],
-        [['title', 'url', 'telephone', 'image'], 'string', 'max' => 255],
+        [['title', 'url', 'telephone', 'image', 'model'], 'string', 'max' => 255],
     ];
   }
 
@@ -69,14 +69,15 @@ class Buttons extends ActiveRecord {
     return [
         'id' => 'ID',
         'title' => 'Название',
-        'platform' => 'Платформа',
+        'model' => 'Model',
         'url' => 'Ссылка',
         'telephone' => 'Телефон',
         'published' => 'Опубликовать',
         'image' => 'Изображение',
         'order' => 'Позиция',
         'section' => 'Категория',
-        'section_id' => 'ID в категории',
+        'section_id' => 'ID',
+        'cat_id' => 'ID в категории',
         'created_at' => 'Create At',
         'updated_at' => 'Updated At',
     ];

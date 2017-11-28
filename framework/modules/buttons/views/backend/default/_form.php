@@ -34,6 +34,9 @@ use yii\widgets\ActiveForm;
         <section>
 		    <?= $form->field($model, 'section_id', ['template' => '{label} <label class="input">{input}{error}{hint}</label>'])->textInput(['maxlength' => true]) ?>
         </section>
+        <section>
+		    <?= $form->field($model, 'cat_id', ['template' => '{label} <label class="input">{input}{error}{hint}</label>'])->textInput(['maxlength' => true]) ?>
+        </section>
         <section class="col col-6">
             <? if ($model->isNewRecord || empty($model->image)):
                 echo $form->field($model, 'image', ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="' . $placeholder . '" alt="" title="" data-placeholder="' . $placeholder . '" />{input}{error}{hint}</label></a>'])->hiddenInput();
