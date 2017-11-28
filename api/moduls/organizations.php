@@ -106,7 +106,7 @@ class Organizations {
                 $data['contacts'] = $contacts;
                 $data['comments'] = $comments;
                 $user_ids = array_unique(Communication::getUsersId($data['comments']));
-                $data['users'] = User::get($user_ids);
+                $data['users'] = User::getUsers($user_ids);
             }
         }
         return $data;

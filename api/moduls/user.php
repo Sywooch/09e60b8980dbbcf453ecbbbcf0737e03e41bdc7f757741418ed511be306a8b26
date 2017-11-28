@@ -215,25 +215,25 @@ class User {
         return md5($user['email'] . $user['token']);
     }
 
-    public static function get($users_id = []) {
+    public static function get() {
         $user = new self;
-        if (empty($users_id)) {
-            $re = $user->accessToken();
-            $data = $user->session_user;
+
+        $re = $user->accessToken();
+        $data = $user->session_user;
+        if ($data) {
             unset($data['token'], $data['pass'], $data['hash'], $data['token_update_date'], $data['active'], $data['email_confirm_hash']);
-            return $data;
-        } else {
-            $data = [];
-            if (is_array($users_id)) {
-                $in_id = implode(',', $users_id);
-                $query = "SELECT id , name , f_name , photo_250 FROM `user` WHERE id IN ( $in_id )";
-                $data = self::q_array($query);
-                if (empty($data)) {
-                    $data = [];
-                }
-            }
-            return $data;
         }
+        return $data;
+    }
+
+    public static function getUsers($users_id = []) {
+        $data = [];
+        if (!empty($users_id) && is_array($users_id)) {
+            $in_id = implode(',', $users_id);
+            $query = "SELECT id , name , f_name , photo_250 FROM `user` WHERE id IN ( $in_id )";
+            $data = self::q_array($query);
+        }
+        return $data;
     }
 
 }

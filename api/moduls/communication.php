@@ -23,7 +23,7 @@ class Communication {
 //        }
         $data['list'] = array_values($c);
         $user_ids = array_unique(self::getUsersId($c));
-        $data['users'] = User::get($user_ids);
+        $data['users'] = User::getUsers($user_ids);
         return $data;
     }
 
@@ -39,7 +39,7 @@ class Communication {
                 }
                 $data['item'] = $c;
                 $user_ids = array_unique(self::getUsersId($c));
-                $data['users'] = User::get($user_ids);
+                $data['users'] = User::getUsers($user_ids);
             }
         }
         return $data;

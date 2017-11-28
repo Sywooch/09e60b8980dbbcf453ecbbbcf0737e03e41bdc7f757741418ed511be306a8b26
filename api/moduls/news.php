@@ -111,7 +111,7 @@ class News {
                     $data['item']['comments'] = $comments;
                     if (!empty($user_ids)) {
                         $user_ids = array_unique($user_ids);
-                        $data['users'] = User::get($user_ids);
+                        $data['users'] = User::getUsers($user_ids);
                     }
                 }
             }

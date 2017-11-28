@@ -19,7 +19,7 @@ class Ads {
         $data['item_list'] = self::itemList($cat_id);
         $user_ids = array_unique(self::getUsersId($data['item_list']));
         if (!empty($user_ids)) {
-            $data['users'] = User::get($user_ids);
+            $data['users'] = User::getUsers($user_ids);
         } else {
             $data['users'] = [];
         }
@@ -50,7 +50,7 @@ class Ads {
         if ($cat_id) {
             $query = "SELECT * FROM ads "
                     . " WHERE (category_id  LIKE ('%," . $cat_id . "') OR category_id = '$cat_id') "
-                    . " AND published = 1 AND `status` != " . self::$hide;
+                    . " AND published = 1 AND `status` != " . self::$hide . " ORDER BY id DESC ";
         }
         // var_dump($query);die;
         if ($query) {
@@ -99,7 +99,7 @@ class Ads {
                 }
                 $data['item'] = $c;
                 $user_ids = array_unique(self::getUsersId($c));
-                $data['users'] = User::get($user_ids);
+                $data['users'] = User::getUsers($user_ids);
             }
         }
         return $data;
