@@ -11,8 +11,13 @@ class Organizations {
             }
         }
         $data['reklama'] = self::reklama($cat_id);
-        $data['category_list'] = self::categoryList($cat_id);
-        $data['item_list'] = self::itemList($cat_id);
+//        $data['category_list'] = self::categoryList($cat_id);
+        $data['category_list'] = CATEGORY::get('organizations', $cat_id);
+        if (!empty($data['category_list'])) {
+            $data['item_list'] = [];
+        } else {
+            $data['item_list'] = self::itemList($cat_id);
+        }
         return $data;
     }
 
