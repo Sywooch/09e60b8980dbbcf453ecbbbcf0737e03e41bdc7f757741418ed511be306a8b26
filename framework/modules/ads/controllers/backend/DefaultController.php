@@ -14,26 +14,25 @@ use yii\filters\VerbFilter;
 /**
  * DefaultController implements the CRUD actions for Ads model.
  */
-class DefaultController extends Controller
-{
+class DefaultController extends Controller {
+
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
+    public function behaviors() {
         return [
-	        'access' => [
-		        'class' => AccessControl::className(),
-		        'rules' => [
-			        [
-				        'allow' => true,
-				        'roles' => ['@'],
-				        'matchCallback' => function () {
-					        return User::checkAccess('ads');
-				        }
-			        ],
-		        ],
-	        ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function () {
+                            return User::checkAccess('ads');
+                        }
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -47,14 +46,13 @@ class DefaultController extends Controller
      * Lists all Ads models.
      * @return mixed
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         $searchModel = new AdsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -63,24 +61,22 @@ class DefaultController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView()
-    {
-	    Yii::$app->response->statusCode = 201;
-    	$model = $this->findModel(Yii::$app->request->post('id'));
-    	if(!is_null($model))
-	    {
-		    if(Yii::$app->request->post('pin') == 'main')
-		        $model->pin_main = Yii::$app->request->post('checked') == 'true' ? $model::STATUS_ACTIVE : $model::STATUS_DISABLE;
-		    else
-			    $model->pin_filter = Yii::$app->request->post('checked') == 'true' ? $model::STATUS_ACTIVE : $model::STATUS_DISABLE;
+    public function actionView() {
+        Yii::$app->response->statusCode = 201;
+        $model = $this->findModel(Yii::$app->request->post('id'));
+        if (!is_null($model)) {
+            if (Yii::$app->request->post('pin') == 'main')
+                $model->pin_main = Yii::$app->request->post('checked') == 'true' ? $model::STATUS_ACTIVE : $model::STATUS_DISABLE;
+            else
+                $model->pin_filter = Yii::$app->request->post('checked') == 'true' ? $model::STATUS_ACTIVE : $model::STATUS_DISABLE;
 
-		    if ($model->save()){
-			    Yii::$app->response->statusCode = 200;
-			    return 'Все прошло успешно!';
-		    }
-		    return 'Что-то пошло не так, повторите попытку позже!';
-	    }
-	    return 'Объявление не найдено!';
+            if ($model->save()) {
+                Yii::$app->response->statusCode = 200;
+                return 'Все прошло успешно!';
+            }
+            return 'Что-то пошло не так, повторите попытку позже!';
+        }
+        return 'Объявление не найдено!';
     }
 
     /**
@@ -88,15 +84,27 @@ class DefaultController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Ads();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                        'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionControl() {
+        $model = new Ads();
+//        print_r('<pre>');
+//        var_dump($model);die;
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                        'model' => $model,
             ]);
         }
     }
@@ -107,15 +115,14 @@ class DefaultController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
+    public function actionUpdate($id) {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                        'model' => $model,
             ]);
         }
     }
@@ -126,11 +133,10 @@ class DefaultController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $model = $this->findModel($id);
-	    $model->status = $model::STATUS_DISABLE;
-	    $model->save(false);
+        $model->status = $model::STATUS_DISABLE;
+        $model->save(false);
         return $this->redirect(['index']);
     }
 
@@ -141,12 +147,12 @@ class DefaultController extends Controller
      * @return Ads the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id) {
         if (($model = Ads::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }
