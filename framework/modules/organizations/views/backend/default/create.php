@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					                    <? if ($model->organization->isNewRecord || empty($model->organization->image)):
 						                    echo $form->field($model->organization, 'image', ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="' . $placeholder . '" alt="" title="" data-placeholder="' . $placeholder . '" />{input}{error}{hint}</label></a>'])->hiddenInput();
 					                    else:
-						                    echo $form->field($model->organization, 'image', ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="' . \Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot' . $model->organization->image), 200, 200, 'outbound', 0,
+						                    echo $form->field($model->organization, 'image', ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="' . \Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot' . $model->organization->image), 320, 180, 'outbound', 100,
 								                    Yii::getAlias('@webroot/uploads/cache/' . $model->organization->image)) . '" alt="" title="" data-placeholder="' . $placeholder . '" />{input}{error}{hint}</label></a>'])->hiddenInput();
 					                    endif;
 					                    ?>
@@ -128,7 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							<!--			--><?// if($model->organization->isNewRecord || empty($model->organization->image)):
 							//				echo $form->field($model->organization, 'image', ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="'.$placeholder.'" alt="" title="" data-placeholder="'.$placeholder.'" />{input}{error}{hint}</label></a>'])->hiddenInput();
 							//			else:
-							//				echo $form->field($model->organization, 'image', ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="'.\Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot' . $model->organization->image), 200, 200, 'outbound', 0,
+							//				echo $form->field($model->organization, 'image', ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="'.\Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot' . $model->organization->image), 320, 180, 'outbound', 100,
 							//						Yii::getAlias('@webroot/uploads/cache/' . $model->organization->image)) .'" alt="" title="" data-placeholder="'.$placeholder.'" />{input}{error}{hint}</label></a>'])->hiddenInput();
 							//			endif;
 							//			?>

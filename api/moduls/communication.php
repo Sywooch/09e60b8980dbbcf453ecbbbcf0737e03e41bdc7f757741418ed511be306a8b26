@@ -88,14 +88,15 @@ class Communication {
             $user_id = (int) $user['id'];
             @$comm = trim($_POST['post']);
             if ($user_id > 0) {
-                if (!empty($comm)) {
-                    if (!empty($_GET['id'])) {
+                if (!empty($_GET['id'])) {
+                    if (!empty($comm)) {
                         $query = " UPDATE communication SET "
                                 . " text = '" . DB::res($comm) . "' "
                                 . "WHERE  user_id =  $user_id  AND  id = " . (int) $_GET['id'];
-                    } else {
-                        $img = IMAGE::PostImgSave();
-
+                    }
+                } else {
+                    $img = IMAGE::PostImgSave();
+                    if (!empty($comm) || $img) {
                         $query = " INSERT INTO communication "
                                 . " SET  img = '" . DB::res($img) . "', "
                                 . " text = '" . DB::res($comm) . "', "
@@ -107,7 +108,7 @@ class Communication {
         }
 //        var_dump($query);
 //        die;
-        $error = DB::q_($query);
+        $error = (!empty($query)) ? DB::q_($query) : 'empty';
         if (!$error) {
             return 'OK';
         }

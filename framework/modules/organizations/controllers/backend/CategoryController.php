@@ -85,7 +85,7 @@ class CategoryController extends Controller {
             return $this->redirect(['index']);
         } else {
             #Defaults
-            $placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot/uploads/no_image.png'), 140, 100, 'inset', 100, Yii::getAlias('@webroot/uploads/cache/thumb-no_image.png'));
+            $placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot/uploads/no_image.png'), 320, 180, 'inset', 100, Yii::getAlias('@webroot/uploads/cache/thumb-no_image.png'));
             return $this->render('create', [
                         'model' => $model,
                         'placeholder' => $placeholder
@@ -105,7 +105,7 @@ class CategoryController extends Controller {
             return $this->redirect(['update', 'id' => $model->id]);
         } else {
             #Defaults
-            $placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('/uploads/no_image.png'), 140, 100, 'inset', 100, Yii::getAlias('/uploads/cache/thumb-no_image.png'));
+            $placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('/uploads/no_image.png'), 320, 180, 'inset', 100, Yii::getAlias('/uploads/cache/thumb-no_image.png'));
             return $this->render('update', [
                         'model' => $model,
                         'placeholder' => $placeholder

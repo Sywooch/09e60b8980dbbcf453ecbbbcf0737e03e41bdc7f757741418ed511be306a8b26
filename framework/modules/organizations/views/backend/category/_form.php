@@ -33,7 +33,7 @@
                         <? if($model->isNewRecord || empty($model->image)):
                                 echo $form->field($model, 'image', ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="'.$placeholder.'" alt="" title="" data-placeholder="'.$placeholder.'" />{input}{error}{hint}</label></a>'])->hiddenInput();
                             else:
-	                            echo $form->field($model, 'image', ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="'.\Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot' . $model->image), 100, 100, 'outbound', 0, Yii::getAlias('@webroot/uploads/cache/' . $model->image)) .'" alt="" title="" data-placeholder="'.$placeholder.'" />{input}{error}{hint}</label></a>'])->hiddenInput();
+	                            echo $form->field($model, 'image', ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="'.\Yii::$app->imageresize->getUrl(Yii::getAlias($model->image), 320, 180, 'outbound', 99, Yii::getAlias('uploads/cache/' . $model->image)) .'" alt="" title="" data-placeholder="'.$placeholder.'" />{input}{error}{hint}</label></a>'])->hiddenInput();
                             endif;
                         ?>
                     </section>

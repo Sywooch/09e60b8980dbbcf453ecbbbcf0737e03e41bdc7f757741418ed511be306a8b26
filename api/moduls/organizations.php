@@ -42,42 +42,94 @@ class Organizations {
         $data = [];
         $query = null;
         if ($cat_id) {
-            $query = "SELECT o.*, oa.*, (SELECT COUNT(id) FROM comments cm WHERE cm.organizations_id = o.id ) as comment_count FROM organizations o "
+            $query = "SELECT  DISTINCT o.*, oa.*, "
+                    . " (SELECT COUNT(id) FROM comments cm WHERE cm.organizations_id = o.id ) as comment_count , "
+                    . " (SELECT number FROM organizations_telephones ot WHERE ot.organization_id = o.id LIMIT 1) as user_telephone FROM organizations o "
                     . " LEFT JOIN organizations_address oa ON (oa.organization_id = o.id) "
-                    . " WHERE (o.category_id  LIKE ('%," . $cat_id . "') OR o.category_id = '$cat_id') "
+                    . " WHERE (o.category_id  LIKE ('%" . $cat_id . "%')) "
                     . " AND o.published = 1";
         }
         if ($query) {
             $data = DB::q_array($query);
         }
+        $ids = [];
         if (!empty($data)) {
             foreach ($data as $key => $vol) {
-                if ($vol['latitude'] == 0 || $vol['longitude'] == 0) {
-                    $vol['latitude'] = '';
-                    $vol['longitude'] = '';
-                    $data[$key]['latitude'] = '';
-                    $data[$key]['longitude'] = '';
-                }
-                if (is_numeric($vol['latitude']) && is_numeric($vol['longitude'])) {
-                    $dist = Distance::getDistance($vol['latitude'], $vol['longitude']);
-                    $data[$key]['distance'] = round($dist / 1000, 2) . ' km';
-                    $data[$key]['distance_integer'] = (int) $dist;
+                if (!isset($ids[$vol['id']])) {
+                    if ($vol['latitude'] == 0 || $vol['longitude'] == 0) {
+                        $vol['latitude'] = '';
+                        $vol['longitude'] = '';
+                        $data[$key]['latitude'] = '';
+                        $data[$key]['longitude'] = '';
+                    }
+                    if (is_numeric($vol['latitude']) && is_numeric($vol['longitude'])) {
+                        $dist = Distance::getDistance($vol['latitude'], $vol['longitude']);
+                        $data[$key]['distance'] = round($dist / 1000, 2) . ' km';
+                        $data[$key]['distance_integer'] = (int) $dist;
+                    } else {
+                        $data[$key]['distance'] = '';
+                        $data[$key]['distance_integer'] = '';
+                    }
+                    $data[$key]['user_telephone'] = preg_replace("/[^0-9+]/", '', $data[$key]['user_telephone']);
+                    $data[$key]['working_days'] = $vol['working_days'] . ' ' . $vol['working_hours'];
+
+                    $ids[$vol['id']] = TRUE;
                 } else {
-                    $data[$key]['distance'] = '';
-                    $data[$key]['distance_integer'] = '';
+                    unset($data[$key]);
                 }
             }
         }
-
+        $data = array_values($data);
         return $data;
     }
 
     private static function reklama() {
-        return ['name' => 'test',
-            'img' => '/uploads/images/ram/2016-06-24_21-35-50.png',
-            'url' => 'https://dunpal.com',
-            'tel' => '+799999999'
-        ];
+        $data = [];
+        $query = "SELECT * FROM advertising_banner ";
+        $vol = DB::q_line($query);
+        if ($vol) {
+            $tel = '';
+            $type = '';
+            $model = '';
+            $url = '';
+            if ($vol['organization_id'] > 0) {
+                $id = $vol['organization_id'];
+                $url = '/Organizations.get?id=' . $id;
+                $model = 'Organizations';
+                $type = 'item';
+            } elseif ($vol['category_id'] > 0) {
+                $id = $vol['category_id'];
+                $url = '/Organizations.getList?cat_id=' . $id;
+                $model = 'Organizations';
+                $type = 'cat';
+            } else {
+                $id = '';
+                if (filter_var($vol['url'], FILTER_VALIDATE_URL)) {
+                    $url = $vol['url'];
+                    $model = 'Url';
+                    $type = 'url';
+                } elseif (!empty($vol['telephone'])) {
+                    $tel = $vol['telephone'];
+                    $model = 'Tel';
+                    $type = 'tel';
+                } else {
+                    return [];
+                }
+            }
+            $data['id'] = $id;
+            $data['title'] = '';
+            $data['url'] = $url;
+            $data['model'] = $model;
+            $data['image'] = $vol['image'];
+            $data['telephone'] = $tel;
+            $data['type'] = $type;
+        }
+        return $data;
+//        return ['name' => 'test',
+//            'img' => '/uploads/images/ram/2016-06-24_21-35-50.png',
+//            'url' => 'https://dunpal.com',
+//            'tel' => '+799999999'
+//        ];
     }
 
     public function get() {
@@ -109,6 +161,10 @@ class Organizations {
                 $data['info'] = $info;
                 $info['go'] = 17;
                 $data['contacts'] = $contacts;
+
+                if (!empty($contacts['telephones'][0])) {
+                    $data['info']['user_telephone'] = preg_replace("/[^0-9+]/", '', $contacts['telephones'][0]);
+                }
                 $data['comments'] = $comments;
                 $user_ids = array_unique(Communication::getUsersId($data['comments']));
                 $data['users'] = User::getUsers($user_ids);
@@ -131,9 +187,12 @@ class Organizations {
 
     public static function item_contacts($id) {
         $data['address'] = DB::q_array("SELECT * FROM organizations_address WHERE organization_id = " . $id);
-//        $images = DB::q_line("SELECT * FROM organizations_images WHERE organization_id = " . $id . " ORDER BY  sort_order DESC")['image'];
-//        $data['images'] = $images;
-//        $data['sites'] = DB::q_array("SELECT * FROM organizations_sites WHERE organization_id = " . $id);
+        if (!empty($data['address'])) {
+            foreach ($data['address'] as $key => $vol) {
+                $data['address'][$key]['working_days'] = $vol['working_days'] . ' ' . $vol['working_hours'];
+            }
+        }
+
         $data['telephones'] = DB::q_array_key("SELECT number FROM organizations_telephones WHERE number !='' AND organization_id = " . $id, 'number');
 
         return $data;

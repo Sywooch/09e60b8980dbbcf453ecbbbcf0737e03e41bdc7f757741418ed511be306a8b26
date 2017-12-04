@@ -17,7 +17,7 @@ class Ads {
         $data['reklama'] = self::reklama($cat_id);
 //        $data['category_list'] = self::categoryList($cat_id);
         $data['category_list'] = CATEGORY::get('ads', $cat_id);
-        if (empty($data['category_list'])) {
+        if (!empty($data['category_list'])) {
             $data['item_list'] = [];
         } else {
             $data['item_list'] = self::itemList($cat_id);
@@ -32,22 +32,22 @@ class Ads {
         return $data;
     }
 
-    private static function categoryList($cat_id = null) {
-        $data = [];
-        $query = null;
-        if ($cat_id) {
-            $cat = DB::q_line("SELECT * FROM ads_category WHERE id = " . $cat_id);
-            if ($cat) {
-                $query = "SELECT * FROM ads_category WHERE root = $cat[id] AND lvl = " . ($cat['lvl'] + 1) . " ";
-            }
-        } else {
-            $query = "SELECT * FROM ads_category WHERE lvl = 0";
-        }
-        if ($query) {
-            $data = DB::q_array($query);
-        }
-        return $data;
-    }
+//    private static function categoryList($cat_id = null) {
+//        $data = [];
+//        $query = null;
+//        if ($cat_id) {
+//            $cat = DB::q_line("SELECT * FROM ads_category WHERE id = " . $cat_id);
+//            if ($cat) {
+//                $query = "SELECT * FROM ads_category WHERE root = $cat[id] AND lvl = " . ($cat['lvl'] + 1) . " ";
+//            }
+//        } else {
+//            $query = "SELECT * FROM ads_category WHERE lvl = 0";
+//        }
+//        if ($query) {
+//            $data = DB::q_array($query);
+//        }
+//        return $data;
+//    }
 
     private static function itemList($cat_id = null) {
         $data = [];
@@ -133,15 +133,18 @@ class Ads {
             $user_id = (int) $user['id'];
             @$comm = trim($_POST['post']);
             if ($user_id > 0) {
-                if (!empty($comm)) {
-                    if (!empty($_GET['id'])) {
+
+                if (!empty($_GET['id'])) {
+                    if (!empty($comm)) {
                         $query = " UPDATE ads SET "
                                 . " text = '" . DB::res($comm) . "' WHERE  user_id =  $user_id  AND  id = " . (int) $_GET['id'];
 //                        var_dump($query);die;
-                    } elseif (!empty($_GET['cat_id'])) {
-                        if ((int) $_GET['cat_id'] > 0) {
-                            $cat = (int) $_GET['cat_id'];
-                            $img = IMAGE::PostImgSave();
+                    }
+                } elseif (!empty($_GET['cat_id'])) {
+                    if ((int) $_GET['cat_id'] > 0) {
+                        $cat = (int) $_GET['cat_id'];
+                        $img = IMAGE::PostImgSave();
+                        if (!empty($comm) || $img) {
                             $query = " INSERT INTO ads "
                                     . " SET img = '" . $img . "', "
                                     . " text = '" . DB::res($comm)
@@ -154,7 +157,7 @@ class Ads {
             }
         }
 //        var_dump($query);die;
-        $error = DB::q_($query);
+        $error = (!empty($query)) ? DB::q_($query) : 'empty';
         if (!$error) {
             return 'OK';
         }

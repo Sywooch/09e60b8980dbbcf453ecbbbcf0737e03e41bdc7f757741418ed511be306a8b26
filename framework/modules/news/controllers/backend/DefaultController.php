@@ -79,7 +79,7 @@
 				}
 			}
 			#Defaults
-			$placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot/uploads/no_image.png'), 140, 100, 'inset', 100, Yii::getAlias('@webroot/uploads/cache/thumb-no_image.png'));
+			$placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot/uploads/no_image.png'), 320, 180, 'inset', 100, Yii::getAlias('@webroot/uploads/cache/thumb-no_image.png'));
 			$data = new Data();
 			$images = new NewsImage();
 			return $this->render('/form', [
@@ -125,7 +125,7 @@
 					Yii::$app->session->setFlash('success', 'Новость сохранена');
 			}
 
-			$placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot/uploads/no_image.png'), 140, 100, 'inset', 100, Yii::getAlias('@webroot/uploads/cache/thumb-no_image.png'));
+			$placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot/uploads/no_image.png'), 320, 180, 'inset', 100, Yii::getAlias('@webroot/uploads/cache/thumb-no_image.png'));
 			return $this->render('/form', ['placeholder' => $placeholder, 'model' => $model, 'data' => new Data()]);
 
 		}

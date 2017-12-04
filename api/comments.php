@@ -70,7 +70,7 @@ class COMMENTS {
         if ($user) {
             $img = IMAGE::CommentImgSave();
             $comm = trim($_POST['comment']);
-            if (!empty($comm)) {
+            if (!empty($comm) || $img) {
                 $query = "INSERT INTO `comments` SET "
                         . " $fild_name = '$id' , "
                         . " user_id = " . $user['id'] . ", "

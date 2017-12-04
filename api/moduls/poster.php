@@ -21,7 +21,7 @@ class Poster {
                 unset($item[$key]['start_at']);
             }
         }
-         $data['category'] = $category;
+        $data['category'] = $category;
         $data['data'] = $item;
         return $data;
     }
@@ -30,11 +30,21 @@ class Poster {
         if (!empty($_GET['id'])) {
             if ((int) $_GET['id'] > 0) {
                 $query = "SELECT * FROM poster "
-                        . " WHERE published = '1' "
+                        . "WHERE published = '1' "
                         . " AND id = " . (int) $_GET['id']
-                        . " AND start_at < NOW() "
                         . " AND end_at > NOW() ";
-                return DB::q_line($query);
+                $vol = DB::q_line($query);
+                if ($vol) {
+                    $at = DATA::poster($vol['start_at'], $vol['end_at']);
+                    $vol['at'] = $at;
+                    unset($vol['updated_at']);
+                    unset($vol['created_at']);
+                    unset($vol['end_at']);
+                    unset($vol['start_at']);
+                } else {
+                    $vol = [];
+                }
+                return $vol;
             }
         }
     }
@@ -58,7 +68,7 @@ class Poster {
                 . " WHERE published = '1' "
                 . " AND category_id = $id "
                 . " AND pin_filter != 1 "
-                . " AND start_at < NOW() "
+//                . " AND start_at < NOW() "
                 . " AND end_at > NOW() "
                 . " ORDER BY end_at DESC";
         $sec = DB::q_array($query);

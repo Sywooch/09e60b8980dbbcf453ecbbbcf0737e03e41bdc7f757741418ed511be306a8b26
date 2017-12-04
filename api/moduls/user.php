@@ -85,7 +85,7 @@ class User {
                         }
                     } else {
                         $data['error']['code'] = 'ure-4';
-                        $data['error']['message'] = '';
+                        $data['error']['message'] = 'Reg error or Internal Error';
                     }
                 } else {
                     $data['error']['code'] = 'ure-3';

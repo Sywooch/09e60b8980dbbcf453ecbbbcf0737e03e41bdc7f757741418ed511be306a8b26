@@ -18,7 +18,7 @@ class AdvertisingBannerSearch extends AdvertisingBanner
     public function rules()
     {
         return [
-            [['id', 'organization_id', 'category_id'], 'integer'],
+            [['id', 'organization_id', 'category_id'], 'safe'],
             [['url', 'telephone', 'image', 'created_at', 'updated_at'], 'safe'],
         ];
     }

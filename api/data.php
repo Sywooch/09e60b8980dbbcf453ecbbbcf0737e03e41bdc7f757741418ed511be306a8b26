@@ -16,7 +16,7 @@ class DATA {
             $s = ' с <b>' . $date->format(self::$FORMAT) . '</b>';
         }
         if (!empty($end)) {
-            $date = new DateTime($start, $ns);
+            $date = new DateTime($end, $ns);
             $d = ' до <b>' . $date->format(self::$FORMAT) . '</b>';
         }
 
