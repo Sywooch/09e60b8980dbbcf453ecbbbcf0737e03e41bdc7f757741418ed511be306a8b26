@@ -1,6 +1,7 @@
 <?php
 
 class User {
+######################  DADA BASE #########################
 
     private static $connection = null;
     protected $session_user = null;
@@ -44,6 +45,12 @@ class User {
         return $error;
     }
 
+    public static function res($query) {
+        return self::cnn()->real_escape_string($query);
+    }
+
+    ##################  MHETOD ########################
+
     public function reg() {
         $data = null;
         if (!empty($_POST['method'])) {
@@ -64,7 +71,6 @@ class User {
 
     private static function regEmail() {
         $data = null;
-
         if (!empty($_POST['name']) && !empty($_POST['f_name']) && !empty($_POST['email']) && !empty($_POST['pass'])) {
             if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                 if (strlen($_POST["pass"]) > 6) {
@@ -81,23 +87,23 @@ class User {
                             $data = 'OK';
                         } else {
                             $data['error']['code'] = 'ure-5';
-                            $data['error']['message'] = '';
+                            $data['error']['message'] = 'Возникло проблемо с оправки емайла';
                         }
                     } else {
                         $data['error']['code'] = 'ure-4';
-                        $data['error']['message'] = 'Reg error or Internal Error';
+                        $data['error']['message'] = 'Внутренняя ошибка, возникло непредвиденное исключение';
                     }
                 } else {
                     $data['error']['code'] = 'ure-3';
-                    $data['error']['message'] = '';
+                    $data['error']['message'] = 'Пароли должны содержать не менее 7-ми символов';
                 }
             } else {
                 $data['error']['code'] = 'ure-2';
-                $data['error']['message'] = '';
+                $data['error']['message'] = 'Неправильный формат Е-майл адреса';
             }
         } else {
             $data['error']['code'] = 'ure-1';
-            $data['error']['message'] = '';
+            $data['error']['message'] = 'Не все поля заполнены';
         }
         return $data;
     }
@@ -112,8 +118,9 @@ class User {
                         . " WHERE id  = " . $this->session_user['id'];
                 $error = self::q_($query);
                 if (!$error) {
-                    self::accessToken();
+                    $this->accessToken();
                     $photo = IMAGE::ProfileImgSave($this->session_user);
+//                    var_dump($photo);die;
                     if (!empty($photo) && empty($photo['error'])) {
                         $data['name'] = $this->session_user['name'];
                         $data['f_name'] = $this->session_user['f_name'];
@@ -174,11 +181,11 @@ class User {
                 }
             } else {
                 $data['error']['code'] = 'ule-2';
-                $data['error']['message'] = '';
+                $data['error']['message'] = 'Неправильный формат Е-майл адреса';
             }
         } else {
             $data['error']['code'] = 'ule-1';
-            $data['error']['message'] = '';
+            $data['error']['message'] = 'Не все поля заполнены';
         }
         return $data;
     }
@@ -232,6 +239,35 @@ class User {
             $in_id = implode(',', $users_id);
             $query = "SELECT id , name , f_name , photo_250 FROM `user` WHERE id IN ( $in_id )";
             $data = self::q_array($query);
+        }
+        return $data;
+    }
+
+    public function resetPassword() {
+        $data = '';
+        if (!empty($_POST['email'])) {
+            if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                $query = "SELECT * FROM user where email = '" . self::res($_POST['email']) . "' "
+//                        . " AND binary pass = '" . DB::res($_POST['pass']) . "' "
+                        . " AND active = 1 ";
+//                        . " AND email_confirm = 1";
+                $user = self::q_line($query);
+                if ($user) {
+//                    $UT = self::updateToken($user);
+                    if (!MAILER::sendResetEmail($user)) {
+                        $data = 'OK';
+                    } else {
+                        $data['error']['code'] = 'ure-5';
+                        $data['error']['message'] = 'Возникло проблемо с оправки емайла';
+                    }
+                } else {
+                    $data['error']['code'] = 'ule-3';
+                    $data['error']['message'] = 'Неправильный email';
+                }
+            } else {
+                $data['error']['code'] = 'ule-2';
+                $data['error']['message'] = 'Неправильный формат Е-майл адреса';
+            }
         }
         return $data;
     }

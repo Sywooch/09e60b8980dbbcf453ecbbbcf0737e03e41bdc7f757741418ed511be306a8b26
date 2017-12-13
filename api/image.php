@@ -17,7 +17,7 @@ class IMAGE extends ImageResize {
             $file = self::fileCollector();
             if ($file) {
                 $file_name = $user['id'] . '_' .
-                        md5($user['hash']) . '.' .
+                        md5($file) . '.' .
                         $file->type;
                 $file_path_base = '/uploads/p_images/' . $file_name;
                 $file_path = __DIR__ . '/../public_html' . $file_path_base;

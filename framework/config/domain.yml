@@ -5,6 +5,7 @@ ramenskoye:
     api: 1
     'x': 55.5708624
     'y': 38.1913837
+    time_zone: Europe/Moscow
 
 zhukovsky:
     short_name: zhuk
@@ -13,92 +14,12 @@ zhukovsky:
     api: 1
     'x': 55.5700441
     'y': 38.0624557
+    time_zone: Europe/Moscow
 
-yerevan:
-    short_name: yer
-    dbname: db_zhuk
-    name: Ереван
-    api: 1
-    'x': 40.1779424
-    'y': 44.5110678
-
-butania:
-    short_name: but
-    dbname: db_zhuk
-    name: Бутания
-    api: 1
-    'x': 40.1548721
-    'y': 44.5122733
-
-komitas:
-    short_name: gym
-    dbname: db_zhuk
-    name: Комитас
-    api: 1
-    'x': 40.2014894
-    'y': 44.4935395
-    
-zzzz_3:
-    short_name: gym
-    dbname: db_zhuk
-    name: կzzzz_3
-    api: 1
-    'x': 40.7844531
-    'y': 43.770366
-    
-zzzz_4:
-    short_name: gym
-    dbname: db_zhuk
-    name: կzzzz_4
-    api: 1
-    'x': 40.7844531
-    'y': 43.770366
-
-zzzz_5:
-    short_name: gym
-    dbname: db_zhuk
-    name: կzzzz_5
-    api: 1
-    'x': 40.7844531
-    'y': 43.770366
-
-zzzz_6:
-    short_name: gym
-    dbname: db_zhuk
-    name: կzzzz_6
-    api: 1
-    'x': 40.7844531
-    'y': 43.770366
-
-zzzz_7:
-    short_name: gym
-    dbname: db_zhuk
-    name: կzzzz_7
-    api: 1
-    'x': 40.7844531
-    'y': 43.770366
-
-zzzz_8:
-    short_name: gym
-    dbname: db_zhuk
-    name: կzzzz_8
-    api: 1
-    'x': 40.7844531
-    'y': 43.770366
-
-zzzz_9:
-    short_name: gym
-    dbname: db_zhuk
-    name: կzzzz_9
-    api: 1
-    'x': 40.7844531
-    'y': 43.770366
-
-zzzz_10:
-    short_name: gym
-    dbname: db_zhuk
-    name: կzzzz_10
-    api: 1
-    'x': 40.7844531
-    'y': 43.770366
-
+#yerevan:
+#    short_name: yer
+#    dbname: db_zhuk
+#    name: Ереван
+#    api: 1
+#    'x': 40.1779424
+#    'y': 44.5110678

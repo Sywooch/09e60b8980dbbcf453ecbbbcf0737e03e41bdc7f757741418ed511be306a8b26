@@ -4,7 +4,6 @@ class Shares {
 
     private static function ddd($string) {
 //        $string = strip_tags($string);
-
 // обрежем его на определённое количество символов:
         $string = mb_substr($string, 0, 23);
 
@@ -30,7 +29,7 @@ class Shares {
             foreach ($item as $key => $vol) {
                 $at = DATA::poster($vol['start_at'], $vol['end_at']);
                 $item[$key]['at'] = $at;
-                $item[$key]['description'] = self::ddd($item[$key]['description']);
+//                $item[$key]['description'] = self::ddd($item[$key]['description']);
                 unset($item[$key]['updated_at']);
                 unset($item[$key]['created_at']);
                 unset($item[$key]['end_at']);
@@ -86,7 +85,7 @@ class Shares {
                 . " AND pin_filter != 1 "
 //                . " AND start_at < NOW() "
 //                . " AND end_at > NOW() "
-                . " ORDER BY id DESC";
+                . " ORDER BY end_at ASC";
         $sec = DB::q_array($query);
 
         return array_merge((array) $top, (array) $sec);
@@ -107,7 +106,7 @@ class Shares {
                 . " AND pin_poster != 1 "
 //                . " AND start_at < NOW() "
 //                . " AND end_at > NOW() "
-                . " ORDER BY end_at DESC";
+                . " ORDER BY end_at ASC";
         $sec = DB::q_array($query);
 
         return array_merge((array) $top, (array) $sec);

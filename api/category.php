@@ -4,7 +4,7 @@ class CATEGORY {
 
     public static function get($name, $id = null) {
         $data = [];
-        $query = "SELECT * FROM " . $name . "_category  ORDER BY root ASC , lft ASC";
+        $query = "SELECT * FROM " . $name . "_category WHERE active = 1 ORDER BY root ASC , lft ASC";
         $cats = DB::q_array($query);
         if (!empty($cats)) {
             $lvl = 0;

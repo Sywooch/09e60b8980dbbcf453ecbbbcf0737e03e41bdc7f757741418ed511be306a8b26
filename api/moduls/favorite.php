@@ -21,7 +21,7 @@ class Favorite {
         $user = User::get();
         if (!empty($_POST['id']) && $user) {
             $id = (int) $_POST['id'];
-            $error = DB::q_("DELETE FROM `favorite` WHERE user_id=$user[id] AND id = $id ");
+            $error = DB::q_("DELETE FROM `favorite` WHERE user_id=" . $user['id'] . " AND item_id = $id ");
             if (!$error) {
                 return 'OK';
             } else {
@@ -46,13 +46,21 @@ class Favorite {
 //                die;
             }
             if (!empty($data)) {
-
+//                var_dump($data);
+//                die;
                 foreach ($data as $key => $vol) {
                     $data[$key]['distance'] = '';
                     $data[$key]['contacts'] = Organizations::item_contacts($vol['id']);
                     if (is_array($data[$key]['contacts'])) {
-                        foreach ($data[$key]['contacts'] as $vol) {
-                            
+//                        foreach ($data[$key]['contacts'] as $vol) {
+//                            
+//                        }
+                        $getContact = Organizations::item_contacts($vol['id']);
+
+                        if (!empty($getContact['telephones'][0])) {
+//                            var_dump($getContact['telephones'][0], $key);
+//                            die;
+                            $data[$key]['user_telephone'] = preg_replace("/[^0-9+]/", '', $getContact['telephones'][0]);
                         }
                     }
                     if (@is_numeric($vol['latitude']) && is_numeric($vol['longitude'])) {

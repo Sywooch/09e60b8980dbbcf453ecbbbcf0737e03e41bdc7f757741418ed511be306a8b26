@@ -70,7 +70,7 @@ class Poster {
                 . " AND pin_filter != 1 "
 //                . " AND start_at < NOW() "
                 . " AND end_at > NOW() "
-                . " ORDER BY end_at DESC";
+                . " ORDER BY end_at ASC";
         $sec = DB::q_array($query);
 
         return array_merge((array) $top, (array) $sec);
@@ -91,7 +91,7 @@ class Poster {
                 . " AND pin_poster != 1 "
 //            . " AND start_at < NOW() "
                 . " AND end_at > NOW() "
-                . " ORDER BY end_at DESC";
+                . " ORDER BY end_at ASC";
         $sec = DB::q_array($query);
 
         return array_merge((array) $top, (array) $sec);

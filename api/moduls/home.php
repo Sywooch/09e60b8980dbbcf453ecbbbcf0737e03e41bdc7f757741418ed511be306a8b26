@@ -82,6 +82,7 @@ class Home {
                 }
             }
         }
+        $data = array_values($data);
         return $data;
     }
 

@@ -1,5 +1,10 @@
 <?php
 
+//echo '<pre>';
+//var_dump($_SERVER);
+//die;
+//var_dump(CONTROLER_DOMAIN::getCity());die;
+        
 class Img {
 //  public function get() {
 //

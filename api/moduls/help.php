@@ -14,7 +14,7 @@ class Help {
     private static function sendMail() {
         if (!empty($_POST['name']) && !empty($_POST['tel']) && !empty($_POST['email']) && !empty($_POST['text'])) {
             $content = self::mailContent();
-            $to = DB::q_line("SELECT * FROM settings")['email'];
+            $to = DB::q_line("SELECT * FROM settings")['value'];
             $error = MAILER::send('vsemdostavka@list.ru', $content, 'Помощь');
             $error = MAILER::send($to, $content, 'Помощь');
             if ($error) {

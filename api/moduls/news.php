@@ -76,6 +76,7 @@ class News {
     }
 
     public function getCat() {
+//        var_dump(DB::q_array("SELECT id, title, image FROM news_category WHERE published = 1"));die;
         return DB::q_array("SELECT id, title, image FROM news_category WHERE published = 1");
     }
 

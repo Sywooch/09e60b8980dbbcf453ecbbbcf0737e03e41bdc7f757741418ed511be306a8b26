@@ -6,9 +6,16 @@ class DATA {
     public static $FORMAT = 'd-m-Y H:i';
 
 //     public static $POSTER_COMMENTS = 'd-m-Y H:i';
+    public static function getTimeZone() {
+        if (CONTROLER_DOMAIN::getCity()['time_zone']) {
+            return CONTROLER_DOMAIN::getCity()['time_zone'];
+        } else {
+            return self::$TIME_ZONE;
+        }
+    }
 
     public static function poster($start, $end) {
-        $ns = new DateTimeZone(self::$TIME_ZONE);
+        $ns = new DateTimeZone(self::getTimeZone());
         $s = null;
         $d = null;
         if (!empty($start)) {
@@ -27,7 +34,7 @@ class DATA {
     public static function comments($data) {
         $start = $data["created_at"];
 //        var_dump($start);die;
-        $ns = new DateTimeZone(self::$TIME_ZONE);
+        $ns = new DateTimeZone(self::getTimeZone());
         $s = null;
         if (!empty($start)) {
             $date = new DateTime($start, $ns);
@@ -40,7 +47,7 @@ class DATA {
 
     public static function news($data) {
         if (!empty($data)) {
-            $ns = new DateTimeZone(self::$TIME_ZONE);
+            $ns = new DateTimeZone(self::getTimeZone());
             foreach ($data as $key => $vol) {
                 $start = $vol["date"];
 //        var_dump($start);die;

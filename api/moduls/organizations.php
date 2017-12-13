@@ -21,33 +21,33 @@ class Organizations {
         return $data;
     }
 
-    private static function categoryList($cat_id = null) {
-        $data = [];
-        $query = null;
-        if ($cat_id) {
-            $cat = DB::q_line("SELECT * FROM organizations_category WHERE id = " . $cat_id);
-            if ($cat) {
-                $query = "SELECT * FROM organizations_category WHERE root = $cat[id] AND lvl = " . ($cat['lvl'] + 1) . " ";
-            }
-        } else {
-            $query = "SELECT * FROM organizations_category WHERE lvl = 0";
-        }
-        if ($query) {
-            $data = DB::q_array($query);
-        }
-        return $data;
-    }
+//    private static function categoryList($cat_id = null) {
+//        $data = [];
+//        $query = null;
+//        if ($cat_id) {
+//            $cat = DB::q_line("SELECT * FROM organizations_category WHERE active = 1 AND id = " . $cat_id);
+//            if ($cat) {
+//                $query = "SELECT * FROM organizations_category WHERE root = $cat[id] AND lvl = " . ($cat['lvl'] + 1) . " AND active = 1";
+//            }
+//        } else {
+//            $query = "SELECT * FROM organizations_category WHERE lvl = 0 AND active = 1";
+//        }
+//        if ($query) {
+//            $data = DB::q_array($query);
+//        }
+//        return $data;
+//    }
 
     private static function itemList($cat_id = null) {
         $data = [];
         $query = null;
         if ($cat_id) {
             $query = "SELECT  DISTINCT o.*, oa.*, "
-                    . " (SELECT COUNT(id) FROM comments cm WHERE cm.organizations_id = o.id ) as comment_count , "
+                    . " (SELECT COUNT(id) FROM comments cm WHERE cm.organizations_id = o.id AND status != " . COMMENTS::$hide . " ) as comment_count , "
                     . " (SELECT number FROM organizations_telephones ot WHERE ot.organization_id = o.id LIMIT 1) as user_telephone FROM organizations o "
                     . " LEFT JOIN organizations_address oa ON (oa.organization_id = o.id) "
                     . " WHERE (o.category_id  LIKE ('%" . $cat_id . "%')) "
-                    . " AND o.published = 1";
+                    . " AND o.published = 1 ORDER BY o.order ASC";
         }
         if ($query) {
             $data = DB::q_array($query);
@@ -186,7 +186,7 @@ class Organizations {
 //    }
 
     public static function item_contacts($id) {
-        $data['address'] = DB::q_array("SELECT * FROM organizations_address WHERE organization_id = " . $id);
+        $data['address'] = DB::q_array("SELECT * FROM organizations_address WHERE organization_id = " . $id . " ");
         if (!empty($data['address'])) {
             foreach ($data['address'] as $key => $vol) {
                 $data['address'][$key]['working_days'] = $vol['working_days'] . ' ' . $vol['working_hours'];
@@ -199,7 +199,7 @@ class Organizations {
     }
 
     private static function item_info($id) {
-        $query = "SELECT * FROM organizations WHERE id = " . $id;
+        $query = "SELECT * FROM organizations WHERE id = " . $id . " ";
         return DB::q_line($query);
     }
 
