@@ -186,3 +186,40 @@ Reklami formi hamar uxarkum eq POST zapros hetevjal anunerov<br>
 <b>tel</b><br>
 <b>email</b><br>
 ete amin inch normal a ancnum veradarcnum a 'OK'
+
+<br>
+<h2>Favorite</h2>
+<code>Favorite</code><br>
+<h3>--- <help>.getList</help></h3>
+<orinak>https://api-ramenskoye.ooogoroda.mobi/Favorite.getList</orinak>
+stanum a useri favoritnery<br>
+<h3>--- <help>.post</help></h3>
+<orinak>https://api-ramenskoye.ooogoroda.mobi/Favorite.post</orinak>
+<br><code>$POST[id]</code> uxarkum a organizacaji ID vory petq a pahel bazzajum hetaga get anelu hamar
+<h3>---<help>.delete</help></h3>
+<orinak>https://api-ramenskoye.ooogoroda.mobi/Favorite.delete</orinak>
+<br><code>$POST[id]</code> uxarkum a organizacaji ID vory petq a heracnel bazajuc
+
+<h2>Help</h2>
+<code>Help</code><br>
+<h3>--- <help>.get</help></h3>
+<orinak>https://api-ramenskoye.ooogoroda.mobi/Help.get</orinak>
+
+<h2>Search</h2>
+<code>Search</code><br>
+<h3>--- <help>.get</help></h3>
+<orinak>https://api-ramenskoye.ooogoroda.mobi/Search.get?News</orinak>
+<br><code>$POST[keyword]</code> (minimumy 2 nish) GET ov poxancvum a konktet modelneri tesaky vortex katarvum a pojisk . 
+<br>kara lini case 'News':'Organizations':'Shares':'Poster':<br>
+<h3>--- <help>.getList</help></h3>
+<orinak>https://api-ramenskoye.ooogoroda.mobi/Search.getList</orinak>
+<br><code>$POST[keyword]</code> (minimumy 2 nish) , Home page i hamar a naxatesvac
+
+
+<h2>Shares</h2>
+<code>Shares</code><br>
+<h3>--- <help>.get</help></h3>
+<orinak>https://api-ramenskoye.ooogoroda.mobi/Shares.get?id=3</orinak>
+<h3>--- <help>.getList</help></h3>
+<orinak>https://api-ramenskoye.ooogoroda.mobi/Shares.getList</orinak>
+<br>ashxatum a nujn devi vonc vor  Poster -y<br>
