@@ -1,5 +1,5 @@
 <?php
-
+ 
 class Advertising {
 
     public function get() {

@@ -72,7 +72,8 @@ class User {
     private static function regEmail() {
         $data = null;
         if (!empty($_POST['name']) && !empty($_POST['f_name']) && !empty($_POST['email']) && !empty($_POST['pass'])) {
-            if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $email = trim($_POST['email']);
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 if (strlen($_POST["pass"]) > 6) {
                     $query = "INSERT INTO `user` SET name = '" . DB::res($_POST['name']) . "', "
                             . " f_name = '" . DB::res($_POST['f_name']) . "', "
@@ -91,7 +92,7 @@ class User {
                         }
                     } else {
                         $data['error']['code'] = 'ure-4';
-                        $data['error']['message'] = 'Внутренняя ошибка, возникло непредвиденное исключение';
+                        $data['error']['message'] = 'Данный Email адрес уже используется';
                     }
                 } else {
                     $data['error']['code'] = 'ure-3';

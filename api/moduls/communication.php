@@ -10,17 +10,10 @@ class Communication {
         $data = null;
         $query = "SELECT * FROM communication WHERE `status` != " . self::$hide . " ORDER BY id DESC";
         $c = DB::q_array_id($query);
-//        if ($c) {
-//            $id = array_keys($c);
-//            $in_id = implode(',', $id);
-//            $query = "SELECT * FROM comments WHERE communication_id IN ( $in_id ) AND `status` != " . self::$hide . " ORDER BY id DESC ";
-//            $cc = DB::q_array($query);
-//            if ($cc) {
-//                foreach ($cc as $vol) {
-//                    $c[$vol['id']]['comments'][] = $vol;
-//                }
-//            }
-//        }
+        foreach ($c as $id => $vol) {
+            $c[$id]['created_at'] = DATA::communication($vol['created_at']);
+            $c[$id]['updated_at'] = DATA::communication($vol['updated_at']);
+        }
         $data['list'] = array_values($c);
         $user_ids = array_unique(self::getUsersId($c));
         $data['users'] = User::getUsers($user_ids);

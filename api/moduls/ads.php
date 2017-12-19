@@ -32,23 +32,6 @@ class Ads {
         return $data;
     }
 
-//    private static function categoryList($cat_id = null) {
-//        $data = [];
-//        $query = null;
-//        if ($cat_id) {
-//            $cat = DB::q_line("SELECT * FROM ads_category WHERE id = " . $cat_id);
-//            if ($cat) {
-//                $query = "SELECT * FROM ads_category WHERE root = $cat[id] AND lvl = " . ($cat['lvl'] + 1) . " ";
-//            }
-//        } else {
-//            $query = "SELECT * FROM ads_category WHERE lvl = 0";
-//        }
-//        if ($query) {
-//            $data = DB::q_array($query);
-//        }
-//        return $data;
-//    }
-
     private static function itemList($cat_id = null) {
         $data = [];
         $query = null;
@@ -60,6 +43,10 @@ class Ads {
         // var_dump($query);die;
         if ($query) {
             $data = DB::q_array($query);
+            foreach ($data as $id => $vol) {
+                $data[$id]['created_at'] = DATA::communication($vol['created_at']);
+                $data[$id]['updated_at'] = DATA::communication($vol['updated_at']);
+            }
         }
 
         return $data;
@@ -85,11 +72,45 @@ class Ads {
     }
 
     private static function reklama() {
-        return ['name' => 'Rek',
-            'img' => '/uploads/images/ram/2016-06-24_21-35-50.png',
-            'url' => 'https://dunpal.com',
-            'tel' => '+799999999'
-        ];
+        $data = new stdClass();
+        $query = "SELECT * FROM advertising_banner ";
+        $vol = DB::q_line($query);
+        if ($vol) {
+            $tel = '';
+            $type = '';
+            $model = '';
+            $url = '';
+            if ($vol['organization_id'] > 0) {
+                $id = $vol['organization_id'];
+                $url = '/Organizations.get?id=' . $id;
+                $model = 'Organizations';
+                $type = 'item';
+            } elseif ($vol['category_id'] > 0) {
+                $id = $vol['category_id'];
+                $url = '/Organizations.getList?cat_id=' . $id;
+                $model = 'Organizations';
+                $type = 'cat';
+            } else {
+                $id = '';
+                if (filter_var($vol['url'], FILTER_VALIDATE_URL)) {
+                    $url = $vol['url'];
+                    $model = 'Url';
+                    $type = 'url';
+                } elseif (!empty($vol['telephone'])) {
+                    $tel = $vol['telephone'];
+                    $model = 'Tel';
+                    $type = 'tel';
+                }
+            }
+            $data->id = $id;
+            $data->title = '';
+            $data->url = $url;
+            $data->model = $model;
+            $data->image = $vol['image'];
+            $data->telephone = $tel;
+            $data->type = $type;
+        }
+        return $data;
     }
 
     public function get() {
@@ -100,6 +121,9 @@ class Ads {
                 $query = "SELECT * FROM ads WHERE id =" . $id;
                 $c = DB::q_line($query);
                 if ($c) {
+                    $c['created_at'] = DATA::communication($c['created_at']);
+                    $c['updated_at'] = DATA::communication($c['updated_at']);
+                    
                     $c['comments'] = COMMENTS::execute('ads_id', $c['id']);
                 }
                 $data['item'] = $c;

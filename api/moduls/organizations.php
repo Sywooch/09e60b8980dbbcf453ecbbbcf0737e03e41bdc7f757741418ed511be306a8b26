@@ -21,23 +21,6 @@ class Organizations {
         return $data;
     }
 
-//    private static function categoryList($cat_id = null) {
-//        $data = [];
-//        $query = null;
-//        if ($cat_id) {
-//            $cat = DB::q_line("SELECT * FROM organizations_category WHERE active = 1 AND id = " . $cat_id);
-//            if ($cat) {
-//                $query = "SELECT * FROM organizations_category WHERE root = $cat[id] AND lvl = " . ($cat['lvl'] + 1) . " AND active = 1";
-//            }
-//        } else {
-//            $query = "SELECT * FROM organizations_category WHERE lvl = 0 AND active = 1";
-//        }
-//        if ($query) {
-//            $data = DB::q_array($query);
-//        }
-//        return $data;
-//    }
-
     private static function itemList($cat_id = null) {
         $data = [];
         $query = null;
@@ -84,10 +67,18 @@ class Organizations {
     }
 
     private static function reklama() {
-        $data = [];
+        $data = new stdClass();
         $query = "SELECT * FROM advertising_banner ";
         $vol = DB::q_line($query);
-        if ($vol) {
+//        var_dump($vol);
+//        die;
+        if (
+                (!empty($vol["url"]) ||
+                !empty($vol["telephone"]) ||
+                !empty($vol["organization_id"]) ||
+                !empty($vol["category_id"])
+                ) && !empty($vol["image"])
+        ) {
             $tel = '';
             $type = '';
             $model = '';
@@ -112,17 +103,15 @@ class Organizations {
                     $tel = $vol['telephone'];
                     $model = 'Tel';
                     $type = 'tel';
-                } else {
-                    return [];
                 }
             }
-            $data['id'] = $id;
-            $data['title'] = '';
-            $data['url'] = $url;
-            $data['model'] = $model;
-            $data['image'] = $vol['image'];
-            $data['telephone'] = $tel;
-            $data['type'] = $type;
+            $data->id = $id;
+            $data->title = '';
+            $data->url = $url;
+            $data->model = $model;
+            $data->image = $vol['image'];
+            $data->telephone = $tel;
+            $data->type = $type;
         }
         return $data;
 //        return ['name' => 'test',

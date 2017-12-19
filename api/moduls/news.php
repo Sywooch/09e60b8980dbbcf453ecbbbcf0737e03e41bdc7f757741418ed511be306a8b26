@@ -1,5 +1,5 @@
 <?php
-
+ 
 function renderText($data, $i = 0, $arr = null) {
 //    var_dump($arr);
     if (is_array($data)) {

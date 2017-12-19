@@ -1,5 +1,5 @@
 <?php
-
+ 
 class Poster {
 
     public function getList() {

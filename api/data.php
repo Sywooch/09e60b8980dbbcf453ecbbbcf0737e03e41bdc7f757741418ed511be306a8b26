@@ -7,7 +7,7 @@ class DATA {
 
 //     public static $POSTER_COMMENTS = 'd-m-Y H:i';
     public static function getTimeZone() {
-        if (CONTROLER_DOMAIN::getCity()['time_zone']) {
+        if (!empty(CONTROLER_DOMAIN::getCity()['time_zone'])) {
             return CONTROLER_DOMAIN::getCity()['time_zone'];
         } else {
             return self::$TIME_ZONE;
@@ -15,15 +15,16 @@ class DATA {
     }
 
     public static function poster($start, $end) {
-        $ns = new DateTimeZone(self::getTimeZone());
         $s = null;
         $d = null;
         if (!empty($start)) {
-            $date = new DateTime($start, $ns);
+            $date = new DateTime($start);
+//            $date->setTimeZone(new DateTimeZone(self::getTimeZone()));
             $s = ' с <b>' . $date->format(self::$FORMAT) . '</b>';
         }
         if (!empty($end)) {
-            $date = new DateTime($end, $ns);
+            $date = new DateTime($end);
+//            $date->setTimeZone(new DateTimeZone(self::getTimeZone()));
             $d = ' до <b>' . $date->format(self::$FORMAT) . '</b>';
         }
 
@@ -33,11 +34,10 @@ class DATA {
 
     public static function comments($data) {
         $start = $data["created_at"];
-//        var_dump($start);die;
-        $ns = new DateTimeZone(self::getTimeZone());
         $s = null;
         if (!empty($start)) {
-            $date = new DateTime($start, $ns);
+            $date = new DateTime($start);
+            $date->setTimeZone(new DateTimeZone(self::getTimeZone()));
             $s = $date->format(self::$FORMAT);
         }
         $data["created_at"] = $s;
@@ -47,19 +47,24 @@ class DATA {
 
     public static function news($data) {
         if (!empty($data)) {
-            $ns = new DateTimeZone(self::getTimeZone());
             foreach ($data as $key => $vol) {
                 $start = $vol["date"];
-//        var_dump($start);die;
-
                 $s = null;
                 if (!empty($start)) {
-                    $date = new DateTime($start, $ns);
+                    $date = new DateTime($start);
+                    $date->setTimeZone(new DateTimeZone(self::getTimeZone()));
                     $s = $date->format(self::$FORMAT);
                 }
                 $data[$key]["date"] = $s;
             }
         }
+        return $data;
+    }
+
+    public static function communication($data) {
+        $date = new DateTime($data);
+        $date->setTimeZone(new DateTimeZone(self::getTimeZone()));
+        $data = $date->format(self::$FORMAT);
         return $data;
     }
 

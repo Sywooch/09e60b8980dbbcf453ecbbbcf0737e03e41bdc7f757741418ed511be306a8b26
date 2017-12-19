@@ -1,7 +1,7 @@
 <?php
 
 class Help {
-
+ 
     public function get() {
         $mail = self::sendMail();
         if (!$mail) {
