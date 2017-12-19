@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'adminEmail' => 'admin@example.com',
-    'supportEmail' => 'no-reply@goroda.com',
+    'adminEmail' => 'k.andranik@mail.ru',
+    'supportEmail' => 'no-reply@ooogoroda.mobi',
 	'user.passwordResetTokenExpire' => 3600,
 	'languages' => [
 		'ru' => 'Русский'
