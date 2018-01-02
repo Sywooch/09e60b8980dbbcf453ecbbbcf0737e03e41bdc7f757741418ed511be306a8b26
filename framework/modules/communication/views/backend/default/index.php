@@ -1,13 +1,15 @@
 <?php
-    use yii\helpers\Html;
-	use yii\web\View;
-	use yii\widgets\ListView;
-/* @var $this yii\web\View */
+
+use yii\helpers\Html;
+use yii\web\View;
+use yii\helpers\Url;
+
 /* @var $searchModel app\modules\communication\models\CommunicationSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = 'Общение';
+//$this->title = 'Общение';
+$this->title = 'Общение/Объявления';
 $this->params['breadcrumbs'][] = $this->title;
-	$js = <<<JS
+$js = <<<JS
     function changeStatus(thi){
         var _this = $(thi);
         $.ajax({
@@ -35,31 +37,137 @@ $this->params['breadcrumbs'][] = $this->title;
             }
         });	
     }
+    function d_id( event ) {
+         if (confirm("Вы подтверждаете удаление?")) {
+//	        submit();
+	    } else {
+	        event.preventDefault();
+	    }
+        
+      };
+        
 JS;
-	$this->registerJs($js, View::POS_END)
+$this->registerJs($js, View::POS_END)
 ?>
+<style>
+    .d_id{
+        color: red;
+    }
+</style>
 <div class="communication-index">
     <div class="row">
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
             <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-comment-o"></i> <?= Html::encode($this->title) ?></h1>
         </div>
     </div>
-    <?= ListView::widget([
-        'dataProvider' => $dataProvider,
-        'itemView' => '_list',
-        'layout' => '{summary}
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="well padding-10">
-                        {items}
-                  </div>
+    <?php
+    $page = 1;
+    $limit = 20 * $page;
+    $CgetList = \Communication::items($limit, \Communication::$allw);
+    $AgetList = \Ads::items($limit, \Ads::$allw);
+
+    $users_d = array_merge($CgetList['users'], $AgetList['users']);
+    foreach ($users_d as $vol) {
+        $users[$vol['id']] = $vol;
+    }
+    ?>
+    <div id ="Communication" class="col-xs-12 col-sm-6" style="border-right: 1px solid;">
+        <h3>Общение</h3>
+        <? foreach ($CgetList['item_list'] as $vol) { ?>
+            <div>
+                <?= render_list($vol, 'Communication', $users) ?>
+            </div>
+        <? } ?>
+    </div>
+    <div id ="Ads" class="col-xs-12 col-sm-6">
+        <h3>Объявления</h3>
+        <? foreach ($AgetList['item_list'] as $vol) { ?>
+            <div>
+                <?= render_list($vol, 'Ads', $users) ?>
+            </div>
+        <? } ?>
+    </div>
+</div>
+<?
+
+function render_list($data, $action, $users) {
+    $model = (object) $data;
+    $class = null;
+    if ($model->status == '2') {
+        $class = 'd_id';
+    }
+    ob_start();
+    ?>
+    <div class="row" style="background-color: white;">
+        <div class="col-md-12">
+            <div class="row margin-bottom-10">
+                <div class="col-sm-2">
+                    <h5 class="<?= $class ?>">
+                        <i class="fa fa-hashtag"></i>
+                        <small><?= $model->id ?></small>
+                    </h5>
+                </div>
+                <div class="col-sm-4">
+                    <h5 >
+                        <i class="fa fa-calendar"></i>
+                        <small><?= $model->created_at ?></small>
+                    </h5>
+                </div>
+                <div class="col-sm-6">
+                    <h5>
+                        <img src="<?= $users[$model->user_id]["photo_250"] ?>" style="border-radius: 50%;width: 32px;">
+                        <span style="font-size: 13px;"><?= $users[$model->user_id]['name'] . ' ' . $users[$model->user_id]["f_name"] ?></span>
+                    </h5>
                 </div>
             </div>
-            {pager}',
-        'summary' => '
-             <div class="row">
-                <div class="col-sm-6">'.$this->render('_search', ['model' => $searchModel]).'</div>
-                <div class="col-sm-6 text-align-right">Показаны записи {begin}-{end} из {totalCount}</div>
-            </div>'
-    ]); ?>
-</div>
+            <p>
+                <?= Html::encode($model->text); ?><br>
+                <? if (!empty($model->img)) { ?>
+                    <a href="<?= Html::encode($model->img) ?>" target="_blank"><img src="<?= Html::encode($model->img) ?>" width="100px"></a>     
+                <? } ?>
+
+            </p>
+            <div class="row">
+                <div class="col-xs-12" >
+                    <div class="smart-form" style="width: 200px;float: left;">
+                        <div class="inline-group">
+                            <label class="checkbox">
+                                <?=
+                                Html::a('<i class="fa fa-add"></i> Одобрить', Url::toRoute(['approve/' . $model->id . '?action=' . $action]), [
+                                    'class' => 'text-green',
+                                    'title' => 'Одобрить',
+                                    'rel' => 'tooltip',
+                                    'aria-label' => 'Одобрить',
+                                    'data-method' => 'post',
+                                ])
+                                ?>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 text-align-right" style="float: right;">
+                        <h5>
+                            <?=
+                            Html::a('<i class="fa fa-remove"></i> Удалить', Url::toRoute(['delete/' . $model->id . '?action=' . $action]), [
+                                'class' => 'text-danger',
+                                'title' => 'Удалить',
+                                'rel' => 'tooltip',
+                                'onclick' => 'd_id(event);',
+                                'aria-label' => 'Удалить',
+                                'data-confirm' => 'Вы уверены, что хотите удалить этот элемент?',
+                                'data-method' => 'post',
+                            ])
+                            ?>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <?
+    $cont = ob_get_contents();
+    ob_end_clean();
+    return $cont;
+}
+?>

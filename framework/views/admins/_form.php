@@ -65,7 +65,7 @@ use yii\widgets\ActiveForm;
                     </label>
                     <label class="checkbox">
 		                <?= Html::Checkbox('AdminsAccess[communication]', isset($model->access['communication'])?:false,  [ 'checked' => isset($model->access['communication'])?:false])?>
-                        <i></i>Общение
+                        <i></i>Общение/Объявления
                     </label>
                     <label class="checkbox">
 		                <?= Html::Checkbox('AdminsAccess[buttons]', isset($model->access['buttons'])?:false,  [ 'checked' => isset($model->access['buttons'])?:false])?>

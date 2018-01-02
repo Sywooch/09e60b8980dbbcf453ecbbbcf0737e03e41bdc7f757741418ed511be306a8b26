@@ -60,9 +60,6 @@ $this->registerJs($js, View::POS_END)
 ?>
 <section>
     <div class="row">
-        <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
-            <!--<h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-file-text"></i> Новости <span>&gt; Комментарии</span></h1>-->
-        </div>
         <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 text-align-right">
             <div class="page-title">
                 <?= Html::a('Опубликованные', Url::toRoute('index'), ['class' => 'btn btn-default']) ?>
@@ -73,6 +70,5 @@ $this->registerJs($js, View::POS_END)
             </div>
         </div>
     </div>
-
 </section>
 

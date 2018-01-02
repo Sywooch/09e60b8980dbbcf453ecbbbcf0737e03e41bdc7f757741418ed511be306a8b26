@@ -1,7 +1,7 @@
 ramenskoye:
     short_name: ram
     dbname: db_ram
-    name: раменское
+    name: Раменское
     api: 1
     'x': 55.5708624
     'y': 38.1913837
@@ -10,12 +10,62 @@ ramenskoye:
 zhukovsky:
     short_name: zhuk
     dbname: db_zhuk
-    name: жуковский
+    name: Жуковский
     api: 1
     'x': 55.5700441
     'y': 38.0624557
     time_zone: Europe/Moscow
+smolensk: 
+    short_name: smolensk
+    dbname: db_smolensk
+    name: Смоленск
+    api: 1
+    'x': 54.782640
+    'y': 32.045134
+    time_zone: Europe/Moscow
+sibay:
+    short_name: sibay
+    dbname: db_sibay
+    name: Сибай
+    api: 1
+    'x': 52.720510
+    'y': 58.666429
+    time_zone: Asia/Yekaterinburg
+ufa:
+    short_name: ufa
+    dbname: db_ufa
+    name: Уфа
+    api: 1
+    'x': 54.735147
+    'y': 55.958727
+    time_zone: Asia/Yekaterinburg
 
+lensk:
+    short_name: lensk
+    dbname: db_lensk
+    name: Ленск
+    api: 1
+    'x': 60.7143
+    'y': 114.9275
+    time_zone: Asia/Yakutsk
+    
+domodedovo:
+    short_name: dedovo
+    dbname: db_dedovo
+    name: Домодедово
+    api: 1
+    'x': 55.441
+    'y': 37.7856
+    time_zone: Europe/Moscow
+
+kyshtym:
+    short_name: kyshtym
+    dbname: db_kyshtym
+    name: Кыштым
+    api: 1
+    'x': 55.6945
+    'y': 60.605
+    time_zone: Asia/Yakutsk
 #yerevan:
 #    short_name: yer
 #    dbname: db_zhuk
