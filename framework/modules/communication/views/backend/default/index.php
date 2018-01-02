@@ -9,6 +9,9 @@ use yii\helpers\Url;
 //$this->title = 'Общение';
 $this->title = 'Общение/Объявления';
 $this->params['breadcrumbs'][] = $this->title;
+//echo'<pre>';
+//var_dump($CgetList);
+//die;
 $js = <<<JS
     function changeStatus(thi){
         var _this = $(thi);
@@ -60,32 +63,21 @@ $this->registerJs($js, View::POS_END)
             <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-comment-o"></i> <?= Html::encode($this->title) ?></h1>
         </div>
     </div>
-    <?php
-    $page = 1;
-    $limit = 20 * $page;
-    $CgetList = \Communication::items($limit, \Communication::$allw);
-    $AgetList = \Ads::items($limit, \Ads::$allw);
-
-    $users_d = array_merge($CgetList['users'], $AgetList['users']);
-    foreach ($users_d as $vol) {
-        $users[$vol['id']] = $vol;
-    }
-    ?>
     <div id ="Communication" class="col-xs-12 col-sm-6" style="border-right: 1px solid;">
         <h3>Общение</h3>
-        <? foreach ($CgetList['item_list'] as $vol) { ?>
+            <? foreach ($CgetList['item_list'] as $vol) { ?>
             <div>
-                <?= render_list($vol, 'Communication', $users) ?>
+            <?= render_list($vol, 'Communication', $users) ?>
             </div>
-        <? } ?>
+<? } ?>
     </div>
     <div id ="Ads" class="col-xs-12 col-sm-6">
         <h3>Объявления</h3>
-        <? foreach ($AgetList['item_list'] as $vol) { ?>
+            <? foreach ($AgetList['item_list'] as $vol) { ?>
             <div>
-                <?= render_list($vol, 'Ads', $users) ?>
+            <?= render_list($vol, 'Ads', $users) ?>
             </div>
-        <? } ?>
+<? } ?>
     </div>
 </div>
 <?
@@ -124,7 +116,7 @@ function render_list($data, $action, $users) {
                 <?= Html::encode($model->text); ?><br>
                 <? if (!empty($model->img)) { ?>
                     <a href="<?= Html::encode($model->img) ?>" target="_blank"><img src="<?= Html::encode($model->img) ?>" width="100px"></a>     
-                <? } ?>
+    <? } ?>
 
             </p>
             <div class="row">

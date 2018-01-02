@@ -51,10 +51,42 @@ class DefaultController extends Controller {
     public function actionIndex() {
         $searchModel = new CommunicationSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $page = 1;
+        $limit = 20 * $page;
+        $CgetList = \Communication::items($limit, \Communication::$allw);
+        $AgetList = \Ads::items($limit, \Ads::$allw);
+        $users = [];
+        $users_d = array_merge($CgetList['users'], $AgetList['users']);
+        foreach ($users_d as $vol) {
+            $users[$vol['id']] = $vol;
+        }
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'users' => $users,
+                    'CgetList' => $CgetList,
+                    'AgetList' => $AgetList
+        ]);
+    }
+
+    public function actionAll() {
+        $searchModel = new CommunicationSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $page = 1;
+        $limit = 20 * $page;
+        $CgetList = \Communication::items($limit, \Communication::$hide);
+        $AgetList = \Ads::items($limit, \Ads::$hide);
+        $users = [];
+        $users_d = array_merge($CgetList['users'], $AgetList['users']);
+        foreach ($users_d as $vol) {
+            $users[$vol['id']] = $vol;
+        }
+        return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    'users' => $users,
+                    'CgetList' => $CgetList,
+                    'AgetList' => $AgetList
         ]);
     }
 
