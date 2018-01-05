@@ -1,7 +1,7 @@
 <?php
 
 class Search {
-
+                        
     public function __construct() {
         
     }
@@ -56,11 +56,11 @@ class Search {
 
     private static function News($keyword) {
         $data = [];
-        $query = "SELECT DISTINCT nid as id, title FROM `news_data` 
+        $query = "SELECT DISTINCT nd.nid as id, nd.title FROM `news_data` nd LEFT JOIN `news` n ON (n.id = nd.nid) 
 	WHERE (`title` LIKE '%" . $keyword . "%'
 	OR `text` LIKE '%" . $keyword . "%' 
 	OR `description` LIKE '%" . $keyword . "%') "
-                . " AND published = 1";
+                . " AND n.published = 1";
         $s = DB::q_array($query);
         if (!empty($s)) {
             foreach ($s as $key => $vol) {
@@ -69,7 +69,7 @@ class Search {
                 $data[$key]['desc'] = 'Новости';
                 $data[$key]['url'] = '/News.get?id=' . $vol['id'];
                 $data[$key]['model'] = 'News';
-                $data[$key]['is'] = 'item';
+                $data[$key]['type'] = 'item';
             }
         }
         return $data;

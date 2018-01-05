@@ -50,7 +50,7 @@ class Advertising extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'text', 'url'], 'required'],
+//            [['title', 'text', 'url'], 'required'],
             [['text'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['title', 'url'], 'string', 'max' => 255],

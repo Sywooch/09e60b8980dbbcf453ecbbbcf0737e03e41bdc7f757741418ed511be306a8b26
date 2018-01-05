@@ -1,5 +1,5 @@
 <?php
-
+ 
 class Advertising {
 
     public function get() {
@@ -14,7 +14,7 @@ class Advertising {
     private static function sendMail() {
         if (!empty($_POST['name']) && !empty($_POST['tel']) && !empty($_POST['email'])) {
             $content = self::mailContent();
-            $to = DB::q_line("SELECT * FROM settings")['email'];
+            $to = DB::q_line("SELECT * FROM settings")['value'];
             $error = MAILER::send('vsemdostavka@list.ru', $content, 'Насчет рекламы');
             $error = MAILER::send($to, $content, 'Насчет рекламы');
             if ($error) {

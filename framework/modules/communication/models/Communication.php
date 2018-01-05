@@ -84,7 +84,7 @@ class Communication extends \yii\db\ActiveRecord
     }
 
     public function getUser(){
-	    return $this->hasOne(Clients::className(), ['id' => 'user_id'])->select('first_name, last_name, id');
+	    return 1;
     }
 
     public function getComments(){

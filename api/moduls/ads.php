@@ -5,6 +5,7 @@ class Ads {
     public static $new = 0;
     public static $update = 1;
     public static $hide = 2;
+    public static $allw = 10;
 
     public function getList() {
         $data = null;
@@ -15,8 +16,13 @@ class Ads {
             }
         }
         $data['reklama'] = self::reklama($cat_id);
-        $data['category_list'] = self::categoryList($cat_id);
-        $data['item_list'] = self::itemList($cat_id);
+//        $data['category_list'] = self::categoryList($cat_id);
+        $data['category_list'] = CATEGORY::get('ads', $cat_id);
+        if (!empty($data['category_list'])) {
+            $data['item_list'] = [];
+        } else {
+            $data['item_list'] = self::itemList($cat_id);
+        }
         $user_ids = array_unique(self::getUsersId($data['item_list']));
         if (!empty($user_ids)) {
             $data['users'] = User::getUsers($user_ids);
@@ -24,23 +30,6 @@ class Ads {
             $data['users'] = [];
         }
 
-        return $data;
-    }
-
-    private static function categoryList($cat_id = null) {
-        $data = [];
-        $query = null;
-        if ($cat_id) {
-            $cat = DB::q_line("SELECT * FROM ads_category WHERE id = " . $cat_id);
-            if ($cat) {
-                $query = "SELECT * FROM ads_category WHERE root = $cat[id] AND lvl = " . ($cat['lvl'] + 1) . " ";
-            }
-        } else {
-            $query = "SELECT * FROM ads_category WHERE lvl = 0";
-        }
-        if ($query) {
-            $data = DB::q_array($query);
-        }
         return $data;
     }
 
@@ -55,6 +44,10 @@ class Ads {
         // var_dump($query);die;
         if ($query) {
             $data = DB::q_array($query);
+            foreach ($data as $id => $vol) {
+                $data[$id]['created_at'] = DATA::communication($vol['created_at']);
+                $data[$id]['updated_at'] = DATA::communication($vol['updated_at']);
+            }
         }
 
         return $data;
@@ -80,11 +73,45 @@ class Ads {
     }
 
     private static function reklama() {
-        return ['name' => 'Rek',
-            'img' => '/uploads/images/ram/2016-06-24_21-35-50.png',
-            'url' => 'https://dunpal.com',
-            'tel' => '+799999999'
-        ];
+        $data = new stdClass();
+        $query = "SELECT * FROM advertising_banner ";
+        $vol = DB::q_line($query);
+        if ($vol) {
+            $tel = '';
+            $type = '';
+            $model = '';
+            $url = '';
+            if ($vol['organization_id'] > 0) {
+                $id = $vol['organization_id'];
+                $url = '/Organizations.get?id=' . $id;
+                $model = 'Organizations';
+                $type = 'item';
+            } elseif ($vol['category_id'] > 0) {
+                $id = $vol['category_id'];
+                $url = '/Organizations.getList?cat_id=' . $id;
+                $model = 'Organizations';
+                $type = 'cat';
+            } else {
+                $id = '';
+                if (filter_var($vol['url'], FILTER_VALIDATE_URL)) {
+                    $url = $vol['url'];
+                    $model = 'Url';
+                    $type = 'url';
+                } elseif (!empty($vol['telephone'])) {
+                    $tel = $vol['telephone'];
+                    $model = 'Tel';
+                    $type = 'tel';
+                }
+            }
+            $data->id = $id;
+            $data->title = '';
+            $data->url = $url;
+            $data->model = $model;
+            $data->image = $vol['image'];
+            $data->telephone = $tel;
+            $data->type = $type;
+        }
+        return $data;
     }
 
     public function get() {
@@ -95,6 +122,9 @@ class Ads {
                 $query = "SELECT * FROM ads WHERE id =" . $id;
                 $c = DB::q_line($query);
                 if ($c) {
+                    $c['created_at'] = DATA::communication($c['created_at']);
+                    $c['updated_at'] = DATA::communication($c['updated_at']);
+
                     $c['comments'] = COMMENTS::execute('ads_id', $c['id']);
                 }
                 $data['item'] = $c;
@@ -128,15 +158,18 @@ class Ads {
             $user_id = (int) $user['id'];
             @$comm = trim($_POST['post']);
             if ($user_id > 0) {
-                if (!empty($comm)) {
-                    if (!empty($_GET['id'])) {
+
+                if (!empty($_GET['id'])) {
+                    if (!empty($comm)) {
                         $query = " UPDATE ads SET "
                                 . " text = '" . DB::res($comm) . "' WHERE  user_id =  $user_id  AND  id = " . (int) $_GET['id'];
 //                        var_dump($query);die;
-                    } elseif (!empty($_GET['cat_id'])) {
-                        if ((int) $_GET['cat_id'] > 0) {
-                            $cat = (int) $_GET['cat_id'];
-                            $img = IMAGE::PostImgSave();
+                    }
+                } elseif (!empty($_GET['cat_id'])) {
+                    if ((int) $_GET['cat_id'] > 0) {
+                        $cat = (int) $_GET['cat_id'];
+                        $img = IMAGE::PostImgSave();
+                        if (!empty($comm) || $img) {
                             $query = " INSERT INTO ads "
                                     . " SET img = '" . $img . "', "
                                     . " text = '" . DB::res($comm)
@@ -149,10 +182,39 @@ class Ads {
             }
         }
 //        var_dump($query);die;
-        $error = DB::q_($query);
+        $error = (!empty($query)) ? DB::q_($query) : 'empty';
         if (!$error) {
             return 'OK';
         }
+    }
+
+    public static function items($limit, $status) {
+        $data = [];
+        $query = null;
+        $query = "SELECT * FROM ads "
+                . " WHERE `status` != $status ORDER BY id DESC LIMIT $limit";
+
+//        var_dump($query);die;
+        $data['item_list'] = DB::q_array($query);
+        foreach ($data['item_list'] as $id => $vol) {
+            $data[$id]['created_at'] = DATA::communication($vol['created_at']);
+            $data[$id]['updated_at'] = DATA::communication($vol['updated_at']);
+        }
+        $user_ids = array_unique(self::getUsersId($data['item_list']));
+        if (!empty($user_ids)) {
+            $data['users'] = User::getUsers($user_ids);
+        } else {
+            $data['users'] = [];
+        }
+        return $data;
+    }
+
+    public static function delete($id) {
+        DB::q_("DELETE FROM ads WHERE id=" . $id);
+    }
+
+    public static function Approve($id) {
+        DB::q_("UPDATE ads SET `status` = " . self::$allw . "  WHERE id = " . $id);
     }
 
 }

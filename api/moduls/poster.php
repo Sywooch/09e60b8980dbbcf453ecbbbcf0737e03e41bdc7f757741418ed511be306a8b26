@@ -13,28 +13,52 @@ class Poster {
         }
         if (!empty($item)) {
             foreach ($item as $key => $vol) {
-                $at = DATA::poster($vol['start_at'], $vol['end_at']);
-                $item[$key]['at'] = $at;
-                unset($item[$key]['updated_at']);
-                unset($item[$key]['created_at']);
-                unset($item[$key]['end_at']);
-                unset($item[$key]['start_at']);
+                if (self::cheker($vol['start_at'], $vol['end_at'])) {
+                    $at = DATA::poster($vol['start_at'], $vol['end_at']);
+                    $item[$key]['at'] = $at;
+                    $item[$key]['description'] = nl2br($item[$key]['description']);
+                    unset($item[$key]['updated_at']);
+                    unset($item[$key]['created_at']);
+                    unset($item[$key]['end_at']);
+                    unset($item[$key]['start_at']);
+                } else {
+                    unset($item[$key]);
+                }
             }
         }
-         $data['category'] = $category;
+        $data['category'] = $category;
         $data['data'] = $item;
         return $data;
+    }
+
+    private static function cheker($start, $end) {
+        if (DATA::posterCheker($start, $end)) {
+            return TRUE;
+        }
     }
 
     public function get() {
         if (!empty($_GET['id'])) {
             if ((int) $_GET['id'] > 0) {
                 $query = "SELECT * FROM poster "
-                        . " WHERE published = '1' "
-                        . " AND id = " . (int) $_GET['id']
-                        . " AND start_at < NOW() "
-                        . " AND end_at > NOW() ";
-                return DB::q_line($query);
+                        . "WHERE published = '1' "
+                        . " AND id = " . (int) $_GET['id'];
+                $vol = DB::q_line($query);
+                if ($vol) {
+                    $at = DATA::poster($vol['start_at'], $vol['end_at']);
+                    $vol['at'] = $at;
+//                    $vol['description'] = preg_replace("/\r\n|\r|\n/", '<br>' . "\r\n", $vol['description']);
+//                    $vol['description'] = mb_ereg_replace("Жанр", 'gago', $vol['description']);
+                    $vol['description'] = nl2br($vol['description']);
+//                    $vol['description'] = '<br />' . $vol['description'];
+                    unset($vol['updated_at']);
+                    unset($vol['created_at']);
+                    unset($vol['end_at']);
+                    unset($vol['start_at']);
+                } else {
+                    $vol = [];
+                }
+                return $vol;
             }
         }
     }
@@ -50,7 +74,7 @@ class Poster {
                 . "AND category_id = $id "
                 . "AND pin_filter = 1 "
 //            . "AND start_at < NOW() "
-                . "AND end_at > NOW() "
+//                . "AND end_at > NOW() "
                 . "ORDER BY id ASC";
         $top = DB::q_array($query);
 
@@ -58,12 +82,12 @@ class Poster {
                 . " WHERE published = '1' "
                 . " AND category_id = $id "
                 . " AND pin_filter != 1 "
-                . " AND start_at < NOW() "
-                . " AND end_at > NOW() "
-                . " ORDER BY end_at DESC";
+//                . " AND start_at < NOW() "
+//                . " AND end_at > NOW() "
+                . " ORDER BY end_at ASC";
         $sec = DB::q_array($query);
 
-        return array_merge((array) $top, (array) $sec);
+        return array_merge(array_values($top), array_values($sec));
     }
 
     private function listAll() {
@@ -72,19 +96,19 @@ class Poster {
                 . "WHERE published = '1' "
                 . " AND pin_poster = 1 "
 //            . " AND start_at < NOW() "
-                . " AND end_at > NOW() "
-                . " ORDER BY id ASC";
+//                . " AND end_at > NOW() "
+                . " ORDER BY  id ASC";
         $top = DB::q_array($query);
 
         $query = "SELECT * FROM poster "
                 . " WHERE published = '1' "
                 . " AND pin_poster != 1 "
 //            . " AND start_at < NOW() "
-                . " AND end_at > NOW() "
-                . " ORDER BY end_at DESC";
+//                . " AND end_at > NOW() "
+                . " ORDER BY end_at ASC";
         $sec = DB::q_array($query);
 
-        return array_merge((array) $top, (array) $sec);
+        return array_merge(array_values($top), array_values($sec));
     }
 
 }

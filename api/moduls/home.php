@@ -1,5 +1,5 @@
 <?php
-
+ 
 class Home {
 
     public function get() {
@@ -82,6 +82,7 @@ class Home {
                 }
             }
         }
+        $data = array_values($data);
         return $data;
     }
 

@@ -8,13 +8,12 @@ use yii\data\ActiveDataProvider;
 /**
  * ButtonsSearch represents the model behind the search form of `app\modules\buttons\models\Buttons`.
  */
-class ButtonsSearch extends Buttons
-{
+class ButtonsSearch extends Buttons {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['id', 'section', 'section_id', 'published'], 'integer'],
             [['title', 'url', 'telephone', 'image', 'created_at', 'updated_at'], 'safe'],
@@ -24,8 +23,7 @@ class ButtonsSearch extends Buttons
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -37,14 +35,17 @@ class ButtonsSearch extends Buttons
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Buttons::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 150,
+            //'pageSizeLimit' => [0, 3],
+            ]
         ]);
 
         $this->load($params);
@@ -66,10 +67,11 @@ class ButtonsSearch extends Buttons
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'url', $this->url])
-            ->andFilterWhere(['like', 'telephone', $this->telephone])
-            ->andFilterWhere(['like', 'image', $this->image]);
+                ->andFilterWhere(['like', 'url', $this->url])
+                ->andFilterWhere(['like', 'telephone', $this->telephone])
+                ->andFilterWhere(['like', 'image', $this->image]);
 
         return $dataProvider;
     }
+
 }

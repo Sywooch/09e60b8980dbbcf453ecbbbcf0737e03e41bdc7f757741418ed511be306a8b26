@@ -15,6 +15,9 @@ class MTD {
     }
     return $data;
   }
+  public static function getTimeZone(){
+      
+  }
 
 //  public static function getModelId($model = null) {
 //    $data = [];

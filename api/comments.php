@@ -70,7 +70,7 @@ class COMMENTS {
         if ($user) {
             $img = IMAGE::CommentImgSave();
             $comm = trim($_POST['comment']);
-            if (!empty($comm)) {
+            if (!empty($comm) || $img) {
                 $query = "INSERT INTO `comments` SET "
                         . " $fild_name = '$id' , "
                         . " user_id = " . $user['id'] . ", "
@@ -102,6 +102,10 @@ class COMMENTS {
         }
 
         return $data;
+    }
+    public static function delete($id) {
+        $query = "DELETE FROM comments WHERE id = $id";
+        DB::q_($query);
     }
 
 }

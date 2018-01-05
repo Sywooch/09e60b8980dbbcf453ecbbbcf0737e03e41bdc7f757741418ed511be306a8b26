@@ -1,5 +1,5 @@
 <?php
-
+ 
 function renderText($data, $i = 0, $arr = null) {
 //    var_dump($arr);
     if (is_array($data)) {
@@ -76,6 +76,7 @@ class News {
     }
 
     public function getCat() {
+//        var_dump(DB::q_array("SELECT id, title, image FROM news_category WHERE published = 1"));die;
         return DB::q_array("SELECT id, title, image FROM news_category WHERE published = 1");
     }
 

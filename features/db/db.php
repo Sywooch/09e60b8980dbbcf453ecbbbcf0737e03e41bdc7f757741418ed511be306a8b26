@@ -79,7 +79,7 @@ class DB {
     }
 
     public static function res($query) {
-        return $data = self::cnn()->real_escape_string($query);
+        return self::cnn()->real_escape_string($query);
     }
 
 }

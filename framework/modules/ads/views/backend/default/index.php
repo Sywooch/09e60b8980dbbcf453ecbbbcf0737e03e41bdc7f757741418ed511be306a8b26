@@ -50,7 +50,8 @@ $this->registerJs($js, View::POS_END)
         </div>
     </div>
     <a href="/ads/category/index">Категории</a>
-    <a href="/ads/create">Объявления</a>
+    <!--    <a href="/ads/create">Объявления</a>-->
+<!--    <a href="/ads/control">Контроль</a>-->
     <?
     echo ListView::widget([
         'dataProvider' => $dataProvider,

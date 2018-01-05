@@ -93,7 +93,7 @@ class DefaultController extends Controller {
             return $this->redirect(['index']);
         } else {
             #Defaults
-            $placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('uploads/no_image.png'), 140, 100, 'inset', 100, Yii::getAlias('uploads/cache/thumb-no_image.png'));
+            $placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('uploads/no_image.png'), 320, 180, 'inset', 100, Yii::getAlias('uploads/cache/thumb-no_image.png'));
             return $this->render('create', [
                         'model' => $model,
                         'placeholder' => $placeholder,
@@ -124,7 +124,7 @@ class DefaultController extends Controller {
             return $this->redirect(['update', 'id' => $model->id]);
         } else {
             #Defaults
-            $placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('uploads/no_image.png'), 140, 100, 'inset', 100, Yii::getAlias('uploads/cache/thumb-no_image.png'));
+            $placeholder = \Yii::$app->imageresize->getUrl(Yii::getAlias('uploads/no_image.png'), 320, 180, 'inset', 100, Yii::getAlias('uploads/cache/thumb-no_image.png'));
             $model->start_at = !is_null($model->start_at) ? Yii::$app->formatter->asDatetime($model->start_at) : '';
             $model->end_at = !is_null($model->end_at) ? Yii::$app->formatter->asDatetime($model->end_at) : '';
             $model->price = !is_null($model->price) ? $model->price : 0;

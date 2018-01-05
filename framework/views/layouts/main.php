@@ -181,8 +181,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?=Url::toRoute('/communication')?>" title="Общение"><i class="fa fa-lg fa-fw fa-comment-o"></i>
-                        <span class="menu-item-parent">Общение</span><span class="badge pull-right inbox-badge margin-right-13 bg-color-yellow"></span>
+                    <a href="<?=Url::toRoute('/communication')?>" title="Общение/Объявления"><i class="fa fa-lg fa-fw fa-comment-o"></i>
+                        <span class="menu-item-parent">Общение/Объявления</span><span class="badge pull-right inbox-badge margin-right-13 bg-color-yellow"></span>
                     </a>
                 </li>
                 <li>
@@ -242,7 +242,7 @@
     </div>
     <div class="page-footer">
         <div class="row">
-            <div class="col-xs-12 col-sm-6"><span class="txt-color-white">Города <span class="hidden-xs"> - система управления API/Manager</span> © 2017</span></div>
+            <div class="col-xs-12 col-sm-6"><span class="txt-color-white">Города <span class="hidden-xs"> - система управления API/Manager</span> © 2017 - 2018</span></div>
             <div class="col-xs-6 col-sm-6 text-right hidden-xs"></div>
         </div>
     </div>

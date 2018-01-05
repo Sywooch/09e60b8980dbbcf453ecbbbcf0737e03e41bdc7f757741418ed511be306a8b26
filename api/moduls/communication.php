@@ -5,22 +5,16 @@ class Communication {
     public static $new = 0;
     public static $update = 1;
     public static $hide = 2;
+    public static $allw = 10;
 
     public function getList() {
         $data = null;
         $query = "SELECT * FROM communication WHERE `status` != " . self::$hide . " ORDER BY id DESC";
         $c = DB::q_array_id($query);
-//        if ($c) {
-//            $id = array_keys($c);
-//            $in_id = implode(',', $id);
-//            $query = "SELECT * FROM comments WHERE communication_id IN ( $in_id ) AND `status` != " . self::$hide . " ORDER BY id DESC ";
-//            $cc = DB::q_array($query);
-//            if ($cc) {
-//                foreach ($cc as $vol) {
-//                    $c[$vol['id']]['comments'][] = $vol;
-//                }
-//            }
-//        }
+        foreach ($c as $id => $vol) {
+            $c[$id]['created_at'] = DATA::communication($vol['created_at']);
+            $c[$id]['updated_at'] = DATA::communication($vol['updated_at']);
+        }
         $data['list'] = array_values($c);
         $user_ids = array_unique(self::getUsersId($c));
         $data['users'] = User::getUsers($user_ids);
@@ -88,14 +82,15 @@ class Communication {
             $user_id = (int) $user['id'];
             @$comm = trim($_POST['post']);
             if ($user_id > 0) {
-                if (!empty($comm)) {
-                    if (!empty($_GET['id'])) {
+                if (!empty($_GET['id'])) {
+                    if (!empty($comm)) {
                         $query = " UPDATE communication SET "
                                 . " text = '" . DB::res($comm) . "' "
                                 . "WHERE  user_id =  $user_id  AND  id = " . (int) $_GET['id'];
-                    } else {
-                        $img = IMAGE::PostImgSave();
-
+                    }
+                } else {
+                    $img = IMAGE::PostImgSave();
+                    if (!empty($comm) || $img) {
                         $query = " INSERT INTO communication "
                                 . " SET  img = '" . DB::res($img) . "', "
                                 . " text = '" . DB::res($comm) . "', "
@@ -107,10 +102,32 @@ class Communication {
         }
 //        var_dump($query);
 //        die;
-        $error = DB::q_($query);
+        $error = (!empty($query)) ? DB::q_($query) : 'empty';
         if (!$error) {
             return 'OK';
         }
+    }
+
+    public static function items($limit, $status) {
+        $data = null;
+        $query = "SELECT * FROM communication WHERE `status` != $status ORDER BY id DESC LIMIT $limit";
+        $c = DB::q_array_id($query);
+        foreach ($c as $id => $vol) {
+            $c[$id]['created_at'] = DATA::communication($vol['created_at']);
+            $c[$id]['updated_at'] = DATA::communication($vol['updated_at']);
+        }
+        $data['item_list'] = array_values($c);
+        $user_ids = array_unique(self::getUsersId($c));
+        $data['users'] = User::getUsers($user_ids);
+        return $data;
+    }
+
+    public static function delete($id) {
+        DB::q_("DELETE FROM communication WHERE id=" . $id);
+    }
+
+    public static function Approve($id) {
+        DB::q_("UPDATE communication SET `status` = " . self::$allw . "  WHERE id = " . $id);
     }
 
 }

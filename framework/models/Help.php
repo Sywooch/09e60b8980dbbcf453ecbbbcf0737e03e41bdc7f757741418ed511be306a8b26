@@ -28,7 +28,7 @@ class Help extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'text'], 'required'],
+//            [['name', 'text'], 'required'],
             [['name', 'text', 'link'], 'string'],
         ];
     }

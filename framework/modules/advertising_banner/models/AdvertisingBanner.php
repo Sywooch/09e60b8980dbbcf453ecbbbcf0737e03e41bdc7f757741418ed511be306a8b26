@@ -52,9 +52,9 @@ class AdvertisingBanner extends ActiveRecord
     public function rules()
     {
         return [
-            [['image', 'category_id'], 'required'],
+            [['image', 'category_id'], 'safe'],
             [['url', 'telephone', 'organization_id'], 'safe'],
-            [['organization_id', 'category_id'], 'integer'],
+            [['organization_id', 'category_id'], 'safe'],
             [['created_at', 'updated_at'], 'safe'],
             [['url', 'image'], 'string', 'max' => 255],
             [['telephone'], 'string', 'max' => 64],
