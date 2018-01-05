@@ -104,14 +104,16 @@ class Home {
 
     private static function adv_Shares() {
         $data = [];
-        $query = "SELECT * FROM shares WHERE  pin_main > 0 AND published = 1 AND end_at > NOW() ";
+        $query = "SELECT * FROM shares WHERE  pin_main > 0 AND published = 1 ";
         $s = DB::q_array($query);
         if ($s) {
             foreach ($s as $key => $vol) {
-                $data[$key]['id'] = $vol['id'];
-                $data[$key]['name'] = $vol['name'];
-                $data[$key]['image'] = $vol['image'];
-                $data[$key]['section'] = 'Shares';
+                if (self::cheker($vol['start_at'], $vol['end_at'])) {
+                    $data[$key]['id'] = $vol['id'];
+                    $data[$key]['name'] = $vol['name'];
+                    $data[$key]['image'] = $vol['image'];
+                    $data[$key]['section'] = 'Shares';
+                }
             }
         }
         return $data;
@@ -119,17 +121,25 @@ class Home {
 
     private static function adv_Poster() {
         $data = [];
-        $query = "SELECT * FROM poster WHERE  pin_main > 0 AND published = 1 AND end_at > NOW() ";
+        $query = "SELECT * FROM poster WHERE  pin_main > 0 AND published = 1 ";
         $s = DB::q_array($query);
         if ($s) {
             foreach ($s as $key => $vol) {
-                $data[$key]['id'] = $vol['id'];
-                $data[$key]['name'] = $vol['name'];
-                $data[$key]['image'] = $vol['image'];
-                $data[$key]['section'] = 'Poster';
+                if (self::cheker($vol['start_at'], $vol['end_at'])) {
+                    $data[$key]['id'] = $vol['id'];
+                    $data[$key]['name'] = $vol['name'];
+                    $data[$key]['image'] = $vol['image'];
+                    $data[$key]['section'] = 'Poster';
+                }
             }
         }
         return $data;
+    }
+
+    private static function cheker($start, $end) {
+        if (DATA::posterCheker($start, $end)) {
+            return TRUE;
+        }
     }
 
 }

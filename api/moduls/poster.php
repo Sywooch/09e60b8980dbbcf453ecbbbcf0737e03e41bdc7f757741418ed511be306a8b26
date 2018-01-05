@@ -86,7 +86,6 @@ class Poster {
 //                . " AND end_at > NOW() "
                 . " ORDER BY end_at ASC";
         $sec = DB::q_array($query);
-
         return array_merge(array_values($top), array_values($sec));
     }
 

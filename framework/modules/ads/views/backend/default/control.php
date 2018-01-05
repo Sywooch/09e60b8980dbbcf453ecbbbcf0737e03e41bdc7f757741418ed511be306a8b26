@@ -5,8 +5,8 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\ads\models\Ads */
-//
-$this->title = 'SS Ads';
+
+$this->title = 'Create Ads';
 $this->params['breadcrumbs'][] = ['label' => 'Ads', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_list_control', [
+    <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
 
