@@ -59,12 +59,23 @@ class User {
                     $data = self::regEmail();
                     break;
                 case 1:
-                    echo "i равно 1";
+                    $data = self::regVk();
                     break;
                 case 2:
                     echo "i равно 2";
                     break;
             }
+        }
+        return $data;
+    }
+
+    private static function regVk() {
+        $data = null;
+        if (!empty($_POST['user_token'])) {
+            
+        } else {
+            $data['error']['code'] = 'urvk-1';
+            $data['error']['message'] = 'Неправильный запрос';
         }
         return $data;
     }
