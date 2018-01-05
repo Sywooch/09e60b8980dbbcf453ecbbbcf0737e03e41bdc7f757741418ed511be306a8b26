@@ -1,20 +1,21 @@
 <?php
 
-	use app\modules\filters\models\Filters;
-	use app\modules\organizations\models\Category;
-	use app\modules\poster\models\Poster;
-	use yii\helpers\Html;
-    use yii\grid\GridView;
-	use yii\helpers\Url;
-	use yii\web\View;
-	use yii\widgets\Pjax;
-    /* @var $this yii\web\View */
-    /* @var $searchModel app\modules\poster\models\PosterSearch */
-    /* @var $dataProvider yii\data\ActiveDataProvider */
+use app\modules\filters\models\Filters;
+use app\modules\organizations\models\Category;
+use app\modules\poster\models\Poster;
+use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\helpers\Url;
+use yii\web\View;
+use yii\widgets\Pjax;
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\modules\poster\models\PosterSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('poster', 'Афиша');
 $this->params['breadcrumbs'][] = $this->title;
-	$js = <<<JS
+$js = <<<JS
         function changeStatus(id){
             $.ajax({
               method: "GET",
@@ -42,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             });
         }
 JS;
-	$this->registerJs($js, View::POS_END)
+$this->registerJs($js, View::POS_END)
 ?>
 <div class="poster-index">
 
@@ -50,9 +51,9 @@ JS;
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
             <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-television"></i> <?= Html::encode($this->title) ?></h1>
         </div>
-        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 text-align-right">
-            <div class="page-title">
-				<?= Html::a('<i class="fa-fw fa fa-plus-circle"></i> Добавить', ['create'], ['class' => 'btn btn-success']) ?>
+        <div class="col-xs-12 text-align-right">
+            <div class="">
+                <?= Html::a('<i class="fa-fw fa fa-plus-circle"></i> Добавить', ['create'], ['class' => 'btn btn-success']) ?>
             </div>
         </div>
     </div>
@@ -69,97 +70,96 @@ JS;
                         <div class="jarviswidget-editbox"></div>
                         <div class="widget-body no-padding">
                             <div class="table-responsive">
-								<?= GridView::widget([
-									'dataProvider' => $dataProvider,
-									'filterModel' => $searchModel,
-									'tableOptions' => ['class' => 'table table-hover no-footer'],
-									'filterPosition' => \yii\grid\GridView::FILTER_POS_HEADER,
-									'layout' => '{items}
+                                <?=
+                                GridView::widget([
+                                    'dataProvider' => $dataProvider,
+                                    'filterModel' => $searchModel,
+                                    'tableOptions' => ['class' => 'table table-hover no-footer'],
+                                    'filterPosition' => \yii\grid\GridView::FILTER_POS_HEADER,
+                                    'layout' => '{items}
                                     <div class="dt-toolbar-footer">
                                         <div class="col-xs-12 col-sm-6"><div class="dataTables_info">{summary}</div></div>
                                         <div class="col-xs-12 col-sm-6"><div class="dataTables_paginate">{pager}</div></div>
                                     </div>',
-									'summary' => 'Показаны записи <span class="txt-color-darken">{begin}</span>-<span class="txt-color-darken">{end}</span> 
+                                    'summary' => 'Показаны записи <span class="txt-color-darken">{begin}</span>-<span class="txt-color-darken">{end}</span> 
                                               из <span class="text-primary">{totalCount}</span>',
-									'pager' => [
-										'options' => ['class' => 'pagination pagination-sm'],
-										'prevPageLabel' => 'Предыдущая',
-										'nextPageLabel' => 'Следующая'
-									],
-									'columns' => [
-										['class' => 'yii\grid\SerialColumn'],
-
-										['attribute' => 'id', 'headerOptions' => ['style' => 'width: 80px;']],
-										'name',
-										'address',
-										'price',
-										[
-											'attribute' => 'category_id',
-											'filter' => Filters::ListOfFilters(Filters::CATEGORY_POSTER),
-											'value' => function ($model) {
-												return isset($model->category->title)?$model->category->title:'';
-											}
-										],
-										'url:url',
-										[
-											'attribute' => 'published',
-											'format' => 'raw',
-											'filter' => [Poster::STATUS_ACTIVE => 'Да', Poster::STATUS_DISABLE => 'Нет'],
-											'headerOptions' => ['width' => '50'],
-											'contentOptions' => ['class' => 'text-center'],
-											'value' => function ($model) {
-												return '<span class="onoffswitch">
+                                    'pager' => [
+                                        'options' => ['class' => 'pagination pagination-sm'],
+                                        'prevPageLabel' => 'Предыдущая',
+                                        'nextPageLabel' => 'Следующая'
+                                    ],
+                                    'columns' => [
+                                        ['class' => 'yii\grid\SerialColumn'],
+                                        ['attribute' => 'id', 'headerOptions' => ['style' => 'width: 80px;']],
+                                        'name',
+                                        'address',
+                                        'price',
+                                        [
+                                            'attribute' => 'category_id',
+                                            'filter' => Filters::ListOfFilters(Filters::CATEGORY_POSTER),
+                                            'value' => function ($model) {
+                                                return isset($model->category->title) ? $model->category->title : '';
+                                            }
+                                        ],
+                                        'url:url',
+                                        [
+                                            'attribute' => 'published',
+                                            'format' => 'raw',
+                                            'filter' => [Poster::STATUS_ACTIVE => 'Да', Poster::STATUS_DISABLE => 'Нет'],
+                                            'headerOptions' => ['width' => '50'],
+                                            'contentOptions' => ['class' => 'text-center'],
+                                            'value' => function ($model) {
+                                                return '<span class="onoffswitch">
                                                 ' . Html::checkbox('id', $model->published == poster::STATUS_ACTIVE ? true : false, [
-														'class' => 'onoffswitch-checkbox',
-														'value' => $model->published == poster::STATUS_ACTIVE ? true : false,
-														'id' => 'status_' . $model->id,
-														'onclick' => "changeStatus('{$model->id}');"
-													]) . '
+                                                            'class' => 'onoffswitch-checkbox',
+                                                            'value' => $model->published == poster::STATUS_ACTIVE ? true : false,
+                                                            'id' => 'status_' . $model->id,
+                                                            'onclick' => "changeStatus('{$model->id}');"
+                                                        ]) . '
                                                 <label class="onoffswitch-label" for="status_' . $model->id . '">
                                                     <span class="onoffswitch-inner" data-swchon-text="Да" data-swchoff-text="Нет"></span>
                                                     <span class="onoffswitch-switch"></span>
                                                 </label>
                                             </span>';
-											}
-										],
-										[
-											'class' => 'yii\grid\ActionColumn',
-											'header' => 'Действия',
-											'headerOptions' => ['width' => '100'],
-											'template' => '{update} {delete}',
-											'buttons' => [
-												'view' => function ($url, $model, $key) {
-													return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['view/' . $model->id]), [
-														'class' => 'btn btn-info',
-														'title' => 'Показать/Скрыть',
-														'rel' => 'tooltip',
-														'aria-label' => 'Показать/Скрыть',
-													]);
-												},
-												'delete' => function ($url, $model, $key) {
-													return Html::a('<i class="fa fa-trash"></i>', Url::toRoute(['delete/' . $model->id]), [
-														'class' => 'btn btn-danger',
-														'title' => 'Удалить',
-														'rel' => 'tooltip',
-														'aria-label' => 'Удалить',
-														'data-confirm' => 'Вы уверены, что хотите удалить этот элемент?',
-														'data-method' => 'get',
-
-													]);
-												},
-												'update' => function ($url, $model, $key) {
-													return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['update/' . $model->id]), [
-														'class' => 'btn btn-primary',
-														'title' => 'Редактировать',
-														'rel' => 'tooltip',
-														'aria-label' => 'Редактировать',
-
-													]);
-												}
-											]
-										]
-									],
-								]); ?>
+                                            }
+                                        ],
+                                        [
+                                            'class' => 'yii\grid\ActionColumn',
+                                            'header' => 'Действия',
+                                            'headerOptions' => ['width' => '100'],
+                                            'template' => '{update} {delete}',
+                                            'buttons' => [
+                                                'view' => function ($url, $model, $key) {
+                                                    return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['view/' . $model->id]), [
+                                                                'class' => 'btn btn-info',
+                                                                'title' => 'Показать/Скрыть',
+                                                                'rel' => 'tooltip',
+                                                                'aria-label' => 'Показать/Скрыть',
+                                                    ]);
+                                                },
+                                                'delete' => function ($url, $model, $key) {
+                                                    return Html::a('<i class="fa fa-trash"></i>', Url::toRoute(['delete/' . $model->id]), [
+                                                                'class' => 'btn btn-danger',
+                                                                'title' => 'Удалить',
+                                                                'rel' => 'tooltip',
+                                                                'aria-label' => 'Удалить',
+                                                                'data-confirm' => 'Вы уверены, что хотите удалить этот элемент?',
+                                                                'data-method' => 'get',
+                                                    ]);
+                                                },
+                                                'update' => function ($url, $model, $key) {
+                                                    return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['update/' . $model->id]), [
+                                                                'class' => 'btn btn-primary',
+                                                                'title' => 'Редактировать',
+                                                                'rel' => 'tooltip',
+                                                                'aria-label' => 'Редактировать',
+                                                    ]);
+                                                }
+                                            ]
+                                        ]
+                                    ],
+                                ]);
+                                ?>
                             </div>
                         </div>
                     </div>

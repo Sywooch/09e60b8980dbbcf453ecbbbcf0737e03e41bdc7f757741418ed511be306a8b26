@@ -103,5 +103,9 @@ class COMMENTS {
 
         return $data;
     }
+    public static function delete($id) {
+        $query = "DELETE FROM comments WHERE id = $id";
+        DB::q_($query);
+    }
 
 }

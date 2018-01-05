@@ -47,9 +47,9 @@ $this->registerJs($js, View::POS_END)
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
             <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-filter"></i> Фильтры</h1>
         </div>
-        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-8 text-align-right">
-            <div class="page-title">
-				<?= Html::a('<i class="fa-fw fa fa-plus-circle"></i> Добавить', Url::toRoute('create'), ['class' => 'btn btn-success']) ?>
+        <div class="col-xs-12 text-align-right">
+            <div class="">
+                <?= Html::a('<i class="fa-fw fa fa-plus-circle"></i> Добавить', Url::toRoute('create'), ['class' => 'btn btn-success']) ?>
             </div>
         </div>
     </div>
@@ -65,106 +65,105 @@ $this->registerJs($js, View::POS_END)
                         <div class="jarviswidget-editbox"></div>
                         <div class="widget-body no-padding">
                             <div class="table-responsive">
-								<?= GridView::widget([
-									'dataProvider' => $dataProvider,
-									'tableOptions' => ['class' => 'table table-hover no-footer'],
-									'options' => ['data' => ['sortable-widget' => 1, 'sortable-url' => Url::toRoute(['sorting'])]],
-									'filterPosition' => \yii\grid\GridView::FILTER_POS_HEADER,
-									'rowOptions' => function ($model, $key, $index, $grid) {
-										return ['data-sortable-id' => $model->id];
-									},
-									'layout' => '
+                                <?=
+                                GridView::widget([
+                                    'dataProvider' => $dataProvider,
+                                    'tableOptions' => ['class' => 'table table-hover no-footer'],
+                                    'options' => ['data' => ['sortable-widget' => 1, 'sortable-url' => Url::toRoute(['sorting'])]],
+                                    'filterPosition' => \yii\grid\GridView::FILTER_POS_HEADER,
+                                    'rowOptions' => function ($model, $key, $index, $grid) {
+                                        return ['data-sortable-id' => $model->id];
+                                    },
+                                    'layout' => '
                                     
                                     {items}
                                     <div class="dt-toolbar-footer">
                                         <div class="col-xs-12 col-sm-6"><div class="dataTables_info">{summary}</div></div>
                                         <div class="col-xs-12 col-sm-6"><div class="dataTables_paginate">{pager}</div></div>
                                     </div>',
-									'summary' => 'Показаны записи <span class="txt-color-darken">{begin}</span>-<span class="txt-color-darken">{end}</span> 
+                                    'summary' => 'Показаны записи <span class="txt-color-darken">{begin}</span>-<span class="txt-color-darken">{end}</span> 
                                               из <span class="text-primary">{totalCount}</span>',
-									'pager' => [
-										'options' => ['class' => 'pagination pagination-sm'],
-										'prevPageLabel' => 'Предыдущая',
-										'nextPageLabel' => 'Следующая'
-									],
-									'filterModel' => $searchModel,
-									'columns' => [
-										['attribute' => 'id', 'headerOptions' => ['style' => 'width: 80px;']],
-
-										[
-											'attribute' => 'category_id',
-											'filter' => Filters::ListOfCategories(),
-											'value' => function ($model) {
-												return Filters::ListOfCategories($model->category_id);
-											}
-										],
+                                    'pager' => [
+                                        'options' => ['class' => 'pagination pagination-sm'],
+                                        'prevPageLabel' => 'Предыдущая',
+                                        'nextPageLabel' => 'Следующая'
+                                    ],
+                                    'filterModel' => $searchModel,
+                                    'columns' => [
+                                        ['attribute' => 'id', 'headerOptions' => ['style' => 'width: 80px;']],
+                                        [
+                                            'attribute' => 'category_id',
+                                            'filter' => Filters::ListOfCategories(),
+                                            'value' => function ($model) {
+                                                return Filters::ListOfCategories($model->category_id);
+                                            }
+                                        ],
                                         'title',
-										//[
-										//	'attribute' => 'parent_id',
-										//	'filter' => Filters::ListOfFilters(),
-										//	'value' => function ($model) {
-										//		return $model->parent['title'] === NULL ? 'Родительский фильтр': $model->parent['title'];
-										//	}
-										//],
-										[
-											'attribute' => 'published',
-											'format' => 'raw',
-											'filter' => [Filters::STATUS_ACTIVE => 'Да', Filters::STATUS_DISABLE => 'Нет'],
-											'headerOptions' => ['width' => '70'],
-											'contentOptions' => ['class' => 'text-center'],
-											'value' => function ($model) {
-												return '<span class="onoffswitch">
+                                        //[
+                                        //	'attribute' => 'parent_id',
+                                        //	'filter' => Filters::ListOfFilters(),
+                                        //	'value' => function ($model) {
+                                        //		return $model->parent['title'] === NULL ? 'Родительский фильтр': $model->parent['title'];
+                                        //	}
+                                        //],
+                                        [
+                                            'attribute' => 'published',
+                                            'format' => 'raw',
+                                            'filter' => [Filters::STATUS_ACTIVE => 'Да', Filters::STATUS_DISABLE => 'Нет'],
+                                            'headerOptions' => ['width' => '70'],
+                                            'contentOptions' => ['class' => 'text-center'],
+                                            'value' => function ($model) {
+                                                return '<span class="onoffswitch">
                                                 ' . Html::checkbox('id', $model->published == Filters::STATUS_ACTIVE ? true : false, [
-														'class' => 'onoffswitch-checkbox',
-														'value' => $model->published == Filters::STATUS_ACTIVE ? true : false,
-														'id' => 'status_' . $model->id,
-														'onclick' => "changeStatus('{$model->id}');"
-													]) . '
+                                                            'class' => 'onoffswitch-checkbox',
+                                                            'value' => $model->published == Filters::STATUS_ACTIVE ? true : false,
+                                                            'id' => 'status_' . $model->id,
+                                                            'onclick' => "changeStatus('{$model->id}');"
+                                                        ]) . '
                                                 <label class="onoffswitch-label" for="status_' . $model->id . '">
                                                     <span class="onoffswitch-inner" data-swchon-text="Да" data-swchoff-text="Нет"></span>
                                                     <span class="onoffswitch-switch"></span>
                                                 </label>
                                             </span>';
-											}
-										],
-										[
-											'class' => 'yii\grid\ActionColumn',
-											'header' => 'Действия',
-											'headerOptions' => ['width' => '100'],
-											'template' => '{update} {delete}',
-											'buttons' => [
-												'view' => function ($url, $model, $key) {
-													return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['view/' . $model->id]), [
-														'class' => 'btn btn-info',
-														'title' => 'Показать/Скрыть',
-														'rel' => 'tooltip',
-														'aria-label' => 'Показать/Скрыть',
-													]);
-												},
-												'delete' => function ($url, $model, $key) {
-													return Html::a('<i class="fa fa-trash"></i>', Url::toRoute(['delete', 'id' => $model->id ]), [
-														'class' => 'btn btn-danger',
-														'title' => 'Удалить',
-														'rel' => 'tooltip',
-														'aria-label' => 'Удалить',
-														'data-confirm' => 'Вы уверены, что хотите удалить этот элемент?',
-														'data-method' => 'post',
-
-													]);
-												},
-												'update' => function ($url, $model, $key) {
-													return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['update', 'id' => $model->id ]), [
-														'class' => 'btn btn-primary',
-														'title' => 'Редактировать',
-														'rel' => 'tooltip',
-														'aria-label' => 'Редактировать',
-
-													]);
-												}
-											]
-										],
-									],
-								]); ?>
+                                            }
+                                        ],
+                                        [
+                                            'class' => 'yii\grid\ActionColumn',
+                                            'header' => 'Действия',
+                                            'headerOptions' => ['width' => '100'],
+                                            'template' => '{update} {delete}',
+                                            'buttons' => [
+                                                'view' => function ($url, $model, $key) {
+                                                    return Html::a('<i class="fa fa-eye"></i>', Url::toRoute(['view/' . $model->id]), [
+                                                                'class' => 'btn btn-info',
+                                                                'title' => 'Показать/Скрыть',
+                                                                'rel' => 'tooltip',
+                                                                'aria-label' => 'Показать/Скрыть',
+                                                    ]);
+                                                },
+                                                'delete' => function ($url, $model, $key) {
+                                                    return Html::a('<i class="fa fa-trash"></i>', Url::toRoute(['delete', 'id' => $model->id]), [
+                                                                'class' => 'btn btn-danger',
+                                                                'title' => 'Удалить',
+                                                                'rel' => 'tooltip',
+                                                                'aria-label' => 'Удалить',
+                                                                'data-confirm' => 'Вы уверены, что хотите удалить этот элемент?',
+                                                                'data-method' => 'post',
+                                                    ]);
+                                                },
+                                                'update' => function ($url, $model, $key) {
+                                                    return Html::a('<i class="fa fa-pencil"></i>', Url::toRoute(['update', 'id' => $model->id]), [
+                                                                'class' => 'btn btn-primary',
+                                                                'title' => 'Редактировать',
+                                                                'rel' => 'tooltip',
+                                                                'aria-label' => 'Редактировать',
+                                                    ]);
+                                                }
+                                            ]
+                                        ],
+                                    ],
+                                ]);
+                                ?>
                             </div>
                         </div>
                     </div>

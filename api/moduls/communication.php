@@ -5,6 +5,7 @@ class Communication {
     public static $new = 0;
     public static $update = 1;
     public static $hide = 2;
+    public static $allw = 10;
 
     public function getList() {
         $data = null;
@@ -105,6 +106,28 @@ class Communication {
         if (!$error) {
             return 'OK';
         }
+    }
+
+    public static function items($limit, $status) {
+        $data = null;
+        $query = "SELECT * FROM communication WHERE `status` != $status ORDER BY id DESC LIMIT $limit";
+        $c = DB::q_array_id($query);
+        foreach ($c as $id => $vol) {
+            $c[$id]['created_at'] = DATA::communication($vol['created_at']);
+            $c[$id]['updated_at'] = DATA::communication($vol['updated_at']);
+        }
+        $data['item_list'] = array_values($c);
+        $user_ids = array_unique(self::getUsersId($c));
+        $data['users'] = User::getUsers($user_ids);
+        return $data;
+    }
+
+    public static function delete($id) {
+        DB::q_("DELETE FROM communication WHERE id=" . $id);
+    }
+
+    public static function Approve($id) {
+        DB::q_("UPDATE communication SET `status` = " . self::$allw . "  WHERE id = " . $id);
     }
 
 }

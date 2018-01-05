@@ -29,7 +29,7 @@ class Shares {
             foreach ($item as $key => $vol) {
                 $at = DATA::poster($vol['start_at'], $vol['end_at']);
                 $item[$key]['at'] = $at;
-//                $item[$key]['description'] = self::ddd($item[$key]['description']);
+                $item[$key]['description'] = nl2br($item[$key]['description']);
                 unset($item[$key]['updated_at']);
                 unset($item[$key]['created_at']);
                 unset($item[$key]['end_at']);
@@ -51,6 +51,7 @@ class Shares {
                 $vol = DB::q_line($query);
                 if ($vol) {
                     $at = DATA::poster($vol['start_at'], $vol['end_at']);
+                    $vol['description'] = nl2br($vol['description']);
                     $vol['at'] = $at;
                     unset($vol['updated_at']);
                     unset($vol['created_at']);

@@ -268,9 +268,9 @@
 				</section>
 				<section class="col col-8">
 					<? if($node->isNewRecord || empty($node->$iconAttribute)):
-						echo $form->field($node, $iconAttribute, ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="'.\Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot/uploads/no_image.png'), 320, 180, 'inset', 100, Yii::getAlias('@webroot/uploads/cache/thumb-no_image.png')).'" alt="" title="" data-placeholder="'.\Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot/uploads/no_image.png'), 320, 180, 'inset', 100, Yii::getAlias('@webroot/uploads/cache/thumb-no_image.png')).'" />{input}{error}{hint}</label></a>'])->hiddenInput();
+						echo $form->field($node, $iconAttribute, ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img style="width: 80%;"   src="'.\Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot/uploads/no_image.png'), 320, 180, 'inset', 100, Yii::getAlias('@webroot/uploads/cache/thumb-no_image.png')).'" alt="" title="" data-placeholder="'.\Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot/uploads/no_image.png'), 320, 180, 'inset', 100, Yii::getAlias('@webroot/uploads/cache/thumb-no_image.png')).'" />{input}{error}{hint}</label></a>'])->hiddenInput();
 					else:
-						echo $form->field($node, $iconAttribute, ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img src="'.\Yii::$app->imageresize->getUrl(Yii::getAlias($node->$iconAttribute), 320, 180, 'outbound', 100,
+						echo $form->field($node, $iconAttribute, ['template' => '{label} <label class="input" id="images"><a href="" id="thumb-image0" data-toggle="image"><img style="width: 80%;"   src="'.\Yii::$app->imageresize->getUrl(Yii::getAlias($node->$iconAttribute), 320, 180, 'outbound', 100,
 								Yii::getAlias('@webroot/uploads/cache/' . $node->$iconAttribute)) .'" alt="" title="" data-placeholder="'.\Yii::$app->imageresize->getUrl(Yii::getAlias('@webroot/uploads/no_image.png'), 320, 180, 'inset', 100, Yii::getAlias('@webroot/uploads/cache/thumb-no_image.png')).'" />{input}{error}{hint}</label></a>'])->hiddenInput();
 					endif;
 					?>

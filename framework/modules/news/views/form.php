@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 $this->title = 'Новости';
 $this->params['breadcrumbs'][] = ['label' => 'Новости', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->isNewRecord ? Module::t('index', 'add') : Module::t('index', 'editor.id', ['id' => $model->id]);
-$cat[''] = "Новости";
+$cat[0] = "Новости";
 $cat = $cat + $model::getNewsCategory();
 //var_dump($cat);
 //die;

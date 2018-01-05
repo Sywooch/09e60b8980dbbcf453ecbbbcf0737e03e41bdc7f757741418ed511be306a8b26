@@ -68,4 +68,16 @@ class DATA {
         return $data;
     }
 
+    public static function posterCheker($start, $end) {
+        $data = true;
+        $startDate = new DateTime($start);
+        $endDate = new DateTime($end);
+        $now = new DateTime("now");
+        $now->setTimeZone(new DateTimeZone(self::getTimeZone()));
+        if ($now < $endDate && $now < $startDate) {
+            $data = false;
+        }
+        return $data;
+    }
+
 }

@@ -5,6 +5,7 @@ class Ads {
     public static $new = 0;
     public static $update = 1;
     public static $hide = 2;
+    public static $allw = 10;
 
     public function getList() {
         $data = null;
@@ -123,7 +124,7 @@ class Ads {
                 if ($c) {
                     $c['created_at'] = DATA::communication($c['created_at']);
                     $c['updated_at'] = DATA::communication($c['updated_at']);
-                    
+
                     $c['comments'] = COMMENTS::execute('ads_id', $c['id']);
                 }
                 $data['item'] = $c;
@@ -185,6 +186,35 @@ class Ads {
         if (!$error) {
             return 'OK';
         }
+    }
+
+    public static function items($limit, $status) {
+        $data = [];
+        $query = null;
+        $query = "SELECT * FROM ads "
+                . " WHERE `status` != $status ORDER BY id DESC LIMIT $limit";
+
+//        var_dump($query);die;
+        $data['item_list'] = DB::q_array($query);
+        foreach ($data['item_list'] as $id => $vol) {
+            $data[$id]['created_at'] = DATA::communication($vol['created_at']);
+            $data[$id]['updated_at'] = DATA::communication($vol['updated_at']);
+        }
+        $user_ids = array_unique(self::getUsersId($data['item_list']));
+        if (!empty($user_ids)) {
+            $data['users'] = User::getUsers($user_ids);
+        } else {
+            $data['users'] = [];
+        }
+        return $data;
+    }
+
+    public static function delete($id) {
+        DB::q_("DELETE FROM ads WHERE id=" . $id);
+    }
+
+    public static function Approve($id) {
+        DB::q_("UPDATE ads SET `status` = " . self::$allw . "  WHERE id = " . $id);
     }
 
 }
