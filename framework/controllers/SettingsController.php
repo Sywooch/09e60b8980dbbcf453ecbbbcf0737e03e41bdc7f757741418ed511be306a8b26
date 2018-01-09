@@ -9,37 +9,35 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 
-class SettingsController extends Controller
-{
-	public function behaviors()
-	{
-		return [
-			'access' => [
-				'class' => AccessControl::className(),
-				'rules' => [
-					[
-						'allow' => true,
-						'roles' => ['@'],
-						'matchCallback' => function () {
-							return User::checkAccess('help');
-						}
-					],
-				],
-			],
-			'verbs' => [
-				'class' => VerbFilter::className(),
-				'actions' => [
-					'delete' => ['POST','GET'],
-				],
-			],
-		];
-	}
+class SettingsController extends Controller {
+
+    public function behaviors() {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function () {
+                            return User::checkAccess('help');
+                        }
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST', 'GET'],
+                ],
+            ],
+        ];
+    }
 
     /**
      * @inheritdoc
      */
-    public function actions()
-    {
+    public function actions() {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -56,22 +54,20 @@ class SettingsController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
-    	if($post = Yii::$app->request->post()){
-		    unset($post['_csrf']);
-		    foreach ($post as $key => $value)
-		    {
-			    $model = Settings::find()->where('name = :name', [':name' => $key])->one();
-			    $model->value = $value;
-			    $model->update();
-		    }
-		    Yii::$app->session->setFlash('success', 'Все успешно обновлено!');
-	    }
+    public function actionIndex() {
+        if ($post = Yii::$app->request->post()) {
+            unset($post['_csrf']);
+            foreach ($post as $key => $value) {
+                $model = Settings::find()->where('name = :name', [':name' => $key])->one();
+                $model->value = $value;
+                $model->update();
+            }
+            Yii::$app->session->setFlash('success', 'Все успешно обновлено!');
+        }
 
-	    $model = Settings::find()->indexBy('name')->all();
-	    return $this->render('index',
-		   ['model' => $model ]
-	    );
+        $model = Settings::find()->indexBy('name')->all();
+        return $this->render('index', ['model' => $model]
+        );
     }
+
 }
