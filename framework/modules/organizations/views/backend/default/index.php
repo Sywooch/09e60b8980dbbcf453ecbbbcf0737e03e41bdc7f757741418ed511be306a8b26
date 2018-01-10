@@ -51,11 +51,11 @@ $this->registerJs($js, View::POS_END)
         </div>
         <div class="col-xs-12  text-align-right">
             <div class="">
-<?= Html::a('<i class="fa-fw fa fa-plus-circle"></i> Добавить', Url::toRoute('create'), ['class' => 'btn btn-success']) ?>
+                <?= Html::a('<i class="fa-fw fa fa-plus-circle"></i> Добавить', Url::toRoute('create'), ['class' => 'btn btn-success']) ?>
             </div>
         </div>
     </div>
-<?php Pjax::begin(); ?>
+    <?php Pjax::begin(); ?>
     <section id="widget-grid">
         <div class="row">
             <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -64,7 +64,7 @@ $this->registerJs($js, View::POS_END)
                         <span class="widget-icon"> <i class="fa fa-table"></i> </span>
                         <h2>Список организаций </h2>
                     </header>
-                    <div>
+                    <div style="overflow-y: hidden;">
                         <div class="jarviswidget-editbox"></div>
                         <div class="widget-body no-padding">
                             <div class="table-responsive1">
@@ -97,7 +97,7 @@ $this->registerJs($js, View::POS_END)
                                         ['attribute' => 'name'],
                                         [
                                             'attribute' => 'category_id',
-                                            'headerOptions' => ['width' => '20%'],
+                                            'headerOptions' => ['width' => 'auto'],
                                             'format' => 'raw',
                                             'filter' => \kartik\tree\TreeViewInput::widget([
                                                 'name' => 'OrganizationsSearch[category_id]',
@@ -125,30 +125,30 @@ $this->registerJs($js, View::POS_END)
                                                 return $name;
                                             }
                                         ],
-                                        [
-                                            'attribute' => 'published',
-                                            'format' => 'raw',
-                                            'filter' => [Organizations::STATUS_NEW => 'Ожидает модерации', Organizations::STATUS_ACTIVE => 'Да', Organizations::STATUS_DISABLE => 'Нет'],
-                                            'headerOptions' => ['width' => '50'],
-                                            'contentOptions' => ['class' => 'text-center'],
-                                            'value' => function ($model) {
-                                                if ($model->published === Organizations::STATUS_NEW)
-                                                    return 'Ожидает модерации';
-
-                                                return '<span class="onoffswitch">
-                                                ' . Html::checkbox('id', $model->published == Organizations::STATUS_ACTIVE ? true : false, [
-                                                            'class' => 'onoffswitch-checkbox',
-                                                            'value' => $model->published == Organizations::STATUS_ACTIVE ? true : false,
-                                                            'id' => 'status_' . $model->id,
-                                                            'onclick' => "changeStatus('{$model->id}');"
-                                                        ]) . '
-                                                <label class="onoffswitch-label" for="status_' . $model->id . '">
-                                                    <span class="onoffswitch-inner" data-swchon-text="Да" data-swchoff-text="Нет"></span>
-                                                    <span class="onoffswitch-switch"></span>
-                                                </label>
-                                            </span>';
-                                            }
-                                        ],
+//                                        [
+//                                            'attribute' => 'published',
+//                                            'format' => 'raw',
+//                                            'filter' => [Organizations::STATUS_NEW => 'Ожидает модерации', Organizations::STATUS_ACTIVE => 'Да', Organizations::STATUS_DISABLE => 'Нет'],
+//                                            'headerOptions' => ['width' => '50'],
+//                                            'contentOptions' => ['class' => 'text-center'],
+//                                            'value' => function ($model) {
+//                                                if ($model->published === Organizations::STATUS_NEW)
+//                                                    return 'Ожидает модерации';
+//
+//                                                return '<span class="onoffswitch">
+//                                                ' . Html::checkbox('id', $model->published == Organizations::STATUS_ACTIVE ? true : false, [
+//                                                            'class' => 'onoffswitch-checkbox',
+//                                                            'value' => $model->published == Organizations::STATUS_ACTIVE ? true : false,
+//                                                            'id' => 'status_' . $model->id,
+//                                                            'onclick' => "changeStatus('{$model->id}');"
+//                                                        ]) . '
+//                                                <label class="onoffswitch-label" for="status_' . $model->id . '">
+//                                                    <span class="onoffswitch-inner" data-swchon-text="Да" data-swchoff-text="Нет"></span>
+//                                                    <span class="onoffswitch-switch"></span>
+//                                                </label>
+//                                            </span>';
+//                                            }
+//                                        ],
                                         [
                                             'class' => 'app\components\CustomActionColumn',
                                             'header' => 'Действия',
@@ -193,5 +193,5 @@ $this->registerJs($js, View::POS_END)
             </article>
         </div>
     </section>
-<?php Pjax::end(); ?>
+    <?php Pjax::end(); ?>
 </div>

@@ -63,7 +63,6 @@ $this->registerJs($js, View::POS_END)
                 <?= Html::a('Опубликованные', Url::toRoute('index'), ['class' => 'btn btn-default col-xs-12 col-sm-2' . ($type == 'published' ? ' disabled' : ''), 'onclick' => $type == 'published' ? 'return false;' : '']) ?>
                 <?= Html::a('Скрытые', Url::toRoute('index/type/hidden'), ['class' => 'btn btn-default col-xs-12 col-sm-2' . ($type == 'hidden' ? ' disabled' : ''), 'onclick' => ($type == 'hidden' ? 'return false;' : '')]) ?>
                 <?= Html::a('Входящие', Url::toRoute('index/type/new'), ['class' => 'btn btn-default col-xs-12 col-sm-2' . ($type == 'new' ? ' disabled' : ''), 'onclick' => $type == 'new' ? 'return false;' : '']) ?>
-                <?= Html::a('Комментарии', Url::toRoute('comments'), ['class' => 'btn btn-default col-xs-12 col-sm-2']) ?>
                 <?= Html::a('<i class="fa-fw fa fa-plus-circle"></i> Добавить', Url::toRoute('add'), ['class' => 'btn btn-primary col-xs-12 col-sm-2']) ?>
             </div>
         </div>

@@ -83,22 +83,22 @@ $this->params['breadcrumbs'][] = $model->name;
 
 
                                         <section>
-<?= $form->field($model, 'url', ['template' => '{label} <label class="input"><i class="icon-prepend fa fa-link"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'Сайт организации']) ?>
+                                            <?= $form->field($model, 'url', ['template' => '{label} <label class="input"><i class="icon-prepend fa fa-link"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'Сайт организации']) ?>
                                         </section>
                                         <section>
-<?= $form->field($model, 'url_vk', ['template' => '<label class="input"><i class="icon-prepend fa fa-vk"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'http://vk.com']) ?>
+                                            <?= $form->field($model, 'url_vk', ['template' => '<label class="input"><i class="icon-prepend fa fa-vk"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'http://vk.com']) ?>
                                         </section>
                                         <section>
-<?= $form->field($model, 'url_ok', ['template' => '<label class="input"><i class="icon-prepend fa fa-odnoklassniki"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'http://ok.ru']) ?>
+                                            <?= $form->field($model, 'url_ok', ['template' => '<label class="input"><i class="icon-prepend fa fa-odnoklassniki"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'http://ok.ru']) ?>
                                         </section>
                                         <section>
-<?= $form->field($model, 'url_facebook', ['template' => '<label class="input"><i class="icon-prepend fa fa-facebook"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'http://facebook.com']) ?>
+                                            <?= $form->field($model, 'url_facebook', ['template' => '<label class="input"><i class="icon-prepend fa fa-facebook"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'http://facebook.com']) ?>
                                         </section>
                                         <section>
-<?= $form->field($model, 'url_instagram', ['template' => '<label class="input"><i class="icon-prepend fa fa-instagram"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'http://instagram.com']) ?>
+                                            <?= $form->field($model, 'url_instagram', ['template' => '<label class="input"><i class="icon-prepend fa fa-instagram"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'http://instagram.com']) ?>
                                         </section>
                                         <section>
-<?= $form->field($model, 'url_twitter', ['template' => '<label class="input"><i class="icon-prepend fa fa-twitter"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'http://twitter.com']) ?>
+                                            <?= $form->field($model, 'url_twitter', ['template' => '<label class="input"><i class="icon-prepend fa fa-twitter"></i>{input}{error}{hint}</label>'])->textInput(['maxlength' => true, 'placeholder' => 'http://twitter.com']) ?>
                                         </section>
 
                                         <section class="col-xs-12 col-sm-12 col-lg-12">
@@ -146,9 +146,9 @@ $this->params['breadcrumbs'][] = $model->name;
                                         'columns' => [
                                             [
                                                 'name' => 'address',
-                                                'title' => 'Адресс',
+                                                'title' => 'Адрес',
                                                 'options' => [
-                                                    'placeholder' => 'Адресс огранизации'
+                                                    'placeholder' => 'Адрес огранизации'
                                                 ],
                                             ],
                                             [
@@ -181,10 +181,11 @@ $this->params['breadcrumbs'][] = $model->name;
                                             ],
                                             [
                                                 'name' => 'latitude',
-                                                'title' => 'Долгота',
-                                            ], [
-                                                'name' => 'longitude',
                                                 'title' => 'Широта',
+                                            ],
+                                            [
+                                                'name' => 'longitude',
+                                                'title' => 'Долгота',
                                             ],
                                         ],
                                         'addButtonOptions' => [
@@ -201,9 +202,9 @@ $this->params['breadcrumbs'][] = $model->name;
                                 </section>
                             </fieldset>
                             <footer>
-                            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+                                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
                             </footer>
-<?php ActiveForm::end(); ?>
+                            <?php ActiveForm::end(); ?>
                         </div>
                     </div>
                 </div>

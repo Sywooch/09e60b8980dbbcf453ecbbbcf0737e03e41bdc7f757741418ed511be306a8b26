@@ -157,7 +157,7 @@
                     <ul>
                         <li><a href="<?=Url::toRoute('/organizations')?>"><i class="fa fa-list"></i> Организации </a></li>
                         <li><a href="<?=Url::toRoute('/organizations/create')?>"><i class="fa fa-plus"></i> Добавить новую </a></li>
-                        <li><a href="<?=Url::toRoute('/organizations/category/index')?>"><i class="fa fa-dedent"></i> Категирии </a></li>
+                        <li><a href="<?=Url::toRoute('/organizations/category/index')?>"><i class="fa fa-dedent"></i> Категории </a></li>
                     </ul>
                 </li>
                 <li>
