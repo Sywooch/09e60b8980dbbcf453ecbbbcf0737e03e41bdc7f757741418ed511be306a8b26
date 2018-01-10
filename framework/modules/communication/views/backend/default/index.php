@@ -63,21 +63,29 @@ $this->registerJs($js, View::POS_END)
             <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-comment-o"></i> <?= Html::encode($this->title) ?></h1>
         </div>
     </div>
-    <div id ="Communication" class="col-xs-12 col-sm-6" style="border-right: 1px solid;">
+    <div id ="Communication" class="col-xs-12 col-sm-4" style="border-right: 1px solid;">
         <h3>Общение</h3>
-            <? foreach ($CgetList['item_list'] as $vol) { ?>
+        <? foreach ($CgetList['item_list'] as $vol) { ?>
             <div>
-            <?= render_list($vol, 'Communication', $users) ?>
+                <?= render_list($vol, 'Communication', $users) ?>
             </div>
-<? } ?>
+        <? } ?>
     </div>
-    <div id ="Ads" class="col-xs-12 col-sm-6">
+    <div id ="Ads" class="col-xs-12 col-sm-4" style="border-right: 1px solid;">
         <h3>Объявления</h3>
-            <? foreach ($AgetList['item_list'] as $vol) { ?>
+        <? foreach ($AgetList['item_list'] as $vol) { ?>
             <div>
-            <?= render_list($vol, 'Ads', $users) ?>
+                <?= render_list($vol, 'Ads', $users) ?>
             </div>
-<? } ?>
+        <? } ?>
+    </div>
+    <div id ="Comment" class="col-xs-12 col-sm-4" >
+        <h3>Комментарии</h3>
+        <? foreach ($CommentList['item_list'] as $vol) { ?>
+            <div>
+                <?= render_list($vol, 'Comment', $users) ?>
+            </div>
+        <? } ?>
     </div>
 </div>
 <?
@@ -116,16 +124,16 @@ function render_list($data, $action, $users) {
                 <?= Html::encode($model->text); ?><br>
                 <? if (!empty($model->img)) { ?>
                     <a href="<?= Html::encode($model->img) ?>" target="_blank"><img src="<?= Html::encode($model->img) ?>" width="100px"></a>     
-    <? } ?>
+                <? } ?>
 
             </p>
             <div class="row">
-                <div class="col-xs-12" >
+                <div class="col-xs-12" style="border-top: 1px solid #CFCFCF;">
                     <div class="smart-form" style="width: 200px;float: left;">
                         <div class="inline-group">
                             <label class="checkbox">
                                 <?=
-                                Html::a('<i class="fa fa-add"></i> Одобрить', Url::toRoute(['approve/' . $model->id . '?action=' . $action]), [
+                                Html::a(' Одобрить', Url::toRoute(['approve/' . $model->id . '?action=' . $action]), [
                                     'class' => 'text-green',
                                     'title' => 'Одобрить',
                                     'rel' => 'tooltip',
@@ -137,19 +145,18 @@ function render_list($data, $action, $users) {
                         </div>
                     </div>
                     <div class="col-sm-4 text-align-right" style="float: right;">
-                        <h5>
-                            <?=
-                            Html::a('<i class="fa fa-remove"></i> Удалить', Url::toRoute(['delete/' . $model->id . '?action=' . $action]), [
-                                'class' => 'text-danger',
-                                'title' => 'Удалить',
-                                'rel' => 'tooltip',
-                                'onclick' => 'd_id(event);',
-                                'aria-label' => 'Удалить',
-                                'data-confirm' => 'Вы уверены, что хотите удалить этот элемент?',
-                                'data-method' => 'post',
-                            ])
-                            ?>
-                        </h5>
+                        <?=
+                        Html::a('Удалить', Url::toRoute(['delete/' . $model->id . '?action=' . $action]), [
+                            'class' => 'text-danger',
+                            'title' => 'Удалить',
+                            'rel' => 'tooltip',
+                            'onclick' => 'd_id(event);',
+                            'aria-label' => 'Удалить',
+                            'data-confirm' => 'Вы уверены, что хотите удалить этот элемент?',
+                            'data-method' => 'post',
+                        ])
+                        ?>
+
                     </div>
                 </div>
             </div>

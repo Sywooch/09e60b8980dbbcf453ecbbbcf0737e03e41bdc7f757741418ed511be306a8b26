@@ -55,8 +55,9 @@ class DefaultController extends Controller {
         $limit = 20 * $page;
         $CgetList = \Communication::items($limit, \Communication::$allw);
         $AgetList = \Ads::items($limit, \Ads::$allw);
+        $CommentList = \COMMENTS::items($limit, \Ads::$hide);
         $users = [];
-        $users_d = array_merge($CgetList['users'], $AgetList['users']);
+        $users_d = array_merge($CgetList['users'], $AgetList['users'], $CommentList['users']);
         foreach ($users_d as $vol) {
             $users[$vol['id']] = $vol;
         }
@@ -65,7 +66,8 @@ class DefaultController extends Controller {
                     'dataProvider' => $dataProvider,
                     'users' => $users,
                     'CgetList' => $CgetList,
-                    'AgetList' => $AgetList
+                    'AgetList' => $AgetList,
+                    'CommentList' => $CommentList
         ]);
     }
 
@@ -76,8 +78,9 @@ class DefaultController extends Controller {
         $limit = 20 * $page;
         $CgetList = \Communication::items($limit, \Communication::$hide);
         $AgetList = \Ads::items($limit, \Ads::$hide);
+        $CommentList = \COMMENTS::items($limit, \Ads::$hide);
         $users = [];
-        $users_d = array_merge($CgetList['users'], $AgetList['users']);
+        $users_d = array_merge($CgetList['users'], $AgetList['users'], $CommentList['users']);
         foreach ($users_d as $vol) {
             $users[$vol['id']] = $vol;
         }
@@ -86,7 +89,8 @@ class DefaultController extends Controller {
                     'dataProvider' => $dataProvider,
                     'users' => $users,
                     'CgetList' => $CgetList,
-                    'AgetList' => $AgetList
+                    'AgetList' => $AgetList,
+                    'CommentList' => $CommentList
         ]);
     }
 
@@ -160,6 +164,8 @@ class DefaultController extends Controller {
                 \Communication::delete($id);
             } elseif ($_GET['action'] == 'Ads') {
                 \Ads::delete($id);
+            } elseif ($_GET['action'] == 'Comment') {
+                \COMMENTS::delete($id);
             }
         }
         $this->redirect(['index']);
@@ -171,6 +177,8 @@ class DefaultController extends Controller {
                 \Communication::Approve($id);
             } elseif ($_GET['action'] == 'Ads') {
                 \Ads::Approve($id);
+            } elseif ($_GET['action'] == 'Comment') {
+                \COMMENTS::Approve($id);
             }
         }
         $this->redirect(['index']);

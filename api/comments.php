@@ -5,6 +5,7 @@ class COMMENTS {
     public static $new = 1;
     public static $update = 2;
     public static $hide = 3;
+    public static $allw = 10;
 
     public static function execute($fild_name = null, $id = null) {
         $data = [];
@@ -103,9 +104,45 @@ class COMMENTS {
 
         return $data;
     }
+
     public static function delete($id) {
         $query = "DELETE FROM comments WHERE id = $id";
         DB::q_($query);
+    }
+
+    public static function items($limit, $status) {
+        $data = null;
+        $query = "SELECT * FROM comments WHERE `status` != $status ORDER BY id DESC LIMIT $limit";
+        $c = DB::q_array_id($query);
+        foreach ($c as $id => $vol) {
+            $c[$id]['created_at'] = DATA::communication($vol['created_at']);
+            $c[$id]['updated_at'] = DATA::communication($vol['updated_at']);
+            $c[$id]['text'] = $vol['comment'];
+        }
+        $data['item_list'] = array_values($c);
+        $user_ids = array_unique(self::getUsersId($c));
+        $data['users'] = User::getUsers($user_ids);
+        return $data;
+    }
+
+    public static function Approve($id) {
+        DB::q_("UPDATE comments SET `status` = " . self::$allw . "  WHERE id = " . $id);
+    }
+
+    public static function getUsersId($array = []) {
+        $data = [];
+        if (!empty($array)) {
+            foreach ($array as $key => $vol) {
+                if (is_array($vol)) {
+                    $data = array_merge($data, self::getUsersId($vol));
+                } else {
+                    if ($key == 'user_id') {
+                        $data[] = (int) $vol;
+                    }
+                }
+            }
+        }
+        return $data;
     }
 
 }
