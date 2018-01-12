@@ -64,13 +64,12 @@ class DATA {
         return $data;
     }
 
-    public static function posterCheker($start, $end) {
+    public static function posterCheker($end) {
         $data = true;
-        $startDate = new DateTime($start);
         $endDate = new DateTime($end);
         $now = new DateTime("now");
         $now->setTimeZone(new DateTimeZone(self::getTimeZone()));
-        if ($now < $endDate && $now < $startDate) {
+        if ($now > $endDate) {
             $data = false;
         }
         return $data;

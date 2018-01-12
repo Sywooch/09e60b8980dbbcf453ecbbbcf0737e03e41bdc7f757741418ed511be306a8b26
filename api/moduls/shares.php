@@ -2,19 +2,6 @@
 
 class Shares {
 
-    private static function ddd($string) {
-//        $string = strip_tags($string);
-// обрежем его на определённое количество символов:
-        $string = mb_substr($string, 0, 23);
-
-// удалим в конце текста восклицательй знак, запятую, точку или тире:
-        $string = rtrim($string, "!,.-");
-
-// находим последний пробел, устраняем его и ставим троеточие:
-        $string = substr($string, 0, strrpos($string, ' '));
-        return $string;
-    }
-
     public function getList() {
         $data = null;
         $category = $this->listFiltr();

@@ -13,7 +13,7 @@ class Poster {
         }
         if (!empty($item)) {
             foreach ($item as $key => $vol) {
-                if (self::cheker($vol['start_at'], $vol['end_at'])) {
+                if (self::cheker($vol['end_at'])) {
                     $at = DATA::poster($vol['start_at'], $vol['end_at']);
                     $item[$key]['at'] = $at;
                     $item[$key]['description'] = nl2br($item[$key]['description']);
@@ -31,8 +31,8 @@ class Poster {
         return $data;
     }
 
-    private static function cheker($start, $end) {
-        if (DATA::posterCheker($start, $end)) {
+    private static function cheker($end) {
+        if (DATA::posterCheker($end)) {
             return TRUE;
         }
     }
