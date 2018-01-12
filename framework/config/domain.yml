@@ -66,6 +66,15 @@ kyshtym:
     'x': 55.6945
     'y': 60.605
     time_zone: Asia/Yakutsk
+
+murmansk:
+    short_name: murm
+    dbname: db_murm
+    name: Мурманск
+    api: 1
+    'x': 68.9631
+    'y': 33.1382
+    time_zone: Europe/Moscow
 #yerevan:
 #    short_name: yer
 #    dbname: db_zhuk

@@ -148,6 +148,7 @@ class Organizations {
 //                $comments = self::item_comments($id);
                 ######
                 $data['info'] = $info;
+                $data['info']['description'] = nl2br($data['info']['description']);
                 $info['go'] = 17;
                 $data['contacts'] = $contacts;
 

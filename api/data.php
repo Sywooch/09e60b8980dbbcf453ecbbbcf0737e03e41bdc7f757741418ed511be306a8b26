@@ -19,16 +19,12 @@ class DATA {
         $d = null;
         if (!empty($start)) {
             $date = new DateTime($start);
-//            $date->setTimeZone(new DateTimeZone(self::getTimeZone()));
             $s = ' с <b>' . $date->format(self::$FORMAT) . '</b>';
         }
         if (!empty($end)) {
             $date = new DateTime($end);
-//            $date->setTimeZone(new DateTimeZone(self::getTimeZone()));
             $d = ' до <b>' . $date->format(self::$FORMAT) . '</b>';
         }
-
-//        echo $date->format('Y-m-d H:i:sP');
         return $s . $d;
     }
 

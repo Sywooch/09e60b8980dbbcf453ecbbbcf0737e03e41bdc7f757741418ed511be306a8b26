@@ -47,10 +47,7 @@ class Poster {
                 if ($vol) {
                     $at = DATA::poster($vol['start_at'], $vol['end_at']);
                     $vol['at'] = $at;
-//                    $vol['description'] = preg_replace("/\r\n|\r|\n/", '<br>' . "\r\n", $vol['description']);
-//                    $vol['description'] = mb_ereg_replace("Жанр", 'gago', $vol['description']);
                     $vol['description'] = nl2br($vol['description']);
-//                    $vol['description'] = '<br />' . $vol['description'];
                     unset($vol['updated_at']);
                     unset($vol['created_at']);
                     unset($vol['end_at']);
@@ -73,8 +70,6 @@ class Poster {
                 . "WHERE published = '1' "
                 . "AND category_id = $id "
                 . "AND pin_filter = 1 "
-//            . "AND start_at < NOW() "
-//                . "AND end_at > NOW() "
                 . "ORDER BY id ASC";
         $top = DB::q_array($query);
 
@@ -82,8 +77,6 @@ class Poster {
                 . " WHERE published = '1' "
                 . " AND category_id = $id "
                 . " AND pin_filter != 1 "
-//                . " AND start_at < NOW() "
-//                . " AND end_at > NOW() "
                 . " ORDER BY end_at ASC";
         $sec = DB::q_array($query);
         return array_merge(array_values($top), array_values($sec));
@@ -94,16 +87,12 @@ class Poster {
         $query = "SELECT * FROM poster "
                 . "WHERE published = '1' "
                 . " AND pin_poster = 1 "
-//            . " AND start_at < NOW() "
-//                . " AND end_at > NOW() "
                 . " ORDER BY  id ASC";
         $top = DB::q_array($query);
 
         $query = "SELECT * FROM poster "
                 . " WHERE published = '1' "
                 . " AND pin_poster != 1 "
-//            . " AND start_at < NOW() "
-//                . " AND end_at > NOW() "
                 . " ORDER BY end_at ASC";
         $sec = DB::q_array($query);
 
